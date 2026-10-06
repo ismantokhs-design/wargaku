@@ -95,7 +95,7 @@
                 <!-- Selamat Datang Banner -->
                 <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
                     <h1 class="text-xl font-bold text-gray-800 mb-1">Selamat Datang di Sistem Informasi RT</h1>
-                    <p class="text-sm text-gray-600">Statistik kependudukan *real-time* dari database Firebase untuk wilayah RT 02 / RW 01 Potrobayan[cite: 12].</p>
+                    <p class="text-sm text-gray-600">Statistik kependudukan <i>real-time</i> dari database Firebase untuk wilayah RT 02 / RW 01 Potrobayan.</p>
                 </div>
 
                 <!-- 3 Kotak Statistik Utama -->
@@ -217,7 +217,7 @@
                 wargaTableBody.innerHTML = '';
                 
                 let totalWargaCount = querySnapshot.size;
-                let totalKKCount = querySnapshot.size; // Berdasarkan jumlah dokumen KK unik
+                let totalKKCount = querySnapshot.size;
 
                 statTotalWarga.textContent = `${totalWargaCount} Jiwa`;
                 statTotalKK.textContent = `${totalKKCount} KK`;
@@ -276,6 +276,15 @@
         });
 
         window.onload = loadWargaData;
+
+        // Pendaftaran Service Worker PWA di Dashboard
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('Service Worker Dashboard OK:', reg.scope))
+                    .catch((err) => console.log('Service Worker Gagal:', err));
+            });
+        }
     </script>
 </body>
 </html>

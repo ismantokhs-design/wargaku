@@ -163,6 +163,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. KK</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Kepala Keluarga</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. Rumah</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="wargaTableBody" class="bg-white divide-y divide-gray-200 text-sm">
@@ -203,7 +204,7 @@
     <!-- Firebase SDK & Logika -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
@@ -234,8 +235,22 @@
             window.location.href = 'index.html';
         });
 
+        // Fungsi Hapus Data Warga
+        window.deleteWarga = async function(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus data warga ini?")) {
+                try {
+                    await deleteDoc(doc(db, "warga", id));
+                    alert("Data berhasil dihapus!");
+                    loadWargaData();
+                } catch (error) {
+                    console.error("Error deleting document: ", error);
+                    alert("Gagal menghapus data.");
+                }
+            }
+        }
+
         async function loadWargaData() {
-            wargaTableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">Memuat data...</td></tr>`;
+            wargaTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Memuat data...</td></tr>`;
             try {
                 const querySnapshot = await getDocs(collection(db, "warga"));
                 wargaTableBody.innerHTML = '';
@@ -247,23 +262,29 @@
                 statTotalKK.textContent = `${totalKKCount} KK`;
 
                 if (querySnapshot.empty) {
-                    wargaTableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">Belum ada data warga.</td></tr>`;
+                    wargaTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Belum ada data warga.</td></tr>`;
                     return;
                 }
 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
+                querySnapshot.forEach((documentSnap) => {
+                    const data = documentSnap.data();
+                    const docId = documentSnap.id;
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td class="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">${data.noKK || '-'}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-900">${data.nama || '-'}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">${data.noRumah || '-'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <button onclick="deleteWarga('${docId}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-xs font-medium transition cursor-pointer">
+                                <i class="fa-solid fa-trash mr-1"></i> Hapus
+                            </button>
+                        </td>
                     `;
                     wargaTableBody.appendChild(row);
                 });
             } catch (error) {
                 console.error("Error: ", error);
-                wargaTableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-red-500">Gagal memuat data dari database.</td></tr>`;
+                wargaTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-red-500">Gagal memuat data dari database.</td></tr>`;
             }
         }
 

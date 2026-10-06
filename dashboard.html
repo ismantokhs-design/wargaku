@@ -130,7 +130,6 @@
 
                 <!-- Bagian Menu Pintasan & Agenda di Monitor -->
                 <div class="grid grid-cols-3 gap-6">
-                    <!-- Menu Pintasan Cepat (2 Kolom) -->
                     <div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                         <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-grid-2 mr-2 text-emerald-600"></i>Pintasan Menu Administrator</h3>
                         <div class="grid grid-cols-4 gap-4">
@@ -153,7 +152,6 @@
                         </div>
                     </div>
 
-                    <!-- Agenda / Aktivitas Terdekat (1 Kolom) -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                         <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-calendar-check mr-2 text-emerald-600"></i>Agenda Terdekat</h3>
                         <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-2">
@@ -174,9 +172,9 @@
 
 
     <!-- ========================================================================= -->
-    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL (Mobile UI ala Referensi Anda)       -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL (Menu Bawah Fixed / Standby)           -->
     <!-- ========================================================================= -->
-    <div class="md:hidden max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-hidden pb-24" style="background-color: #f0fdf4;">
+    <div class="md:hidden max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-24" style="background-color: #f0fdf4;">
         
         <!-- Header HP -->
         <header class="px-6 pt-6 pb-4 flex justify-between items-center bg-white sticky top-0 z-40">
@@ -196,7 +194,7 @@
             </div>
         </header>
 
-        <!-- Konten HP -->
+        <!-- Konten HP (Bisa di-scroll tanpa menggeser menu bawah) -->
         <main class="px-6 space-y-5 flex-1 overflow-y-auto">
 
             <!-- Profil Sambutan HP -->
@@ -287,21 +285,21 @@
 
         </main>
 
-        <!-- Bottom Navigation Bar HP -->
-        <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around items-center h-16 px-4 z-50 shadow-lg">
+        <!-- ================= BOTTOM NAVIGATION BAR (FIXED & STANDBY) ================= -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 flex justify-around items-center h-16 px-4 z-50 shadow-2xl">
             <a href="dashboard.html" class="flex flex-col items-center text-emerald-600">
                 <i class="fa-solid fa-house text-lg"></i>
                 <span class="text-[10px] font-medium mt-1">Beranda</span>
             </a>
-            <a href="#" onclick="alert('Layanan'); return false;" class="flex flex-col items-center text-gray-400">
+            <a href="#" onclick="alert('Layanan'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
                 <i class="fa-solid fa-layer-group text-lg"></i>
                 <span class="text-[10px] font-medium mt-1">Layanan</span>
             </a>
-            <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-gray-400">
+            <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
                 <i class="fa-regular fa-comment-dots text-lg"></i>
                 <span class="text-[10px] font-medium mt-1">Pesan</span>
             </a>
-            <a href="#" onclick="alert('Akun'); return false;" class="flex flex-col items-center text-gray-400">
+            <a href="#" onclick="alert('Akun'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
                 <i class="fa-regular fa-user text-lg"></i>
                 <span class="text-[10px] font-medium mt-1">Akun</span>
             </a>
@@ -331,11 +329,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Ambil elemen statistik untuk desktop dan mobile
         const statTotalWargaDesktop = document.getElementById('statTotalWargaDesktop');
         const statTotalWargaMobile = document.getElementById('statTotalWargaMobile');
         
-        // Tombol Logout untuk kedua tampilan
         const handleLogout = () => {
             localStorage.removeItem('isLoggedIn');
             window.location.href = 'index.html';
@@ -343,7 +339,6 @@
         document.getElementById('logoutBtnDesktop').addEventListener('click', handleLogout);
         document.getElementById('logoutBtnMobile').addEventListener('click', handleLogout);
 
-        // Ambil data warga dari Firebase secara real-time untuk mengisi kedua tampilan
         async function loadAllStats() {
             try {
                 const querySnapshot = await getDocs(collection(db, "warga"));
@@ -358,7 +353,6 @@
 
         window.onload = loadAllStats;
 
-        // Pendaftaran Service Worker PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')

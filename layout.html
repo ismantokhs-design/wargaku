@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warga-RT - Potrobayan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon menu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar / Menu Samping -->
+        <aside class="w-64 bg-[#1e2229] text-gray-300 flex flex-col justify-between shadow-xl">
+            
+            <!-- Bagian Atas: Brand & Info Wilayah -->
+            <div class="p-5">
+                <!-- Judul Aplikasi -->
+                <div class="flex items-center space-x-2 text-blue-500 font-bold text-xl tracking-wide mb-3">
+                    <i class="fa-solid fa-house-chimney text-blue-500"></i>
+                    <span>WARGA-RT</span>
+                </div>
+
+                <!-- Info Alamat RT -->
+                <div class="text-xs text-gray-400 space-y-0.5 pb-4 border-b border-gray-700">
+                    <p class="font-semibold text-gray-300">Potrobayan</p>
+                    <p>RT 02 / RW 01</p>
+                    <p>Kal. Srihardono, Kec. Pundong</p>
+                    <p>Bantul</p>
+                </div>
+
+                <!-- Daftar Menu Navigasi -->
+                <nav class="mt-4 space-y-1">
+                    <!-- Dashboard (Aktif) -->
+                    <a href="#" class="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-medium shadow-md transition">
+                        <i class="fa-solid fa-gauge w-7"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <!-- Profil -->
+                    <a href="#" class="flex items-center px-4 py-2.5 hover:bg-gray-800 hover:text-white rounded-lg transition text-gray-400">
+                        <i class="fa-solid fa-circle-info w-7"></i>
+                        <span>Profil</span>
+                    </a>
+
+                    <!-- Kependudukan (Dropdown) -->
+                    <a href="#" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 hover:text-white rounded-lg transition text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-users w-7"></i>
+                            <span>Kependudukan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+
+                    <!-- Keuangan (Dropdown) -->
+                    <a href="#" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 hover:text-white rounded-lg transition text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-wallet w-7"></i>
+                            <span>Keuangan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+
+                    <!-- Kegiatan (Dropdown) -->
+                    <a href="#" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 hover:text-white rounded-lg transition text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-calendar-days w-7"></i>
+                            <span>Kegiatan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+
+                    <!-- Surat (Dropdown) -->
+                    <a href="#" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 hover:text-white rounded-lg transition text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-envelope w-7"></i>
+                            <span>Surat</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+
+                    <!-- Laporan (Dropdown) -->
+                    <a href="#" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 hover:text-white rounded-lg transition text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-chart-column w-7"></i>
+                            <span>Laporan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+
+                    <!-- Pengaturan (Dropdown) -->
+                    <a href="#" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 hover:text-white rounded-lg transition text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-gear w-7"></i>
+                            <span>Pengaturan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Bagian Bawah: Hak Cipta & Versi -->
+            <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
+                <p>Copyright ThisApplication 2026</p>
+                <p class="mt-0.5">Version 1.0.0</p>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Header Atas Dashboard -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8">
+                <div class="text-lg font-semibold text-gray-800">
+                    Selamat Datang, Pengurus RT 02 Potrobayan
+                </div>
+                <div>
+                    <a href="index.html" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                    </a>
+                </div>
+            </header>
+
+            <!-- Isi Konten Utama -->
+            <div class="p-8">
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-200">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Dashboard Utama</h1>
+                    <p class="text-gray-600">Pilih menu di sebelah kiri untuk mengelola data kependudukan, keuangan kas RT, kegiatan warga, dan surat-menyurat.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

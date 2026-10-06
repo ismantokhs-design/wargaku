@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Warga-RT Potrobayan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar / Menu Samping -->
+        <aside class="w-64 bg-[#1e2229] text-gray-300 flex flex-col justify-between shadow-xl flex-shrink-0">
+            <div class="p-5">
+                <!-- Judul Aplikasi -->
+                <div class="flex items-center space-x-2 text-blue-500 font-bold text-xl tracking-wide mb-3">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span>WARGA-RT</span>
+                </div>
+
+                <!-- Info Alamat RT -->
+                <div class="text-xs text-gray-400 space-y-0.5 pb-4 border-b border-gray-700">
+                    <p class="font-semibold text-gray-300">Potrobayan</p>
+                    <p>RT 02 / RW 01</p>
+                    <p>Kal. Srihardono, Kec. Pundong</p>
+                    <p>Bantul</p>
+                </div>
+
+                <!-- Navigasi -->
+                <nav class="mt-4 space-y-1">
+                    <a href="dashboard.html" class="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-medium shadow-md transition">
+                        <i class="fa-solid fa-gauge w-7"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" onclick="alert('Menu Profil dalam pengembangan.'); return false;" class="flex items-center px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
+                        <i class="fa-solid fa-circle-info w-7"></i>
+                        <span>Profil</span>
+                    </a>
+                    <a href="#" onclick="alert('Menu Kependudukan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
+                        <div class="flex items-center"><i class="fa-solid fa-users w-7"></i><span>Kependudukan</span></div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                    <a href="#" onclick="alert('Menu Keuangan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
+                        <div class="flex items-center"><i class="fa-solid fa-wallet w-7"></i><span>Keuangan</span></div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                    <a href="#" onclick="alert('Menu Kegiatan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
+                        <div class="flex items-center"><i class="fa-solid fa-calendar-days w-7"></i><span>Kegiatan</span></div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                    <a href="#" onclick="alert('Menu Surat dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
+                        <div class="flex items-center"><i class="fa-solid fa-envelope w-7"></i><span>Surat</span></div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                    <a href="#" onclick="alert('Menu Laporan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
+                        <div class="flex items-center"><i class="fa-solid fa-chart-column w-7"></i><span>Laporan</span></div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                    <a href="#" onclick="alert('Menu Pengaturan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
+                        <div class="flex items-center"><i class="fa-solid fa-gear w-7"></i><span>Pengaturan</span></div>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
+                <p>Copyright ThisApplication 2026</p>
+                <p class="mt-0.5">Version 1.0.0</p>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8">
+                <div class="text-sm font-medium text-gray-600">
+                    <i class="fa-solid fa-chart-pie mr-2 text-blue-600"></i>Ringkasan Eksekutif Dashboard
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg text-gray-700">
+                        <i class="fa-regular fa-calendar mr-1.5 text-gray-500"></i> Periode Tahun: <strong class="text-blue-600">2026</strong>
+                    </div>
+                    <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                    </button>
+                </div>
+            </header>
+
+            <!-- Isi Dashboard Model Eksekutif -->
+            <div class="p-8 space-y-6">
+                
+                <!-- Selamat Datang Banner -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <h1 class="text-xl font-bold text-gray-800 mb-1">Selamat Datang di Sistem Informasi RT</h1>
+                    <p class="text-sm text-gray-600">Statistik kependudukan *real-time* dari database Firebase untuk wilayah RT 02 / RW 01 Potrobayan[cite: 12].</p>
+                </div>
+
+                <!-- 3 Kotak Statistik Utama -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Total Warga -->
+                    <div class="bg-blue-600 text-white rounded-xl shadow-md p-6 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs uppercase tracking-wider font-medium opacity-90">Total Warga (Database)</p>
+                            <h3 id="statTotalWarga" class="text-3xl font-bold mt-1">0 Jiwa</h3>
+                        </div>
+                        <div class="text-4xl opacity-80"><i class="fa-solid fa-users"></i></div>
+                    </div>
+                    <!-- Total Kepala Keluarga -->
+                    <div class="bg-emerald-600 text-white rounded-xl shadow-md p-6 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs uppercase tracking-wider font-medium opacity-90">Total Kepala Keluarga</p>
+                            <h3 id="statTotalKK" class="text-3xl font-bold mt-1">0 KK</h3>
+                        </div>
+                        <div class="text-4xl opacity-80"><i class="fa-solid fa-house"></i></div>
+                    </div>
+                    <!-- Status Sistem -->
+                    <div class="bg-gray-900 text-white rounded-xl shadow-md p-6 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs uppercase tracking-wider font-medium text-gray-400">Status Sistem</p>
+                            <h3 class="text-2xl font-bold mt-1 text-emerald-400 flex items-center">
+                                <span class="w-3 h-3 bg-emerald-500 rounded-full inline-block mr-2 animate-pulse"></span> Terhubung
+                            </h3>
+                        </div>
+                        <div class="text-4xl text-gray-400"><i class="fa-solid fa-database"></i></div>
+                    </div>
+                </div>
+
+                <!-- Form Input Warga Cepat -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4"><i class="fa-solid fa-user-plus mr-2 text-blue-600"></i>Formulir Tambah Data Warga</h2>
+                    <form id="wargaForm" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Nomor Kartu Keluarga (KK)</label>
+                            <input type="text" id="noKK" required placeholder="No. KK" class="w-full rounded-md border-gray-300 border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Nama Kepala Keluarga</label>
+                            <input type="text" id="nama" required placeholder="Nama Lengkap" class="w-full rounded-md border-gray-300 border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Blok / Nomor Rumah</label>
+                            <input type="text" id="noRumah" required placeholder="Contoh: Blok A No. 5" class="w-full rounded-md border-gray-300 border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md text-sm transition cursor-pointer">
+                                Simpan Data
+                            </button>
+                        </div>
+                    </form>
+                    <div id="statusMsg" class="mt-3 text-center text-xs font-medium"></div>
+                </div>
+
+                <!-- Tabel Rekap Data Warga -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4"><i class="fa-solid fa-table-list mr-2 text-blue-600"></i>Rekap Data Warga Terdaftar</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. KK</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Kepala Keluarga</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. Rumah</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wargaTableBody" class="bg-white divide-y divide-gray-200 text-sm">
+                                <!-- Data dimuat dinamis -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK & Logika -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const form = document.getElementById('wargaForm');
+        const statusMsg = document.getElementById('statusMsg');
+        const wargaTableBody = document.getElementById('wargaTableBody');
+        const statTotalWarga = document.getElementById('statTotalWarga');
+        const statTotalKK = document.getElementById('statTotalKK');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+
+        async function loadWargaData() {
+            wargaTableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">Memuat data...</td></tr>`;
+            try {
+                const querySnapshot = await getDocs(collection(db, "warga"));
+                wargaTableBody.innerHTML = '';
+                
+                let totalWargaCount = querySnapshot.size;
+                let totalKKCount = querySnapshot.size; // Berdasarkan jumlah dokumen KK unik
+
+                statTotalWarga.textContent = `${totalWargaCount} Jiwa`;
+                statTotalKK.textContent = `${totalKKCount} KK`;
+
+                if (querySnapshot.empty) {
+                    wargaTableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">Belum ada data warga.</td></tr>`;
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">${data.noKK || '-'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${data.nama || '-'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">${data.noRumah || '-'}</td>
+                    `;
+                    wargaTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Error: ", error);
+                wargaTableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-red-500">Gagal memuat data dari database.</td></tr>`;
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const noKK = document.getElementById('noKK').value;
+            const nama = document.getElementById('nama').value;
+            const noRumah = document.getElementById('noRumah').value;
+            const submitBtn = document.getElementById('submitBtn');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Menyimpan...';
+
+            try {
+                await addDoc(collection(db, "warga"), {
+                    noKK: noKK,
+                    nama: nama,
+                    noRumah: noRumah,
+                    createdAt: new Date().toISOString()
+                });
+
+                statusMsg.textContent = 'Data berhasil disimpan!';
+                statusMsg.className = 'mt-3 text-center text-xs font-medium text-green-600';
+                form.reset();
+                loadWargaData();
+            } catch (error) {
+                console.error("Error: ", error);
+                statusMsg.textContent = 'Gagal menyimpan data.';
+                statusMsg.className = 'mt-3 text-center text-xs font-medium text-red-600';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Simpan Data';
+            }
+        });
+
+        window.onload = loadWargaData;
+    </script>
+</body>
+</html>

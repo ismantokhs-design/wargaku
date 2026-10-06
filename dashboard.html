@@ -47,11 +47,11 @@
                     <a href="dashboard.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
                         <i class="fa-solid fa-gauge w-7 text-lg"></i><span>Dashboard Utama</span>
                     </a>
+                    <a href="input-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-user-plus w-7 text-lg"></i><span>Data Warga</span>
+                    </a>
                     <a href="#" onclick="alert('Menu Pengumuman'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-bullhorn w-7 text-lg"></i><span>Pengumuman</span>
-                    </a>
-                    <a href="#" onclick="alert('Menu Data Warga'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
-                        <i class="fa-solid fa-users-rectangle w-7 text-lg"></i><span>Data Warga</span>
                     </a>
                     <a href="#" onclick="alert('Menu Keuangan Kas RT'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-wallet w-7 text-lg"></i><span>Keuangan Kas</span>
@@ -90,12 +90,9 @@
                 </div>
             </header>
 
-            <!-- Konten Isi Desktop (16:9 Grid Layout) -->
+            <!-- Konten Isi Desktop -->
             <div class="p-10 space-y-8 max-w-7xl mx-auto w-full">
-                
-                <!-- Baris Statistik Atas (3 Kolom Lebar) -->
                 <div class="grid grid-cols-3 gap-6">
-                    <!-- Kotak 1 -->
                     <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
                         <div>
                             <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Total Warga Terdaftar</p>
@@ -105,7 +102,6 @@
                         <div class="text-6xl opacity-20"><i class="fa-solid fa-users"></i></div>
                     </div>
 
-                    <!-- Kotak 2 -->
                     <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
                         <div>
                             <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Iuran Kas Bulanan</p>
@@ -115,7 +111,6 @@
                         <div class="text-6xl opacity-20"><i class="fa-solid fa-wallet"></i></div>
                     </div>
 
-                    <!-- Kotak 3 -->
                     <div class="bg-gradient-to-br from-gray-800 to-gray-900 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
                         <div>
                             <p class="text-xs uppercase tracking-wider font-semibold opacity-40">Status Sistem Cloud</p>
@@ -128,18 +123,17 @@
                     </div>
                 </div>
 
-                <!-- Bagian Menu Pintasan & Agenda di Monitor -->
                 <div class="grid grid-cols-3 gap-6">
                     <div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                         <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-grid-2 mr-2 text-emerald-600"></i>Pintasan Menu Administrator</h3>
                         <div class="grid grid-cols-4 gap-4">
+                            <a href="input-warga.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
+                                <i class="fa-solid fa-user-plus text-2xl"></i>
+                                <span class="text-xs font-semibold">Warga</span>
+                            </a>
                             <a href="#" onclick="alert('Fitur Pengumuman'); return false;" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
                                 <i class="fa-solid fa-bullhorn text-2xl"></i>
                                 <span class="text-xs font-semibold">Buat Pengumuman</span>
-                            </a>
-                            <a href="#" onclick="alert('Fitur Data Warga'); return false;" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
-                                <i class="fa-solid fa-users-rectangle text-2xl"></i>
-                                <span class="text-xs font-semibold">Kelola Warga</span>
                             </a>
                             <a href="#" onclick="alert('Fitur Keuangan'); return false;" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
                                 <i class="fa-solid fa-wallet text-2xl"></i>
@@ -165,36 +159,48 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
 
 
     <!-- ========================================================================= -->
-    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL (Menu Bawah Fixed / Standby)           -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                     -->
     <!-- ========================================================================= -->
-    <div class="md:hidden max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-24" style="background-color: #f0fdf4;">
+    <div class="md:hidden max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-32" style="background-color: #f0fdf4;">
         
-        <!-- Header HP -->
-        <header class="px-6 pt-6 pb-4 flex justify-between items-center bg-white sticky top-0 z-40">
+        <!-- Header HP dengan Dropdown Profil / Logout -->
+        <header class="px-6 pt-6 pb-4 flex justify-between items-center bg-white sticky top-0 z-40 relative">
             <div class="flex items-center space-x-2">
                 <span class="bg-emerald-500 text-white p-2 rounded-full flex items-center justify-center shadow-md">
                     <i class="fa-solid fa-house-chimney text-sm"></i>
                 </span>
                 <h1 class="text-xl font-bold text-gray-800 tracking-wide">WargaKu</h1>
             </div>
-            <div class="flex items-center space-x-3">
+            
+            <div class="flex items-center space-x-3 relative">
                 <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
                     <i class="fa-regular fa-bell"></i>
                 </button>
-                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold border-2 border-emerald-500 overflow-hidden shadow-sm">
-                    <i class="fa-solid fa-user text-sm"></i>
+                
+                <!-- Tombol Profil (Dropdown Logout) -->
+                <div class="relative">
+                    <button onclick="toggleUserDropdown()" class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold border-2 border-emerald-500 overflow-hidden shadow-sm focus:outline-none cursor-pointer">
+                        <i class="fa-solid fa-user text-sm"></i>
+                    </button>
+
+                    <!-- Dropdown Menu Logout -->
+                    <div id="userDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50">
+                        <button id="logoutBtnMobile" class="w-full text-left px-4 py-2.5 text-xs font-semibold text-red-600 hover:bg-red-50 flex items-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Keluar (Logout)</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <!-- Konten HP (Bisa di-scroll tanpa menggeser menu bawah) -->
+        <!-- Konten HP -->
         <main class="px-6 space-y-5 flex-1 overflow-y-auto">
 
             <!-- Profil Sambutan HP -->
@@ -232,17 +238,17 @@
             <!-- Grid Menu HP -->
             <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
                 <div class="grid grid-cols-4 gap-4 text-center">
+                    <a href="input-warga.html" class="flex flex-col items-center space-y-1.5 group">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-700">Warga</span>
+                    </a>
                     <a href="#" onclick="alert('Pengumuman'); return false;" class="flex flex-col items-center space-y-1.5 group">
                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
                             <i class="fa-solid fa-bullhorn"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-700">Info</span>
-                    </a>
-                    <a href="#" onclick="alert('Lapor Masalah'); return false;" class="flex flex-col items-center space-y-1.5 group">
-                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                        </div>
-                        <span class="text-[11px] font-medium text-gray-700">Lapor</span>
                     </a>
                     <a href="#" onclick="alert('Keuangan Kas'); return false;" class="flex flex-col items-center space-y-1.5 group">
                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
@@ -250,11 +256,11 @@
                         </div>
                         <span class="text-[11px] font-medium text-gray-700">Kas</span>
                     </a>
-                    <a href="#" onclick="alert('Data Warga'); return false;" class="flex flex-col items-center space-y-1.5 group">
+                    <a href="#" onclick="alert('Pengaturan'); return false;" class="flex flex-col items-center space-y-1.5 group">
                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
-                            <i class="fa-solid fa-users-rectangle"></i>
+                            <i class="fa-solid fa-gear"></i>
                         </div>
-                        <span class="text-[11px] font-medium text-gray-700">Warga</span>
+                        <span class="text-[11px] font-medium text-gray-700">Pengaturan</span>
                     </a>
                 </div>
             </div>
@@ -275,39 +281,100 @@
                 </div>
             </div>
 
-            <!-- Tombol Logout HP -->
-            <div class="pt-2">
-                <button id="logoutBtnMobile" class="w-full py-3 bg-red-50 hover:bg-red-100 text-red-600 font-semibold rounded-2xl text-xs transition border border-red-200 cursor-pointer flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Keluar dari Akun (Logout)</span>
-                </button>
-            </div>
-
         </main>
 
-        <!-- ================= BOTTOM NAVIGATION BAR (FIXED & STANDBY) ================= -->
-        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 flex justify-around items-center h-16 px-4 z-50 shadow-2xl">
-            <a href="dashboard.html" class="flex flex-col items-center text-emerald-600">
-                <i class="fa-solid fa-house text-lg"></i>
-                <span class="text-[10px] font-medium mt-1">Beranda</span>
-            </a>
-            <a href="#" onclick="alert('Layanan'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
-                <i class="fa-solid fa-layer-group text-lg"></i>
-                <span class="text-[10px] font-medium mt-1">Layanan</span>
-            </a>
-            <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
-                <i class="fa-regular fa-comment-dots text-lg"></i>
-                <span class="text-[10px] font-medium mt-1">Pesan</span>
-            </a>
-            <a href="#" onclick="alert('Akun'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
-                <i class="fa-regular fa-user text-lg"></i>
-                <span class="text-[10px] font-medium mt-1">Akun</span>
-            </a>
-        </nav>
+        <!-- ================= FIXED BOTTOM NAVIGATION DENGAN MULTI-LEVEL MENU ================= -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            
+            <!-- LEVEL 2: SUB-MENU MANAJEMEN (Setting User, Hak Akses, Profil Wilayah) -->
+            <div id="subManajemenMenu" class="hidden bg-emerald-50/95 border-t border-emerald-200 px-6 py-3 shadow-lg rounded-t-2xl transition-all duration-300">
+                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-200">
+                    <span class="text-[11px] font-bold text-emerald-800"><i class="fa-solid fa-sitemap mr-1"></i> Sub-Menu Manajemen</span>
+                    <button onclick="toggleSubManajemen()" class="text-emerald-700 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-200">✕ Tutup</button>
+                </div>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <a href="#" onclick="alert('Membuka Setting User'); return false;" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-700">Setting User</span>
+                    </a>
+                    <a href="#" onclick="alert('Membuka Hak Akses'); return false;" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-700">Hak Akses</span>
+                    </a>
+                    <a href="#" onclick="alert('Membuka Profil Wilayah'); return false;" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-700">Profil Wilayah</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- LEVEL 1: MENU UTAMA "LAINNYA" (Urutan: Warga, Laporan, Manajemen, Database) -->
+            <div id="expandMenu" class="hidden bg-white border-t border-gray-200 px-6 py-4 shadow-xl rounded-t-3xl transition-all duration-300">
+                <div class="grid grid-cols-4 gap-2 text-center">
+                    <!-- 1. Warga -->
+                    <a href="input-warga.html" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Warga</span>
+                    </a>
+
+                    <!-- 2. Laporan -->
+                    <a href="#" onclick="alert('Menu Laporan'); toggleLainnya(); return false;" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Laporan</span>
+                    </a>
+                    
+                    <!-- 3. Manajemen (Memicu Sub-Menu) -->
+                    <button onclick="toggleSubManajemen()" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition focus:outline-none cursor-pointer">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Manajemen</span>
+                    </button>
+
+                    <!-- 4. Database -->
+                    <a href="#" onclick="alert('Menu Database'); toggleLainnya(); return false;" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Database</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- BILAH UTAMA BAWAH -->
+            <nav class="bg-white border-t border-gray-100 flex justify-around items-center h-16 px-4 shadow-2xl">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-600">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="#" onclick="alert('Menu Galeri'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Galeri</span>
+                </a>
+                <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <button onclick="toggleLainnya()" class="flex flex-col items-center text-gray-400 hover:text-emerald-600 focus:outline-none cursor-pointer">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </button>
+            </nav>
+        </div>
 
     </div>
 
-    <!-- Firebase & Logika Otomatis Sinkronisasi Data -->
+    <!-- Firebase & Logika Interaksi Bertingkat -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -336,8 +403,31 @@
             localStorage.removeItem('isLoggedIn');
             window.location.href = 'index.html';
         };
+
         document.getElementById('logoutBtnDesktop').addEventListener('click', handleLogout);
         document.getElementById('logoutBtnMobile').addEventListener('click', handleLogout);
+
+        // Fungsi toggle dropdown profil HP
+        window.toggleUserDropdown = function() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Fungsi toggle menu utama "Lainnya"
+        window.toggleLainnya = function() {
+            const menu = document.getElementById('expandMenu');
+            const subMenu = document.getElementById('subManajemenMenu');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                subMenu.classList.add('hidden');
+            }
+        }
+
+        // Fungsi toggle sub-menu "Manajemen"
+        window.toggleSubManajemen = function() {
+            const subMenu = document.getElementById('subManajemenMenu');
+            subMenu.classList.toggle('hidden');
+        }
 
         async function loadAllStats() {
             try {

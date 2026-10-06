@@ -3,128 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Warga-RT Potrobayan</title>
+    <title>WargaKu - Dashboard Sistem RT</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1e2229">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans antialiased">
+<body class="font-sans antialiased">
 
-    <div class="flex h-screen overflow-hidden">
+    <!-- ========================================================================= -->
+    <!-- 1. TAMPILAN KHUSUS LAYAR MONITOR KOMPUTER / DESKTOP (Rasio 16:9 / Layar Lebar) -->
+    <!-- ========================================================================= -->
+    <div class="hidden md:flex h-screen overflow-hidden bg-gray-100">
         
-        <!-- ================= DESKTOP SIDEBAR (Sembunyi di HP, Tampil di Laptop/Tablet) ================= -->
-        <aside class="hidden md:flex w-64 bg-[#1e2229] text-gray-300 flex-col justify-between shadow-xl flex-shrink-0">
-            <div class="p-5">
-                <!-- Judul Aplikasi -->
-                <div class="flex items-center space-x-2 text-blue-500 font-bold text-xl tracking-wide mb-3">
-                    <i class="fa-solid fa-house-chimney"></i>
-                    <span>WARGA-RT</span>
+        <!-- Sidebar Samping Desktop -->
+        <aside class="w-64 bg-[#1e2229] text-gray-300 flex flex-col justify-between shadow-xl flex-shrink-0">
+            <div class="p-6">
+                <!-- Brand -->
+                <div class="flex items-center space-x-3 text-emerald-400 font-bold text-xl tracking-wide mb-4">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <i class="fa-solid fa-house-chimney text-lg"></i>
+                    </div>
+                    <span>WargaKu</span>
                 </div>
 
-                <!-- Info Alamat RT -->
-                <div class="text-xs text-gray-400 space-y-0.5 pb-4 border-b border-gray-700">
-                    <p class="font-semibold text-gray-300">Potrobayan</p>
-                    <p>RT 02 / RW 01</p>
-                    <p>Kal. Srihardono, Kec. Pundong</p>
-                    <p>Bantul</p>
+                <!-- Info Wilayah -->
+                <div class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
+                    <p class="font-semibold text-gray-200 text-sm">Potrobayan</p>
+                    <p>RT 02 / RW 01, Kal. Srihardono</p>
+                    <p>Kec. Pundong, Bantul</p>
                 </div>
 
-                <!-- Navigasi Desktop -->
-                <nav class="mt-4 space-y-1">
-                    <a href="dashboard.html" class="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-medium shadow-md transition">
-                        <i class="fa-solid fa-gauge w-7"></i>
-                        <span>Dashboard</span>
+                <!-- Menu Navigasi Desktop -->
+                <nav class="mt-6 space-y-1.5">
+                    <a href="dashboard.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
+                        <i class="fa-solid fa-gauge w-7 text-lg"></i><span>Dashboard Utama</span>
                     </a>
-                    <a href="#" onclick="alert('Menu Profil dalam pengembangan.'); return false;" class="flex items-center px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
-                        <i class="fa-solid fa-circle-info w-7"></i>
-                        <span>Profil</span>
+                    <a href="#" onclick="alert('Menu Pengumuman'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-bullhorn w-7 text-lg"></i><span>Pengumuman</span>
                     </a>
-                    <a href="#" onclick="alert('Menu Kependudukan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
-                        <div class="flex items-center"><i class="fa-solid fa-users w-7"></i><span>Kependudukan</span></div>
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    <a href="#" onclick="alert('Menu Data Warga'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-users-rectangle w-7 text-lg"></i><span>Data Warga</span>
                     </a>
-                    <a href="#" onclick="alert('Menu Keuangan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
-                        <div class="flex items-center"><i class="fa-solid fa-wallet w-7"></i><span>Keuangan</span></div>
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    <a href="#" onclick="alert('Menu Keuangan Kas RT'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-wallet w-7 text-lg"></i><span>Keuangan Kas</span>
                     </a>
-                    <a href="#" onclick="alert('Menu Kegiatan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
-                        <div class="flex items-center"><i class="fa-solid fa-calendar-days w-7"></i><span>Kegiatan</span></div>
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    <a href="#" onclick="alert('Menu Bantuan & Sosial'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-hand-holding-heart w-7 text-lg"></i><span>Bantuan Sosial</span>
                     </a>
-                    <a href="#" onclick="alert('Menu Surat dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
-                        <div class="flex items-center"><i class="fa-solid fa-envelope w-7"></i><span>Surat</span></div>
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
-                    </a>
-                    <a href="#" onclick="alert('Menu Laporan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
-                        <div class="flex items-center"><i class="fa-solid fa-chart-column w-7"></i><span>Laporan</span></div>
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
-                    </a>
-                    <a href="#" onclick="alert('Menu Pengaturan dalam pengembangan.'); return false;" class="flex items-center justify-between px-4 py-2.5 hover:bg-gray-800 text-gray-400 rounded-lg transition">
-                        <div class="flex items-center"><i class="fa-solid fa-gear w-7"></i><span>Pengaturan</span></div>
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    <a href="#" onclick="alert('Menu Jadwal Kegiatan'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-calendar-days w-7 text-lg"></i><span>Jadwal Kegiatan</span>
                     </a>
                 </nav>
             </div>
             <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
-                <p>Copyright ThisApplication 2026</p>
-                <p class="mt-0.5">Version 1.0.0</p>
+                <p>WargaKu Desktop v1.0</p>
+                <p class="mt-0.5">Database Terhubung (Firebase)</p>
             </div>
         </aside>
 
-        <!-- Area Konten Utama -->
-        <main class="flex-1 flex flex-col overflow-y-auto pb-20 md:pb-0">
-            <!-- Header -->
-            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-4 md:px-8">
-                <div class="text-xs md:text-sm font-medium text-gray-600 truncate">
-                    <i class="fa-solid fa-chart-pie mr-1 text-blue-600"></i>Ringkasan Eksekutif
+        <!-- Area Konten Utama Desktop -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Header Desktop -->
+            <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Sistem Informasi Pengurus RT 02</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Kelola seluruh administrasi warga dan laporan keuangan dalam satu layar.</p>
                 </div>
-                <div class="flex items-center space-x-2 md:space-x-4">
-                    <div class="text-xs bg-gray-50 border border-gray-200 px-2 py-1 rounded-lg text-gray-700 hidden sm:block">
-                        <i class="fa-regular fa-calendar mr-1 text-gray-500"></i> Tahun: <strong class="text-blue-600">2026</strong>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-sm font-bold text-gray-800">Ismanto</p>
+                        <p class="text-xs text-emerald-600 font-medium">Administrator RT</p>
                     </div>
-                    <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition cursor-pointer">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                    <button id="logoutBtnDesktop" class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-xl text-sm font-semibold transition border border-red-200 cursor-pointer flex items-center space-x-2">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Keluar</span>
                     </button>
                 </div>
             </header>
 
-            <!-- Isi Dashboard Model Eksekutif -->
-            <div class="p-4 md:p-8 space-y-6">
+            <!-- Konten Isi Desktop (16:9 Grid Layout) -->
+            <div class="p-10 space-y-8 max-w-7xl mx-auto w-full">
                 
-                <!-- Selamat Datang Banner -->
-                <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-200">
-                    <h1 class="text-lg md:text-xl font-bold text-gray-800 mb-1">Selamat Datang di Sistem Informasi RT</h1>
-                    <p class="text-xs md:text-sm text-gray-600">Statistik kependudukan real-time dari database Firebase untuk wilayah RT 02 / RW 01 Potrobayan.</p>
+                <!-- Baris Statistik Atas (3 Kolom Lebar) -->
+                <div class="grid grid-cols-3 gap-6">
+                    <!-- Kotak 1 -->
+                    <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
+                        <div>
+                            <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Total Warga Terdaftar</p>
+                            <h3 id="statTotalWargaDesktop" class="text-4xl font-extrabold mt-2">0 Jiwa</h3>
+                            <p class="text-xs mt-2 bg-white/20 px-2 py-0.5 rounded-md inline-block font-medium">Database Real-time</p>
+                        </div>
+                        <div class="text-6xl opacity-20"><i class="fa-solid fa-users"></i></div>
+                    </div>
+
+                    <!-- Kotak 2 -->
+                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
+                        <div>
+                            <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Iuran Kas Bulanan</p>
+                            <h3 class="text-4xl font-extrabold mt-2">Rp 20.000</h3>
+                            <p class="text-xs mt-2 bg-white/20 px-2 py-0.5 rounded-md inline-block font-medium">Periode Tahun 2026</p>
+                        </div>
+                        <div class="text-6xl opacity-20"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
+
+                    <!-- Kotak 3 -->
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
+                        <div>
+                            <p class="text-xs uppercase tracking-wider font-semibold opacity-40">Status Sistem Cloud</p>
+                            <h3 class="text-2xl font-bold mt-2 text-emerald-400 flex items-center">
+                                <span class="w-3.5 h-3.5 bg-emerald-500 rounded-full inline-block mr-2.5 animate-pulse"></span> Terhubung Aktif
+                            </h3>
+                            <p class="text-xs text-gray-400 mt-2">Firebase Firestore Online</p>
+                        </div>
+                        <div class="text-6xl text-gray-700"><i class="fa-solid fa-database"></i></div>
+                    </div>
                 </div>
 
-                <!-- 3 Kotak Statistik Utama -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                    <div class="bg-blue-600 text-white rounded-xl shadow-md p-5 flex justify-between items-center">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider font-medium opacity-90">Total Warga</p>
-                            <h3 id="statTotalWarga" class="text-2xl md:text-3xl font-bold mt-1">0 Jiwa</h3>
+                <!-- Bagian Menu Pintasan & Agenda di Monitor -->
+                <div class="grid grid-cols-3 gap-6">
+                    <!-- Menu Pintasan Cepat (2 Kolom) -->
+                    <div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                        <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-grid-2 mr-2 text-emerald-600"></i>Pintasan Menu Administrator</h3>
+                        <div class="grid grid-cols-4 gap-4">
+                            <a href="#" onclick="alert('Fitur Pengumuman'); return false;" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
+                                <i class="fa-solid fa-bullhorn text-2xl"></i>
+                                <span class="text-xs font-semibold">Buat Pengumuman</span>
+                            </a>
+                            <a href="#" onclick="alert('Fitur Data Warga'); return false;" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
+                                <i class="fa-solid fa-users-rectangle text-2xl"></i>
+                                <span class="text-xs font-semibold">Kelola Warga</span>
+                            </a>
+                            <a href="#" onclick="alert('Fitur Keuangan'); return false;" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
+                                <i class="fa-solid fa-wallet text-2xl"></i>
+                                <span class="text-xs font-semibold">Rekap Kas RT</span>
+                            </a>
+                            <a href="#" onclick="alert('Fitur Pengaturan'); return false;" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
+                                <i class="fa-solid fa-gear text-2xl"></i>
+                                <span class="text-xs font-semibold">Pengaturan RT</span>
+                            </a>
                         </div>
-                        <div class="text-3xl md:text-4xl opacity-80"><i class="fa-solid fa-users"></i></div>
                     </div>
-                    <div class="bg-emerald-600 text-white rounded-xl shadow-md p-5 flex justify-between items-center">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider font-medium opacity-90">Total Kepala Keluarga</p>
-                            <h3 id="statTotalKK" class="text-2xl md:text-3xl font-bold mt-1">0 KK</h3>
+
+                    <!-- Agenda / Aktivitas Terdekat (1 Kolom) -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                        <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-calendar-check mr-2 text-emerald-600"></i>Agenda Terdekat</h3>
+                        <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-2">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-bold">12</div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-gray-800">Kerja Bakti Lingkungan</h4>
+                                    <p class="text-[11px] text-gray-500">Minggu, Pukul 07.00 WIB</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-3xl md:text-4xl opacity-80"><i class="fa-solid fa-house"></i></div>
-                    </div>
-                    <div class="bg-gray-900 text-white rounded-xl shadow-md p-5 flex justify-between items-center">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider font-medium text-gray-400">Status Sistem</p>
-                            <h3 class="text-xl md:text-2xl font-bold mt-1 text-emerald-400 flex items-center">
-                                <span class="w-3 h-3 bg-emerald-500 rounded-full inline-block mr-2 animate-pulse"></span> Terhubung
-                            </h3>
-                        </div>
-                        <div class="text-3xl md:text-4xl text-gray-400"><i class="fa-solid fa-database"></i></div>
                     </div>
                 </div>
 
@@ -132,31 +172,144 @@
         </main>
     </div>
 
-    <!-- ================= MOBILE BOTTOM NAVIGATION (Hanya Tampil di HP) ================= -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#1e2229] text-gray-400 border-t border-gray-800 flex justify-around items-center h-16 px-2 z-50 shadow-2xl">
-        <a href="dashboard.html" class="flex flex-col items-center text-blue-500">
-            <i class="fa-solid fa-gauge text-lg"></i>
-            <span class="text-[10px] mt-1">Dashboard</span>
-        </a>
-        <a href="#" onclick="alert('Menu Kependudukan dalam pengembangan.'); return false;" class="flex flex-col items-center hover:text-white">
-            <i class="fa-solid fa-users text-lg"></i>
-            <span class="text-[10px] mt-1">Warga</span>
-        </a>
-        <a href="#" onclick="alert('Menu Keuangan dalam pengembangan.'); return false;" class="flex flex-col items-center hover:text-white">
-            <i class="fa-solid fa-wallet text-lg"></i>
-            <span class="text-[10px] mt-1">Keuangan</span>
-        </a>
-        <a href="#" onclick="alert('Menu Kegiatan dalam pengembangan.'); return false;" class="flex flex-col items-center hover:text-white">
-            <i class="fa-solid fa-calendar-days text-lg"></i>
-            <span class="text-[10px] mt-1">Kegiatan</span>
-        </a>
-        <a href="#" onclick="alert('Menu Pengaturan dalam pengembangan.'); return false;" class="flex flex-col items-center hover:text-white">
-            <i class="fa-solid fa-gear text-lg"></i>
-            <span class="text-[10px] mt-1">Pengaturan</span>
-        </a>
-    </nav>
 
-    <!-- Firebase SDK & Logika -->
+    <!-- ========================================================================= -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL (Mobile UI ala Referensi Anda)       -->
+    <!-- ========================================================================= -->
+    <div class="md:hidden max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-hidden pb-24" style="background-color: #f0fdf4;">
+        
+        <!-- Header HP -->
+        <header class="px-6 pt-6 pb-4 flex justify-between items-center bg-white sticky top-0 z-40">
+            <div class="flex items-center space-x-2">
+                <span class="bg-emerald-500 text-white p-2 rounded-full flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-house-chimney text-sm"></i>
+                </span>
+                <h1 class="text-xl font-bold text-gray-800 tracking-wide">WargaKu</h1>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold border-2 border-emerald-500 overflow-hidden shadow-sm">
+                    <i class="fa-solid fa-user text-sm"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Konten HP -->
+        <main class="px-6 space-y-5 flex-1 overflow-y-auto">
+
+            <!-- Profil Sambutan HP -->
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        IS
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-bold text-gray-800">Selamat datang, <span id="userName">Ismanto</span></h2>
+                        <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot text-emerald-500 mr-1"></i> RT 02 / RW 01, Potrobayan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Ringkasan HP -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <span class="bg-white/20 text-[10px] px-2 py-0.5 rounded-full font-medium">Iuran RT</span>
+                        <h3 class="text-xs font-medium opacity-90 mt-2">Bulanan</h3>
+                        <p class="text-lg font-bold mt-0.5">Rp 20.000</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <span class="bg-white/20 text-[10px] px-2 py-0.5 rounded-full font-medium">Database</span>
+                        <h3 class="text-xs font-medium opacity-90 mt-2">Total Warga</h3>
+                        <p id="statTotalWargaMobile" class="text-lg font-bold mt-0.5">0 Jiwa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Menu HP -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+                <div class="grid grid-cols-4 gap-4 text-center">
+                    <a href="#" onclick="alert('Pengumuman'); return false;" class="flex flex-col items-center space-y-1.5 group">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-700">Info</span>
+                    </a>
+                    <a href="#" onclick="alert('Lapor Masalah'); return false;" class="flex flex-col items-center space-y-1.5 group">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-700">Lapor</span>
+                    </a>
+                    <a href="#" onclick="alert('Keuangan Kas'); return false;" class="flex flex-col items-center space-y-1.5 group">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-700">Kas</span>
+                    </a>
+                    <a href="#" onclick="alert('Data Warga'); return false;" class="flex flex-col items-center space-y-1.5 group">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-users-rectangle"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-700">Warga</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- List Agenda HP -->
+            <div class="space-y-3">
+                <h3 class="text-sm font-bold text-gray-800">List Agenda Khusus</h3>
+                <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-broom"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-gray-800">Kerja bakti pembersihan lingkungan</h4>
+                            <p class="text-[11px] text-gray-500 mt-0.5">Minggu, 12 Oktober • Pukul 07.00 WIB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol Logout HP -->
+            <div class="pt-2">
+                <button id="logoutBtnMobile" class="w-full py-3 bg-red-50 hover:bg-red-100 text-red-600 font-semibold rounded-2xl text-xs transition border border-red-200 cursor-pointer flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Keluar dari Akun (Logout)</span>
+                </button>
+            </div>
+
+        </main>
+
+        <!-- Bottom Navigation Bar HP -->
+        <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around items-center h-16 px-4 z-50 shadow-lg">
+            <a href="dashboard.html" class="flex flex-col items-center text-emerald-600">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">Beranda</span>
+            </a>
+            <a href="#" onclick="alert('Layanan'); return false;" class="flex flex-col items-center text-gray-400">
+                <i class="fa-solid fa-layer-group text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">Layanan</span>
+            </a>
+            <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-gray-400">
+                <i class="fa-regular fa-comment-dots text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">Pesan</span>
+            </a>
+            <a href="#" onclick="alert('Akun'); return false;" class="flex flex-col items-center text-gray-400">
+                <i class="fa-regular fa-user text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">Akun</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- Firebase & Logika Otomatis Sinkronisasi Data -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -178,37 +331,39 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const statTotalWarga = document.getElementById('statTotalWarga');
-        const statTotalKK = document.getElementById('statTotalKK');
-        const logoutBtn = document.getElementById('logoutBtn');
-
-        logoutBtn.addEventListener('click', () => {
+        // Ambil elemen statistik untuk desktop dan mobile
+        const statTotalWargaDesktop = document.getElementById('statTotalWargaDesktop');
+        const statTotalWargaMobile = document.getElementById('statTotalWargaMobile');
+        
+        // Tombol Logout untuk kedua tampilan
+        const handleLogout = () => {
             localStorage.removeItem('isLoggedIn');
             window.location.href = 'index.html';
-        });
+        };
+        document.getElementById('logoutBtnDesktop').addEventListener('click', handleLogout);
+        document.getElementById('logoutBtnMobile').addEventListener('click', handleLogout);
 
-        // Ambil data statistik dari Firestore
-        async function loadDashboardStats() {
+        // Ambil data warga dari Firebase secara real-time untuk mengisi kedua tampilan
+        async function loadAllStats() {
             try {
                 const querySnapshot = await getDocs(collection(db, "warga"));
-                let totalWargaCount = querySnapshot.size;
-                let totalKKCount = querySnapshot.size;
-
-                statTotalWarga.textContent = `${totalWargaCount} Jiwa`;
-                statTotalKK.textContent = `${totalKKCount} KK`;
+                const count = querySnapshot.size;
+                
+                if (statTotalWargaDesktop) statTotalWargaDesktop.textContent = `${count} Jiwa`;
+                if (statTotalWargaMobile) statTotalWargaMobile.textContent = `${count} Jiwa`;
             } catch (error) {
-                console.error("Error loading stats: ", error);
+                console.error("Gagal memuat statistik:", error);
             }
         }
 
-        window.onload = loadDashboardStats;
+        window.onload = loadAllStats;
 
         // Pendaftaran Service Worker PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then((reg) => console.log('Service Worker Dashboard OK:', reg.scope))
-                    .catch((err) => console.log('Service Worker Gagal:', err));
+                    .then((reg) => console.log('PWA Service Worker Aktif:', reg.scope))
+                    .catch((err) => console.log('Gagal:', err));
             });
         }
     </script>

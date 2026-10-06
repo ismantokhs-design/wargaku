@@ -75,7 +75,7 @@
             </div>
         </aside>
 
-        <!-- Area Konten Utama (pb-20 agar isi bawah tidak tertutup menu HP) -->
+        <!-- Area Konten Utama -->
         <main class="flex-1 flex flex-col overflow-y-auto pb-20 md:pb-0">
             <!-- Header -->
             <header class="bg-white shadow-sm h-16 flex items-center justify-between px-4 md:px-8">
@@ -128,56 +128,11 @@
                     </div>
                 </div>
 
-                <!-- Form Input Warga Cepat -->
-                <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-200">
-                    <h2 class="text-base md:text-lg font-bold text-gray-800 mb-4"><i class="fa-solid fa-user-plus mr-2 text-blue-600"></i>Formulir Tambah Data Warga</h2>
-                    <form id="wargaForm" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-                        <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Nomor Kartu Keluarga (KK)</label>
-                            <input type="text" id="noKK" required placeholder="No. KK" class="w-full rounded-md border-gray-300 border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Nama Kepala Keluarga</label>
-                            <input type="text" id="nama" required placeholder="Nama Lengkap" class="w-full rounded-md border-gray-300 border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Blok / Nomor Rumah</label>
-                            <input type="text" id="noRumah" required placeholder="Contoh: Blok A No. 5" class="w-full rounded-md border-gray-300 border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div>
-                            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md text-sm transition cursor-pointer">
-                                Simpan Data
-                            </button>
-                        </div>
-                    </form>
-                    <div id="statusMsg" class="mt-3 text-center text-xs font-medium"></div>
-                </div>
-
-                <!-- Tabel Rekap Data Warga -->
-                <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-200">
-                    <h2 class="text-base md:text-lg font-bold text-gray-800 mb-4"><i class="fa-solid fa-table-list mr-2 text-blue-600"></i>Rekap Data Warga Terdaftar</h2>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. KK</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Kepala Keluarga</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. Rumah</th>
-                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="wargaTableBody" class="bg-white divide-y divide-gray-200 text-sm">
-                                <!-- Data dimuat dinamis -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
             </div>
         </main>
     </div>
 
-    <!-- ================= MOBILE BOTTOM NAVIGATION (Hanya Tampil di HP / Layar Kecil) ================= -->
+    <!-- ================= MOBILE BOTTOM NAVIGATION (Hanya Tampil di HP) ================= -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#1e2229] text-gray-400 border-t border-gray-800 flex justify-around items-center h-16 px-2 z-50 shadow-2xl">
         <a href="dashboard.html" class="flex flex-col items-center text-blue-500">
             <i class="fa-solid fa-gauge text-lg"></i>
@@ -204,7 +159,7 @@
     <!-- Firebase SDK & Logika -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
@@ -223,9 +178,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const form = document.getElementById('wargaForm');
-        const statusMsg = document.getElementById('statusMsg');
-        const wargaTableBody = document.getElementById('wargaTableBody');
         const statTotalWarga = document.getElementById('statTotalWarga');
         const statTotalKK = document.getElementById('statTotalKK');
         const logoutBtn = document.getElementById('logoutBtn');
@@ -235,92 +187,21 @@
             window.location.href = 'index.html';
         });
 
-        // Fungsi Hapus Data Warga
-        window.deleteWarga = async function(id) {
-            if (confirm("Apakah Anda yakin ingin menghapus data warga ini?")) {
-                try {
-                    await deleteDoc(doc(db, "warga", id));
-                    alert("Data berhasil dihapus!");
-                    loadWargaData();
-                } catch (error) {
-                    console.error("Error deleting document: ", error);
-                    alert("Gagal menghapus data.");
-                }
-            }
-        }
-
-        async function loadWargaData() {
-            wargaTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Memuat data...</td></tr>`;
+        // Ambil data statistik dari Firestore
+        async function loadDashboardStats() {
             try {
                 const querySnapshot = await getDocs(collection(db, "warga"));
-                wargaTableBody.innerHTML = '';
-                
                 let totalWargaCount = querySnapshot.size;
                 let totalKKCount = querySnapshot.size;
 
                 statTotalWarga.textContent = `${totalWargaCount} Jiwa`;
                 statTotalKK.textContent = `${totalKKCount} KK`;
-
-                if (querySnapshot.empty) {
-                    wargaTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Belum ada data warga.</td></tr>`;
-                    return;
-                }
-
-                querySnapshot.forEach((documentSnap) => {
-                    const data = documentSnap.data();
-                    const docId = documentSnap.id;
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">${data.noKK || '-'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${data.nama || '-'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">${data.noRumah || '-'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                            <button onclick="deleteWarga('${docId}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-xs font-medium transition cursor-pointer">
-                                <i class="fa-solid fa-trash mr-1"></i> Hapus
-                            </button>
-                        </td>
-                    `;
-                    wargaTableBody.appendChild(row);
-                });
             } catch (error) {
-                console.error("Error: ", error);
-                wargaTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-red-500">Gagal memuat data dari database.</td></tr>`;
+                console.error("Error loading stats: ", error);
             }
         }
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const noKK = document.getElementById('noKK').value;
-            const nama = document.getElementById('nama').value;
-            const noRumah = document.getElementById('noRumah').value;
-            const submitBtn = document.getElementById('submitBtn');
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Menyimpan...';
-
-            try {
-                await addDoc(collection(db, "warga"), {
-                    noKK: noKK,
-                    nama: nama,
-                    noRumah: noRumah,
-                    createdAt: new Date().toISOString()
-                });
-
-                statusMsg.textContent = 'Data berhasil disimpan!';
-                statusMsg.className = 'mt-3 text-center text-xs font-medium text-green-600';
-                form.reset();
-                loadWargaData();
-            } catch (error) {
-                console.error("Error: ", error);
-                statusMsg.textContent = 'Gagal menyimpan data.';
-                statusMsg.className = 'mt-3 text-center text-xs font-medium text-red-600';
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Simpan Data';
-            }
-        });
-
-        window.onload = loadWargaData;
+        window.onload = loadDashboardStats;
 
         // Pendaftaran Service Worker PWA
         if ('serviceWorker' in navigator) {

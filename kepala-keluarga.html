@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Kepala Keluarga - WargaKu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- ========================================================================= -->
+    <!-- 1. TAMPILAN DESKTOP / LAYAR LEBAR (Sidebar & Tabel Luas)                  -->
+    <!-- ========================================================================= -->
+    <div class="hidden md:flex h-screen overflow-hidden bg-slate-100">
+        
+        <!-- Sidebar Samping Desktop -->
+        <aside class="w-64 bg-[#1e2229] text-gray-300 flex flex-col justify-between shadow-xl flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 text-emerald-400 font-bold text-xl tracking-wide mb-4">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <i class="fa-solid fa-house-chimney text-lg"></i>
+                    </div>
+                    <span>WargaKu</span>
+                </div>
+                <div class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
+                    <p class="font-semibold text-gray-200 text-sm">Potrobayan</p>
+                    <p>RT -- / RW --, Kal. Srihardono</p>
+                    <p>Kec. Pundong, Bantul</p>
+                </div>
+                <nav class="mt-6 space-y-1.5">
+                    <a href="dashboard.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-gauge w-7 text-lg"></i><span>Dashboard Utama</span>
+                    </a>
+                    <a href="kepala-keluarga.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
+                        <i class="fa-solid fa-user-tie w-7 text-lg"></i><span>Kepala Keluarga</span>
+                    </a>
+                    <a href="daftar-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-address-book w-7 text-lg"></i><span>Daftar Warga</span>
+                    </a>
+                    <a href="input-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-user-plus w-7 text-lg"></i><span>Input Data Warga</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
+                <p>WargaKu Desktop v1.0</p>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama Desktop -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Data Kepala Keluarga (KK)</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Rekapitulasi Kartu Keluarga wilayah RT/RW Potrobayan.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="location.href='dashboard.html'" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                    </button>
+                </div>
+            </header>
+
+            <div class="p-10 max-w-7xl mx-auto w-full">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-user-tie text-emerald-600 mr-2"></i>Tabel Rekapitulasi KK</h3>
+                        <span id="totalKKBadgeDesktop" class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-semibold">Memuat data...</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-900 text-white text-xs uppercase tracking-wider">
+                                    <th class="p-3.5 text-center w-12">No</th>
+                                    <th class="p-3.5">No. Kartu Keluarga</th>
+                                    <th class="p-3.5">Nama Kepala Keluarga</th>
+                                    <th class="p-3.5 text-center">Jumlah Anggota</th>
+                                    <th class="p-3.5 text-center">Status Ekonomi</th>
+                                    <th class="p-3.5 text-center">Penerimaan Bantuan</th>
+                                    <th class="p-3.5">Jenis Bantuan</th>
+                                    <th class="p-3.5 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelKKBodyDesktop" class="divide-y divide-gray-100 text-xs text-gray-700">
+                                <!-- Data dimuat via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                      -->
+    <!-- ========================================================================= -->
+    <div class="md:hidden max-w-md mx-auto min-h-screen shadow-2xl flex flex-col justify-between relative pb-32" style="background-color: #f0fdf4;">
+        
+        <!-- Header HP -->
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex items-center space-x-3">
+                <span class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-inner border border-white/30">
+                    <i class="fa-solid fa-user-tie text-xs"></i>
+                </span>
+                <div>
+                    <h1 class="text-lg font-bold text-white tracking-wide">Kepala Keluarga</h1>
+                    <p id="totalKKBadgeMobile" class="text-[10px] text-emerald-100">Memuat jumlah KK...</p>
+                </div>
+            </div>
+            <button onclick="location.href='dashboard.html'" class="text-xs bg-white/20 backdrop-blur-md hover:bg-white/30 text-white px-3 py-1.5 rounded-xl font-medium transition border border-white/30 shadow-inner">
+                Kembali
+            </button>
+        </header>
+
+        <!-- Konten Daftar KK HP -->
+        <main class="px-4 py-4 space-y-3 flex-1 overflow-y-auto">
+            <div id="listKKMobile" class="space-y-3">
+                <!-- Data Card Mobile dimuat via JavaScript -->
+            </div>
+        </main>
+
+        <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Galeri</span>
+                </a>
+                <a href="#" onclick="showToast('Fitur Pesan segera hadir', 'info'); return false;" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+    <!-- ================= MODAL DETAIL / EDIT KELUARGA ================= -->
+    <div id="detailKKModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                <h3 class="text-sm font-bold text-gray-800"><i class="fa-solid fa-user-tie text-emerald-600 mr-2"></i>Detail & Edit Info KK</h3>
+                <button onclick="closeDetailKKModal()" class="text-gray-400 hover:text-gray-600 text-xs font-bold px-2 py-1 cursor-pointer">✕ Tutup</button>
+            </div>
+            
+            <form id="editKKForm" class="space-y-3">
+                <input type="hidden" id="editNoKK">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nomor Kartu Keluarga</label>
+                    <input type="text" id="displayNoKK" disabled class="w-full rounded-xl border border-gray-300 p-2 text-xs bg-gray-100 font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Kepala Keluarga</label>
+                    <input type="text" id="editNamaKK" required class="w-full rounded-xl border border-gray-300 p-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Status Ekonomi</label>
+                    <select id="editStatusEkonomi" class="w-full rounded-xl border border-gray-300 p-2 text-xs bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="-">-</option>
+                        <option value="Mampu">Mampu</option>
+                        <option value="Prasejahtera">Prasejahtera</option>
+                        <option value="Kurang Mampu">Kurang Mampu</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Penerimaan Bantuan</label>
+                    <select id="editPenerimaBantuan" class="w-full rounded-xl border border-gray-300 p-2 text-xs bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="Tidak">Tidak</option>
+                        <option value="Ya">Ya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Jenis Bantuan</label>
+                    <input type="text" id="editJenisBantuan" placeholder="Contoh: PKH, BPNT, BLT" class="w-full rounded-xl border border-gray-300 p-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div class="pt-2 flex space-x-2">
+                    <button type="button" onclick="closeDetailKKModal()" class="w-1/2 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-xs transition cursor-pointer">Batal</button>
+                    <button type="submit" id="saveKKBtn" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow transition cursor-pointer">Simpan Info KK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ================= ELEGAN TOAST NOTIFICATION CONTAINER ================= -->
+    <div id="toastContainer" class="fixed top-5 right-5 z-[9999] flex flex-col space-y-2 pointer-events-none"></div>
+
+
+    <!-- ================= SCRIPT KONEKSI FIREBASE & RENDER DATA ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, query, where, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Cek Sesi Login
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.kkDataStore = {};
+
+        // Fungsi Notifikasi Elegan (Toast Custom)
+        window.showToast = function(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-emerald-900 text-white border-emerald-700';
+            let icon = '<i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>';
+            
+            if (type === 'error') {
+                bgClass = 'bg-red-900 text-white border-red-700';
+                icon = '<i class="fa-solid fa-circle-exclamation text-red-400 text-base"></i>';
+            } else if (type === 'info') {
+                bgClass = 'bg-slate-900 text-white border-slate-700';
+                icon = '<i class="fa-solid fa-circle-info text-blue-400 text-base"></i>';
+            }
+
+            toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-2xl shadow-2xl border backdrop-blur-md transform translate-y-2 opacity-0 transition-all duration-300 ${bgClass}`;
+            toast.innerHTML = `
+                ${icon}
+                <div class="text-xs font-medium tracking-wide">${message}</div>
+            `;
+
+            container.appendChild(toast);
+
+            // Animasi Muncul
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            // Hilang Otomatis setelah 3 detik
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        async function loadDataKK() {
+            const tabelBodyDesktop = document.getElementById('tabelKKBodyDesktop');
+            const listKKMobile = document.getElementById('listKKMobile');
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "warga"));
+                const kkMap = {};
+
+                querySnapshot.forEach((docSnap) => {
+                    const d = docSnap.data();
+                    const noKK = d.noKK ? d.noKK.trim() : 'TANPA_KK';
+                    
+                    if (!kkMap[noKK]) {
+                        kkMap[noKK] = {
+                            noKK: noKK,
+                            kepalaKeluarga: '-',
+                            jumlahAnggota: 0,
+                            statusEkonomi: '-',
+                            penerimaBantuan: '-',
+                            jenisBantuan: '-'
+                        };
+                    }
+
+                    kkMap[noKK].jumlahAnggota++;
+
+                    if (d.hubunganKK === 'Kepala Keluarga' || (!kkMap[noKK].kepalaKeluarga || kkMap[noKK].kepalaKeluarga === '-')) {
+                        if (d.hubunganKK === 'Kepala Keluarga') {
+                            kkMap[noKK].kepalaKeluarga = d.nama || '-';
+                        }
+                    }
+                });
+
+                const kkList = Object.values(kkMap);
+                document.getElementById('totalKKBadgeDesktop').textContent = `Total: ${kkList.length} KK`;
+                document.getElementById('totalKKBadgeMobile').textContent = `Total: ${kkList.length} KK`;
+
+                if (kkList.length === 0) {
+                    tabelBodyDesktop.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-gray-400">Belum ada data Kartu Keluarga.</td></tr>`;
+                    listKKMobile.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-gray-400 shadow-sm">Belum ada data KK.</div>`;
+                    return;
+                }
+
+                let rowsDesktop = '';
+                let cardsMobile = '';
+                let no = 1;
+
+                for (const item of kkList) {
+                    let statusEkonomi = '-';
+                    let penerimaBantuan = 'Tidak';
+                    let jenisBantuan = '-';
+
+                    try {
+                        const infoRef = doc(db, "info-kk", item.noKK);
+                        const infoSnap = await getDoc(infoRef);
+                        if (infoSnap.exists()) {
+                            const inf = infoSnap.data();
+                            statusEkonomi = inf.statusEkonomi || '-';
+                            penerimaBantuan = inf.penerimaBantuan || 'Tidak';
+                            jenisBantuan = inf.jenisBantuan || '-';
+                        }
+                    } catch (e) {}
+
+                    item.statusEkonomi = statusEkonomi;
+                    item.penerimaBantuan = penerimaBantuan;
+                    item.jenisBantuan = jenisBantuan;
+
+                    window.kkDataStore[item.noKK] = item;
+
+                    const badgeEkonomi = statusEkonomi !== '-' ? `<span class="bg-slate-100 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold">${statusEkonomi}</span>` : `-`;
+                    const badgeBantuan = penerimaBantuan === 'Ya' ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">Ya</span>` : `Tidak`;
+
+                    rowsDesktop += `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3.5 text-center font-medium">${no}</td>
+                            <td class="p-3.5 font-mono text-emerald-600 font-semibold">${item.noKK}</td>
+                            <td class="p-3.5 font-bold text-gray-800">${item.kepalaKeluarga}</td>
+                            <td class="p-3.5 text-center">${item.jumlahAnggota} Orang</td>
+                            <td class="p-3.5 text-center">${badgeEkonomi}</td>
+                            <td class="p-3.5 text-center">${badgeBantuan}</td>
+                            <td class="p-3.5">${item.jenisBantuan}</td>
+                            <td class="p-3.5 text-center">
+                                <button onclick="openDetailKKModal('${item.noKK}')" class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition border border-blue-200 cursor-pointer">
+                                    <i class="fa-solid fa-eye mr-1"></i> Detail / Edit
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                    cardsMobile += `
+                        <div class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm space-y-2">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">#${no} • ${item.jumlahAnggota} Anggota</span>
+                                    <h4 class="text-xs font-bold text-gray-800 mt-1">${item.kepalaKeluarga}</h4>
+                                </div>
+                                <span class="text-[10px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded font-mono">${item.noKK}</span>
+                            </div>
+                            <div class="text-[11px] text-gray-500 space-y-0.5 pt-1 border-t border-gray-100">
+                                <p><strong class="text-gray-700">Status Ekonomi:</strong> ${statusEkonomi}</p>
+                                <p><strong class="text-gray-700">Penerima Bantuan:</strong> ${penerimaBantuan} (${jenisBantuan})</p>
+                            </div>
+                            <div class="pt-2 flex justify-end">
+                                <button onclick="openDetailKKModal('${item.noKK}')" class="w-full py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-semibold rounded-xl border border-blue-200 transition text-center cursor-pointer">
+                                    <i class="fa-solid fa-eye mr-1"></i> Detail / Edit Kartu Keluarga
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    no++;
+                }
+
+                tabelBodyDesktop.innerHTML = rowsDesktop;
+                let listKKContainer = document.getElementById('listKKMobile');
+                if(listKKContainer) listKKContainer.innerHTML = cardsMobile;
+
+            } catch (error) {
+                console.error("Gagal memuat data KK:", error);
+                showToast("Gagal memuat data dari database.", "error");
+            }
+        }
+
+        window.openDetailKKModal = function(noKK) {
+            const data = window.kkDataStore[noKK];
+            if (!data) return;
+
+            document.getElementById('editNoKK').value = noKK;
+            document.getElementById('displayNoKK').value = noKK;
+            document.getElementById('editNamaKK').value = data.kepalaKeluarga || '';
+            document.getElementById('editStatusEkonomi').value = data.statusEkonomi || '-';
+            document.getElementById('editPenerimaBantuan').value = data.penerimaBantuan || 'Tidak';
+            document.getElementById('editJenisBantuan').value = data.jenisBantuan || '-';
+
+            document.getElementById('detailKKModal').classList.remove('hidden');
+        }
+
+        window.closeDetailKKModal = function() {
+            document.getElementById('detailKKModal').classList.add('hidden');
+        }
+
+        document.getElementById('editKKForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const noKK = document.getElementById('editNoKK').value;
+            const btn = document.getElementById('saveKKBtn');
+
+            btn.disabled = true;
+            btn.textContent = 'Menyimpan...';
+
+            try {
+                const infoRef = doc(db, "info-kk", noKK);
+                await setDoc(infoRef, {
+                    statusEkonomi: document.getElementById('editStatusEkonomi').value,
+                    penerimaBantuan: document.getElementById('editPenerimaBantuan').value,
+                    jenisBantuan: document.getElementById('editJenisBantuan').value,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+
+                showToast("Informasi Kartu Keluarga berhasil disimpan!");
+                closeDetailKKModal();
+                loadDataKK();
+            } catch (error) {
+                console.error("Gagal menyimpan info KK:", error);
+                showToast("Gagal menyimpan ke database.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Simpan Info KK';
+            }
+        });
+
+        window.onload = () => {
+            loadDataKK();
+        };
+    </script>
+</body>
+</html>

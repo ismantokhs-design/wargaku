@@ -48,16 +48,16 @@
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-24" style="background-color: #f0fdf4;">
         
         <!-- Header Halaman -->
-        <header class="px-6 pt-6 pb-4 flex justify-between items-center bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm">
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
             <div class="flex items-center space-x-3">
-                <a href="dashboard.html" class="w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-100 transition shadow-sm">
+                <a href="dashboard.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </a>
-                <h1 class="text-lg font-bold text-gray-800 tracking-wide">Kelola Profil Wilayah</h1>
+                <h1 class="text-lg font-bold text-white tracking-wide">Kelola Profil Wilayah</h1>
             </div>
             
-            <div class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-3 py-1.5 rounded-full border border-emerald-300 flex items-center space-x-1 shadow-sm">
-                <i class="fa-solid fa-pen-to-square text-xs"></i>
+            <div class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/30 flex items-center space-x-1 shadow-inner">
+                <i class="fa-solid fa-pen-to-square text-amber-300 text-xs"></i>
                 <span>Mode Edit</span>
             </div>
         </header>
@@ -72,56 +72,56 @@
                 <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-3xl p-6 shadow-lg relative overflow-hidden">
                     <span class="bg-white/20 text-[10px] px-3 py-1 rounded-full font-semibold uppercase tracking-wider inline-block mb-2">Form Pengaturan</span>
                     <h2 class="text-base font-bold">Update Data Wilayah RT</h2>
-                    <p class="text-xs text-emerald-100 mt-1">Perubahan akan langsung memperbarui data di seluruh aplikasi sistem.</p>
+                    <p class="text-xs text-emerald-100 mt-1">Data wilayah telah dimuat ke form di bawah. Silakan ubah sesuai kebutuhan dan simpan.</p>
                 </div>
 
                 <!-- Input Detail Informasi Wilayah -->
                 <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-4">
                     <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm pb-3 border-b border-gray-100">
                         <i class="fa-solid fa-table-cells text-emerald-600"></i>
-                        <span>INPUT INFORMASI WILAYAH</span>
+                        <span>UBAH INFORMASI WILAYAH</span>
                     </div>
 
                     <div class="space-y-3.5">
                         <div>
                             <label class="block font-bold text-gray-600 mb-1">Alamat / Dukuh</label>
-                            <input type="text" id="inputDukuh" placeholder="Contoh: Potrobayan" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                            <input type="text" id="inputDukuh" value="Potrobayan" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-bold text-gray-600 mb-1">Nomor RT</label>
-                                <input type="text" id="inputRt" placeholder="Contoh: 02" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                                <input type="text" id="inputRt" value="02" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
                             </div>
                             <div>
                                 <label class="block font-bold text-gray-600 mb-1">Nomor RW</label>
-                                <input type="text" id="inputRw" placeholder="Contoh: 01" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                                <input type="text" id="inputRw" value="01" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-bold text-gray-600 mb-1">Kode Pos</label>
-                            <input type="text" id="inputKodePos" placeholder="Contoh: 55771" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition">
+                            <input type="text" id="inputKodePos" value="55771" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition">
                         </div>
 
                         <div>
                             <label class="block font-bold text-gray-600 mb-1">Desa / Kalurahan</label>
-                            <input type="text" id="inputKalurahan" placeholder="Contoh: Srihardono" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                            <input type="text" id="inputKalurahan" value="Srihardono" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
                         </div>
 
                         <div>
                             <label class="block font-bold text-gray-600 mb-1">Kecamatan</label>
-                            <input type="text" id="inputKecamatan" placeholder="Contoh: Pundong" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                            <input type="text" id="inputKecamatan" value="Pundong" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
                         </div>
 
                         <div>
                             <label class="block font-bold text-gray-600 mb-1">Kabupaten / Kota</label>
-                            <input type="text" id="inputKabupaten" placeholder="Contoh: Bantul" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                            <input type="text" id="inputKabupaten" value="Bantul" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
                         </div>
 
                         <div>
                             <label class="block font-bold text-gray-600 mb-1">Provinsi</label>
-                            <input type="text" id="inputProvinsi" placeholder="Contoh: Yogyakarta" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                            <input type="text" id="inputProvinsi" value="Yogyakarta" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
                         </div>
                     </div>
                 </div>
@@ -130,17 +130,17 @@
                 <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-3">
                     <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm pb-2 border-b border-gray-100">
                         <i class="fa-solid fa-circle-info text-emerald-600"></i>
-                        <span>TENTANG WILAYAH</span>
+                        <span>UBAH CATATAN WILAYAH</span>
                     </div>
                     <div>
-                        <textarea id="inputTentang" rows="3" placeholder="Ketik keterangan atau catatan profil wilayah..." class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition"></textarea>
+                        <textarea id="inputTentang" rows="3" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition">Profil wilayah RT 02 Potrobayan merupakan lingkungan yang asri dan aktif. Tetap Semangat menjaga kerukunan warga!</textarea>
                     </div>
                 </div>
 
                 <!-- Tombol Simpan -->
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl transition shadow-lg shadow-emerald-600/30 cursor-pointer flex items-center justify-center space-x-2 text-sm">
+                <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold py-3.5 rounded-2xl transition shadow-lg shadow-emerald-600/30 cursor-pointer flex items-center justify-center space-x-2 text-sm">
                     <i class="fa-solid fa-floppy-disk"></i>
-                    <span>Simpan Perubahan Profil</span>
+                    <span>SIMPAN PERUBAHAN</span>
                 </button>
             </form>
 
@@ -148,24 +148,26 @@
 
         <!-- Navigasi Bawah -->
         <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
-            <nav class="bg-white border-t border-gray-100 flex justify-around items-center h-16 px-2 shadow-2xl">
-                <a href="dashboard.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-solid fa-house text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Beranda</span>
                 </a>
-                <a href="profil-read.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+                
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-solid fa-id-badge text-lg"></i>
-                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                    <span class="text-[10px] mt-1">Profil</span>
                 </a>
-                <a href="#" onclick="alert('Menu Galeri'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+
+                <a href="#" onclick="alert('Menu Galeri'); return false;" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-solid fa-images text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Galeri</span>
                 </a>
-                <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+                <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-regular fa-comment-dots text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Pesan</span>
                 </a>
-                <a href="dashboard.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-solid fa-bars-staggered text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Lainnya</span>
                 </a>
@@ -213,31 +215,43 @@
             }, 2500);
         }
 
-        // Ambil data yang sudah ada di database untuk dimuat ke form input (jika ada)
+        // Fungsi ambil data dari database dengan pencarian koleksi menyeluruh
         async function loadProfilUntukEdit() {
             try {
-                const querySnapshot = await getDocs(collection(db, "profil-wilayah"));
-                if (!querySnapshot.empty) {
-                    const docSnap = querySnapshot.docs[0];
-                    const data = docSnap.data();
-                    
-                    document.getElementById('docId').value = docSnap.id;
-                    document.getElementById('inputDukuh').value = data.dukuh || data.namaDukuh || "";
-                    document.getElementById('inputRt').value = data.rt || "";
-                    document.getElementById('inputRw').value = data.rw || "";
-                    document.getElementById('inputKodePos').value = data.kodePos || "";
-                    document.getElementById('inputKalurahan').value = data.kelurahan || data.kalurahan || "";
-                    document.getElementById('inputKecamatan').value = data.kecamatan || "";
-                    document.getElementById('inputKabupaten').value = data.kabupaten || data.kabupatenKota || "";
-                    document.getElementById('inputProvinsi').value = data.provinsi || "";
-                    document.getElementById('inputTentang').value = data.tentang || data.keterangan || "";
+                // Daftar nama koleksi yang mungkin dipakai di database Anda
+                const collectionsToTry = ["profil-wilayah", "profil_wilayah", "profil", "wilayah"];
+                let foundData = false;
+
+                for (const colName of collectionsToTry) {
+                    const querySnapshot = await getDocs(collection(db, colName));
+                    if (!querySnapshot.empty) {
+                        const docSnap = querySnapshot.docs[0];
+                        const data = docSnap.data();
+                        
+                        document.getElementById('docId').value = docSnap.id;
+                        document.getElementById('inputDukuh').value = data.dukuh || data.namaDukuh || "Potrobayan";
+                        document.getElementById('inputRt').value = data.rt || "02";
+                        document.getElementById('inputRw').value = data.rw || "01";
+                        document.getElementById('inputKodePos').value = data.kodePos || "55771";
+                        document.getElementById('inputKalurahan').value = data.kelurahan || data.kalurahan || "Srihardono";
+                        document.getElementById('inputKecamatan').value = data.kecamatan || "Pundong";
+                        document.getElementById('inputKabupaten').value = data.kabupaten || data.kabupatenKota || "Bantul";
+                        document.getElementById('inputProvinsi').value = data.provinsi || "Yogyakarta";
+                        document.getElementById('inputTentang').value = data.tentang || data.keterangan || `Profil wilayah RT 02 Potrobayan merupakan lingkungan yang asri dan aktif. Tetap Semangat menjaga kerukunan warga!`;
+                        
+                        foundData = true;
+                        break;
+                    }
+                }
+
+                if (!foundData) {
+                    console.log("Data tidak ditemukan di database, menggunakan data default.");
                 }
             } catch (error) {
-                console.error("Gagal memuat data untuk diedit:", error);
+                console.error("Gagal memuat data profil dari database:", error);
             }
         }
 
-        // Fungsi Simpan atau Update ke database Firestore
         window.saveProfilWilayah = async function(e) {
             e.preventDefault();
             const docId = document.getElementById('docId').value;
@@ -255,13 +269,17 @@
                 updatedAt: new Date().toISOString()
             };
 
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Menyimpan...`;
+
             try {
-                if (!docId) {
-                    // Jika belum ada dokumen, buat baru (Add)
+                // Simpan konsisten ke koleksi "profil-wilayah" (atau "profil_wilayah")
+                if (!docId || docId === "") {
                     await addDoc(collection(db, "profil-wilayah"), profilData);
                     showToast('Profil wilayah berhasil ditambahkan!');
                 } else {
-                    // Jika sudah ada, update dokumen tersebut (Edit)
                     const docRef = doc(db, "profil-wilayah", docId);
                     await updateDoc(docRef, profilData);
                     showToast('Profil wilayah berhasil diperbarui!');
@@ -274,6 +292,8 @@
             } catch (error) {
                 console.error("Gagal menyimpan profil:", error);
                 alert("Terjadi kesalahan saat menyimpan ke database.");
+                submitBtn.disabled, submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
             }
         }
 

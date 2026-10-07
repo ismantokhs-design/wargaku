@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info & Event Terbaru - WargaKu PWA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Kontainer Utama Tampilan Mobile / PWA -->
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-24" style="background-color: #f0fdf4;">
+        
+        <!-- Header Halaman -->
+        <header class="px-6 pt-6 pb-5 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <h1 class="text-xl font-extrabold text-white tracking-wide">Info & Event Terbaru</h1>
+            <p class="text-[11px] text-emerald-100 mt-0.5">Dokumentasi dan informasi kegiatan warga RT</p>
+        </header>
+
+        <!-- Konten Utama (Read-Only untuk Warga) -->
+        <main class="px-6 space-y-5 flex-1 py-6 overflow-y-auto">
+
+            <!-- Bar Pencarian Event -->
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                </span>
+                <input type="text" id="inputCari" oninput="filterGaleriWarga()" placeholder="Cari event..." class="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-4 py-3 text-xs font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 shadow-sm transition">
+            </div>
+
+            <!-- Daftar List Event / Galeri (Format Card Besar Sesuai Gambar Referensi) -->
+            <div id="listGaleriWargaContainer" class="space-y-5">
+                <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm text-center text-xs text-gray-400 py-12">
+                    <i class="fa-solid fa-spinner animate-spin mr-2"></i> Memuat info & event terbaru...
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Navigasi Bawah -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-300 font-bold">
+                    <i class="fa-solid fa-images text-lg drop-shadow"></i>
+                    <span class="text-[10px] mt-1">Galeri</span>
+                </a>
+                <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Script Ambil Data Firestore (Hanya Menampilkan yang Berstatus Aktif) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let cacheGaleriWarga = [];
+
+        async function loadGaleriWarga() {
+            const container = document.getElementById('listGaleriWargaContainer');
+            try {
+                const querySnapshot = await getDocs(collection(db, "galeri"));
+                cacheGaleriWarga = [];
+
+                querySnapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    // Hanya ambil data yang statusnya aktif (true atau tidak di-set false)
+                    if (data.status !== false) {
+                        cacheGaleriWarga.push({ id: docSnap.id, ...data });
+                    }
+                });
+
+                renderGaleriWarga(cacheGaleriWarga);
+            } catch (error) {
+                console.error("Gagal memuat galeri:", error);
+                container.innerHTML = `<div class="text-center text-xs text-red-500 py-6">Gagal memuat informasi event.</div>`;
+            }
+        }
+
+        function renderGaleriWarga(dataList) {
+            const container = document.getElementById('listGaleriWargaContainer');
+            if (dataList.length === 0) {
+                container.innerHTML = `<div class="text-center text-xs text-gray-400 py-12 bg-white rounded-3xl border border-gray-200">Belum ada info atau event terbaru saat ini.</div>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            dataList.forEach(item => {
+                // Format tanggal sederhana atau ambil dari createdAt
+                let tanggalStr = "25 September 2026";
+                if (item.createdAt) {
+                    const d = new Date(item.createdAt);
+                    if (!isNaN(d)) {
+                        tanggalStr = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                    }
+                }
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-sm transition hover:shadow-md";
+                card.innerHTML = `
+                    <div class="w-full h-48 bg-gray-100 overflow-hidden relative">
+                        <img src="${item.gambar || 'https://via.placeholder.com/600x300'}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <p class="text-[11px] text-gray-400 font-medium">${tanggalStr}</p>
+                        <h2 class="text-sm font-extrabold text-gray-900">${item.nama}</h2>
+                        <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">${item.deskripsi}</p>
+                        <div class="pt-2">
+                            <button onclick="alert('Detail Event: ${item.nama}\\n\\n${item.deskripsi}')" class="text-xs font-bold text-[#0b3c65] hover:text-[#082a48] inline-flex items-center space-x-1 cursor-pointer">
+                                <span>Baca selengkapnya</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.filterGaleriWarga = function() {
+            const keyword = document.getElementById('inputCari').value.toLowerCase();
+            const filtered = cacheGaleriWarga.filter(item => 
+                item.nama.toLowerCase().includes(keyword) || 
+                item.deskripsi.toLowerCase().includes(keyword)
+            );
+            renderGaleriWarga(filtered);
+        }
+
+        window.onload = () => {
+            loadGaleriWarga();
+        };
+    </script>
+</body>
+</html>

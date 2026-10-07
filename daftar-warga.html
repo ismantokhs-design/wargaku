@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Warga - WargaKu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- ========================================================================= -->
+    <!-- 1. TAMPILAN DESKTOP / LAYAR LEBAR (Sidebar & Tabel Luas)                  -->
+    <!-- ========================================================================= -->
+    <div class="hidden md:flex h-screen overflow-hidden bg-slate-100">
+        
+        <!-- Sidebar Samping Desktop -->
+        <aside class="w-64 bg-[#1e2229] text-gray-300 flex flex-col justify-between shadow-xl flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 text-emerald-400 font-bold text-xl tracking-wide mb-4">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <i class="fa-solid fa-house-chimney text-lg"></i>
+                    </div>
+                    <span>WargaKu</span>
+                </div>
+                <div class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
+                    <p class="font-semibold text-gray-200 text-sm">Potrobayan</p>
+                    <p>RT -- / RW --, Kal. Srihardono</p>
+                    <p>Kec. Pundong, Bantul</p>
+                </div>
+                <nav class="mt-6 space-y-1.5">
+                    <a href="dashboard.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-gauge w-7 text-lg"></i><span>Dashboard Utama</span>
+                    </a>
+                    <a href="daftar-warga.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
+                        <i class="fa-solid fa-address-book w-7 text-lg"></i><span>Daftar Warga</span>
+                    </a>
+                    <a href="input-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-user-plus w-7 text-lg"></i><span>Input Data Warga</span>
+                    </a>
+                    <a href="#" onclick="alert('Menu Keuangan Kas RT'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-wallet w-7 text-lg"></i><span>Keuangan Kas</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
+                <p>WargaKu Desktop v1.0</p>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama Desktop -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Daftar Seluruh Warga</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Database kependudukan wilayah RT/RW Potrobayan.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="input-warga.html" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-user-plus"></i><span>Tambah Warga</span>
+                    </a>
+                    <button onclick="location.href='dashboard.html'" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                    </button>
+                </div>
+            </header>
+
+            <div class="p-10 max-w-7xl mx-auto w-full">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-users text-emerald-600 mr-2"></i>Tabel Data Penduduk</h3>
+                        <span id="totalWargaBadgeDesktop" class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-semibold">Memuat data...</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-900 text-white text-xs uppercase tracking-wider">
+                                    <th class="p-3.5 text-center w-12">No</th>
+                                    <th class="p-3.5">NIK</th>
+                                    <th class="p-3.5">Nama Lengkap</th>
+                                    <th class="p-3.5">Jenis Kelamin</th>
+                                    <th class="p-3.5">Tempat Lahir</th>
+                                    <th class="p-3.5">Tanggal Lahir</th>
+                                    <th class="p-3.5">Agama</th>
+                                    <th class="p-3.5 text-center">Gol. Darah</th>
+                                    <th class="p-3.5">Status Perkawinan</th>
+                                    <th class="p-3.5">Status Keluarga</th>
+                                    <th class="p-3.5 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelWargaBodyDesktop" class="divide-y divide-gray-100 text-xs text-gray-700">
+                                <!-- Data dimuat via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL (Mobile UI Modern dengan Fixed Nav)  -->
+    <!-- ========================================================================= -->
+    <div class="md:hidden max-w-md mx-auto min-h-screen shadow-2xl flex flex-col justify-between relative pb-32" style="background-color: #f0fdf4;">
+        
+        <!-- Header HP -->
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex items-center space-x-3">
+                <span class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-inner border border-white/30">
+                    <i class="fa-solid fa-address-book text-xs"></i>
+                </span>
+                <div>
+                    <h1 class="text-lg font-bold text-white tracking-wide">Daftar Warga</h1>
+                    <p id="totalWargaBadgeMobile" class="text-[10px] text-emerald-100">Memuat jumlah warga...</p>
+                </div>
+            </div>
+            <button onclick="location.href='dashboard.html'" class="text-xs bg-white/20 backdrop-blur-md hover:bg-white/30 text-white px-3 py-1.5 rounded-xl font-medium transition border border-white/30 shadow-inner">
+                Kembali
+            </button>
+        </header>
+
+        <!-- Konten Daftar Warga HP -->
+        <main class="px-4 py-4 space-y-3 flex-1 overflow-y-auto">
+            <div id="listWargaMobile" class="space-y-3">
+                <!-- Data Card Mobile dimuat via JavaScript -->
+            </div>
+        </main>
+
+        <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Galeri</span>
+                </a>
+
+                <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+    <!-- ================= MODAL DETAIL WARGA ================= -->
+    <div id="detailModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                <h3 class="text-sm font-bold text-gray-800"><i class="fa-solid fa-circle-info text-blue-600 mr-2"></i>Detail Data Warga</h3>
+                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 text-xs font-bold px-2 py-1">✕ Tutup</button>
+            </div>
+            
+            <div id="detailContent" class="space-y-3 text-xs text-gray-700">
+                <!-- Diisi via JavaScript -->
+            </div>
+
+            <div class="pt-2">
+                <button type="button" onclick="closeDetailModal()" class="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-xs transition cursor-pointer">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= MODAL EDIT DATA WARGA ================= -->
+    <div id="editModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                <h3 class="text-sm font-bold text-gray-800"><i class="fa-solid fa-user-pen text-emerald-600 mr-2"></i>Edit Data Warga</h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 text-xs font-bold px-2 py-1">✕ Tutup</button>
+            </div>
+            
+            <form id="editForm" class="space-y-4">
+                <input type="hidden" id="editDocId">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">NIK (16 Digit)</label>
+                    <input type="text" id="editNik" required maxlength="16" class="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Lengkap</label>
+                    <input type="text" id="editNama" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Tempat Lahir</label>
+                        <input type="text" id="editTempatLahir" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Tanggal Lahir</label>
+                        <input type="date" id="editTanggalLahir" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Jenis Kelamin</label>
+                        <select id="editGender" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Golongan Darah</label>
+                        <select id="editGolDarah" class="w-full rounded-xl border border-gray-300 p-2.5 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="-">-</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O">O</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Agama</label>
+                        <select id="editAgama" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Islam">Islam</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Budha">Budha</option>
+                            <option value="Khonghucu">Khonghucu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Status Perkawinan</label>
+                        <select id="editStatusPerkawinan" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Belum Kawin">Belum Kawin</option>
+                            <option value="Kawin">Kawin</option>
+                            <option value="Cerai Hidup">Cerai Hidup</option>
+                            <option value="Cerai Mati">Cerai Mati</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Hubungan dalam KK (Status Keluarga)</label>
+                    <select id="editHubunganKK" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="Kepala Keluarga">Kepala Keluarga</option>
+                        <option value="Suami/Istri">Suami/Istri</option>
+                        <option value="Anak">Anak</option>
+                        <option value="Menantu">Menantu</option>
+                        <option value="Cucu">Cucu</option>
+                        <option value="Orang Tua/Mertua">Orang Tua/Mertua</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="pt-2 flex space-x-2">
+                    <button type="button" onclick="closeEditModal()" class="w-1/2 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-xs transition cursor-pointer">Batal</button>
+                    <button type="submit" id="saveEditBtn" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow transition cursor-pointer">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ================= SCRIPT KONEKSI FIREBASE & RENDER DATA ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Cek Sesi Login
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Simpan data warga global untuk akses detail & edit
+        window.wargaDataStore = {};
+
+        async function loadDaftarWarga() {
+            const tabelBodyDesktop = document.getElementById('tabelWargaBodyDesktop');
+            const listWargaMobile = document.getElementById('listWargaMobile');
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, "warga"));
+                const totalWarga = querySnapshot.size;
+
+                document.getElementById('totalWargaBadgeDesktop').textContent = `Total: ${totalWarga} Jiwa`;
+                document.getElementById('totalWargaBadgeMobile').textContent = `Total: ${totalWarga} Jiwa`;
+
+                if (querySnapshot.empty) {
+                    tabelBodyDesktop.innerHTML = `<tr><td colspan="11" class="text-center py-8 text-gray-400">Belum ada data warga yang tersimpan.</td></tr>`;
+                    listWargaMobile.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-gray-400 shadow-sm">Belum ada data warga.</div>`;
+                    return;
+                }
+
+                let rowsDesktop = '';
+                let cardsMobile = '';
+                let no = 1;
+
+                querySnapshot.forEach((docSnap) => {
+                    const id = docSnap.id;
+                    const d = docSnap.data();
+                    
+                    // Simpan ke store global
+                    window.wargaDataStore[id] = d;
+
+                    const nik = d.nik || '-';
+                    const nama = d.nama || '-';
+                    const gender = d.gender ? d.gender.toUpperCase() : '-';
+                    const tempatLahir = d.tempatLahir ? d.tempatLahir.toUpperCase() : '-';
+                    const tanggalLahir = d.tanggalLahir || '-';
+                    const agama = d.agama ? d.agama.toUpperCase() : '-';
+                    const golDarah = d.golDarah || '-';
+                    const statusPerkawinan = d.statusPerkawinan ? d.statusPerkawinan.toUpperCase() : '-';
+                    const statusKeluarga = d.hubunganKK ? d.hubunganKK.toUpperCase() : '-';
+
+                    // Baris Tabel Desktop (Tombol Detail & Edit Berdampingan)
+                    rowsDesktop += `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3.5 text-center font-medium">${no}</td>
+                            <td class="p-3.5 font-mono text-emerald-600 font-semibold">${nik}</td>
+                            <td class="p-3.5 font-bold text-gray-800">${nama}</td>
+                            <td class="p-3.5">${gender}</td>
+                            <td class="p-3.5">${tempatLahir}</td>
+                            <td class="p-3.5">${tanggalLahir}</td>
+                            <td class="p-3.5">${agama}</td>
+                            <td class="p-3.5 text-center font-bold">${golDarah}</td>
+                            <td class="p-3.5">${statusPerkawinan}</td>
+                            <td class="p-3.5"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md font-semibold text-[10px]">${statusKeluarga}</span></td>
+                            <td class="p-3.5 text-center space-x-1 whitespace-nowrap">
+                                <button onclick="openDetailModal('${id}')" class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition border border-blue-200 cursor-pointer">
+                                    <i class="fa-solid fa-eye mr-1"></i> Detail
+                                </button>
+                                <button onclick="openEditModal('${id}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition border border-emerald-200 cursor-pointer">
+                                    <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                    // Kartu Mobile (Tombol Detail & Edit Berdampingan)
+                    cardsMobile += `
+                        <div class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm space-y-2">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">#${no} • ${statusKeluarga}</span>
+                                    <h4 class="text-xs font-bold text-gray-800 mt-1">${nama}</h4>
+                                </div>
+                                <span class="text-[10px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded font-mono">${gender}</span>
+                            </div>
+                            <div class="text-[11px] text-gray-500 space-y-0.5 pt-1 border-t border-gray-100">
+                                <p><strong class="text-gray-700">NIK:</strong> <span class="font-mono text-emerald-600">${nik}</span></p>
+                                <p><strong class="text-gray-700">TTL:</strong> ${tempatLahir}, ${tanggalLahir}</p>
+                                <p><strong class="text-gray-700">Agama / Darah:</strong> ${agama} / <span class="font-bold">${golDarah}</span></p>
+                                <p><strong class="text-gray-700">Status:</strong> ${statusPerkawinan}</p>
+                            </div>
+                            <div class="pt-2 grid grid-cols-2 gap-2">
+                                <button onclick="openDetailModal('${id}')" class="py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-semibold rounded-xl border border-blue-200 transition text-center cursor-pointer">
+                                    <i class="fa-solid fa-eye mr-1"></i> Detail
+                                </button>
+                                <button onclick="openEditModal('${id}')" class="py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl border border-emerald-200 transition text-center cursor-pointer">
+                                    <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    no++;
+                });
+
+                tabelBodyDesktop.innerHTML = rowsDesktop;
+                let listWargaContainer = document.getElementById('listWargaMobile');
+                if(listWargaContainer) listWargaContainer.innerHTML = cardsMobile;
+
+            } catch (error) {
+                console.error("Gagal memuat data warga:", error);
+                tabelBodyDesktop.innerHTML = `<tr><td colspan="11" class="text-center py-8 text-red-500">Gagal memuat data dari database.</td></tr>`;
+            }
+        }
+
+        // Fungsi Buka Modal Detail
+        window.openDetailModal = function(id) {
+            const d = window.wargaDataStore[id];
+            if (!d) return;
+
+            const content = `
+                <div class="bg-slate-50 p-3 rounded-xl space-y-1.5 border border-gray-200">
+                    <p><strong>Nama Lengkap:</strong> ${d.nama || '-'}</p>
+                    <p><strong>NIK:</strong> <span class="font-mono text-emerald-600">${d.nik || '-'}</span></p>
+                    <p><strong>No. KK:</strong> <span class="font-mono">${d.noKK || '-'}</span></p>
+                    <p><strong>Tempat/Tanggal Lahir:</strong> ${d.tempatLahir || '-'}, ${d.tanggalLahir || '-'}</p>
+                    <p><strong>Jenis Kelamin:</strong> ${d.gender || '-'}</p>
+                    <p><strong>Golongan Darah:</strong> ${d.golDarah || '-'}</p>
+                    <p><strong>Agama:</strong> ${d.agama || '-'}</p>
+                    <p><strong>Status Perkawinan:</strong> ${d.statusPerkawinan || '-'}</p>
+                    <p><strong>Pendidikan Terakhir:</strong> ${d.pendidikan || '-'}</p>
+                    <p><strong>Pekerjaan:</strong> ${d.pekerjaan || '-'}</p>
+                    <p><strong>Kewarganegaraan:</strong> ${d.kewarganegaraan || '-'} ${d.noPaspor ? '(Paspor: ' + d.noPaspor + ')' : ''}</p>
+                    <p><strong>Hubungan dlm KK:</strong> ${d.hubunganKK || '-'}</p>
+                    <p><strong>Alamat:</strong> ${d.alamat || '-'}, RT ${d.rt || '-'}/RW ${d.rw || '-'}, Kal. ${d.desa || '-'}, Kec. ${d.kecamatan || '-'}</p>
+                </div>
+            `;
+            document.getElementById('detailContent').innerHTML = content;
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        window.closeDetailModal = function() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        // Fungsi Buka Modal Edit
+        window.openEditModal = function(id) {
+            const data = window.wargaDataStore[id];
+            if (!data) return;
+
+            document.getElementById('editDocId').value = id;
+            document.getElementById('editNik').value = data.nik || '';
+            document.getElementById('editNama').value = data.nama || '';
+            document.getElementById('editTempatLahir').value = data.tempatLahir || '';
+            document.getElementById('editTanggalLahir').value = data.tanggalLahir || '';
+            document.getElementById('editGender').value = data.gender || 'Laki-laki';
+            document.getElementById('editGolDarah').value = data.golDarah || '-';
+            document.getElementById('editAgama').value = data.agama || 'Islam';
+            document.getElementById('editStatusPerkawinan').value = data.statusPerkawinan || 'Belum Kawin';
+            document.getElementById('editHubunganKK').value = data.hubunganKK || 'Kepala Keluarga';
+
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        // Fungsi Tutup Modal Edit
+        window.closeEditModal = function() {
+            document.getElementById('editModal').classList.add('hidden');
+        }
+
+        // Tangani Submit Form Edit
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editDocId').value;
+            const btn = document.getElementById('saveEditBtn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Menyimpan...';
+
+            try {
+                const docRef = doc(db, "warga", id);
+                await updateDoc(docRef, {
+                    nik: document.getElementById('editNik').value,
+                    nama: document.getElementById('editNama').value,
+                    tempatLahir: document.getElementById('editTempatLahir').value,
+                    tanggalLahir: document.getElementById('editTanggalLahir').value,
+                    gender: document.getElementById('editGender').value,
+                    golDarah: document.getElementById('editGolDarah').value,
+                    agama: document.getElementById('editAgama').value,
+                    statusPerkawinan: document.getElementById('editStatusPerkawinan').value,
+                    hubunganKK: document.getElementById('editHubunganKK').value,
+                    updatedAt: new Date().toISOString()
+                });
+
+                alert('Data warga berhasil diperbarui!');
+                closeEditModal();
+                loadDaftarWarga();
+            } catch (error) {
+                console.error("Gagal mengupdate data:", error);
+                alert('Gagal memperbarui data ke database.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Simpan Perubahan';
+            }
+        });
+
+        window.onload = () => {
+            loadDaftarWarga();
+        };
+    </script>
+</body>
+</html>

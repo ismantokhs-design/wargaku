@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Input Galeri - WargaKu PWA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-animation {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- ELEMEN CUSTOM TOAST NOTIFICATION -->
+    <div id="toastNotification" class="hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-[90%] bg-gray-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md flex items-center space-x-3 border border-gray-700/50">
+        <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0 shadow-md">
+            <i class="fa-solid fa-check text-sm"></i>
+        </div>
+        <div class="flex-1">
+            <h4 class="text-xs font-bold text-white">Berhasil</h4>
+            <p id="toastMessage" class="text-[11px] text-gray-300">Aksi berhasil dilakukan!</p>
+        </div>
+    </div>
+
+    <!-- Kontainer Utama Tampilan Mobile / PWA -->
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-24" style="background-color: #f0fdf4;">
+        
+        <!-- Header Halaman -->
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex items-center space-x-3">
+                <a href="dashboard.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </a>
+                <h1 class="text-lg font-bold text-white tracking-wide">Event / Galeri</h1>
+            </div>
+            
+            <div class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/30 flex items-center space-x-1 shadow-inner">
+                <i class="fa-solid fa-images text-amber-300 text-xs"></i>
+                <span>Admin</span>
+            </div>
+        </header>
+
+        <!-- Konten Utama -->
+        <main class="px-6 space-y-4 flex-1 py-6 overflow-y-auto">
+
+            <!-- Bar Pencarian & Tombol Aksi (Hapus & Tambah) -->
+            <div class="space-y-3">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input type="text" id="inputCari" oninput="filterGaleri()" placeholder="Cari event..." class="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-4 py-3 text-xs font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 shadow-sm transition">
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <!-- Tombol Hapus Dinamis (Hanya muncul jika ada yang dicentang) -->
+                    <button id="btnHapusTerpilih" onclick="hapusTerpilih()" class="hidden bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center space-x-1.5 cursor-pointer">
+                        <i class="fa-solid fa-trash-can text-[11px]"></i>
+                        <span id="txtJumlahHapus">Hapus (0)</span>
+                    </button>
+                    <!-- Spacer agar tombol Tambah Event tetap di kanan saat tombol hapus tersembunyi -->
+                    <div id="spacerHapus" class="hidden md:block"></div>
+
+                    <button onclick="openModal()" class="bg-[#0b3c65] hover:bg-[#082a48] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center space-x-2 cursor-pointer ml-auto">
+                        <span>Tambah Event</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Daftar List Card Event / Galeri -->
+            <div id="listGaleriContainer" class="space-y-3.5">
+                <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm flex items-center justify-center text-gray-400 text-xs py-10">
+                    <i class="fa-solid fa-spinner animate-spin mr-2"></i> Memuat data galeri...
+                </div>
+            </div>
+
+            <!-- Navigasi Halaman (Pagination Sederhana) -->
+            <div class="bg-white rounded-2xl p-3 border border-gray-200 shadow-sm flex items-center justify-between text-xs text-gray-600">
+                <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition">
+                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                </button>
+                <span class="font-bold bg-emerald-50 text-emerald-700 px-3 py-1 rounded-lg border border-emerald-100">1</span>
+                <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition">
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </button>
+            </div>
+
+        </main>
+
+        <!-- FLOATING ACTION BUTTON (+) UNTUK TAMBAH EVENT -->
+        <button onclick="openModal()" class="fixed bottom-20 right-6 z-40 w-14 h-14 bg-white text-gray-800 rounded-full shadow-2xl border border-gray-200 flex items-center justify-center text-xl hover:bg-emerald-50 hover:text-emerald-600 transition cursor-pointer">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+
+        <!-- MODAL / POPUP TAMBAH EVENT -->
+        <div id="modalTambah" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl border border-gray-100 overflow-hidden modal-animation flex flex-col max-h-[90vh]">
+                
+                <!-- Header Modal -->
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-sm font-bold text-gray-900">Tambah Event</h3>
+                    <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition cursor-pointer">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- Form Modal -->
+                <form id="formTambahGaleri" onsubmit="simpanGaleri(event)" class="p-6 space-y-4 overflow-y-auto text-xs">
+                    
+                    <!-- Kotak Pratinjau Gambar (Rasio 2:1) -->
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Pratinjau Gambar (2:1)</label>
+                        <div id="previewBox" class="w-full h-36 bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center text-gray-400 overflow-hidden relative">
+                            <i class="fa-regular fa-image text-2xl mb-1"></i>
+                            <span class="text-[11px]">Pratinjau Gambar (2:1)</span>
+                            <img id="imgPreview" class="hidden absolute inset-0 w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Nama Event -->
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Nama Event</label>
+                        <input type="text" id="inputNamaEvent" placeholder="Misal: Event Heboh / Kerja Bakti" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                    </div>
+
+                    <!-- Deskripsi Event -->
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Deskripsi Event</label>
+                        <textarea id="inputDeskripsi" rows="3" placeholder="Ketik keterangan atau laporan singkat kegiatan..." class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required></textarea>
+                    </div>
+
+                    <!-- Upload Gambar -->
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Upload Gambar</label>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="fileNameDisplay" value="Tidak ada yang dipilih" class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-400 truncate" readonly>
+                            <label class="bg-[#0b3c65] hover:bg-[#082a48] text-white font-bold px-4 py-2.5 rounded-xl cursor-pointer transition shadow-sm text-[11px] flex-shrink-0">
+                                Pilih File
+                                <input type="file" id="inputFileGambar" accept="image/*" onchange="previewFile(this)" class="hidden" required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Simpan Event -->
+                    <button type="submit" id="btnSimpan" class="w-full bg-[#0b3c65] hover:bg-[#082a48] text-white font-bold py-3 rounded-xl transition shadow-lg cursor-pointer flex items-center justify-center space-x-2 text-xs mt-2">
+                        <span>Simpan Event</span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Navigasi Bawah -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-40">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+                <a href="input-galeri.html" class="flex flex-col items-center text-emerald-300 font-bold">
+                    <i class="fa-solid fa-images text-lg drop-shadow"></i>
+                    <span class="text-[10px] mt-1">Galeri</span>
+                </a>
+                <a href="#" onclick="alert('Pesan'); return false;" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Script Firestore & Logika Galeri -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let cacheGaleriData = [];
+
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = message;
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        }
+
+        window.openModal = function() {
+            document.getElementById('modalTambah').classList.remove('hidden');
+        }
+
+        window.closeModal = function() {
+            document.getElementById('modalTambah').classList.add('hidden');
+            document.getElementById('formTambahGaleri').reset();
+            document.getElementById('imgPreview').classList.add('hidden');
+            document.getElementById('fileNameDisplay').value = "Tidak ada yang dipilih";
+        }
+
+        window.previewFile = function(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById('fileNameDisplay').value = file.name;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('imgPreview');
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Ambil Data Galeri dari Firestore
+        async function loadGaleri() {
+            const container = document.getElementById('listGaleriContainer');
+            try {
+                const querySnapshot = await getDocs(collection(db, "galeri"));
+                cacheGaleriData = [];
+
+                querySnapshot.forEach(docSnap => {
+                    cacheGaleriData.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                renderGaleri(cacheGaleriData);
+                updateDeleteButtonState();
+            } catch (error) {
+                console.error("Gagal memuat galeri:", error);
+                container.innerHTML = `<div class="text-center text-xs text-red-500 py-6">Gagal memuat data dari database.</div>`;
+            }
+        }
+
+        function renderGaleri(dataList) {
+            const container = document.getElementById('listGaleriContainer');
+            if (dataList.length === 0) {
+                container.innerHTML = `<div class="text-center text-xs text-gray-400 py-10 bg-white rounded-2xl border border-gray-200">Belum ada event atau galeri tersimpan.</div>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            dataList.forEach(item => {
+                const isActive = item.status !== false;
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-4 border border-gray-200 shadow-sm flex items-center justify-between space-x-3";
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3 flex-1 min-w-0">
+                        <input type="checkbox" value="${item.id}" onchange="updateDeleteButtonState()" class="checkbox-galeri w-4 h-4 text-emerald-600 rounded border-gray-300 focus:ring-emerald-500 flex-shrink-0 cursor-pointer">
+                        <img src="${item.gambar || 'https://via.placeholder.com/150'}" class="w-16 h-16 rounded-xl object-cover border border-gray-100 flex-shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-xs font-bold text-gray-900 truncate">${item.nama}</h4>
+                            <p class="text-[11px] text-gray-500 truncate mt-0.5">${item.deskripsi}</p>
+                            <div class="mt-2 text-[10px] text-gray-400 border-t border-gray-100 pt-1 flex justify-between items-center">
+                                <span>Status</span>
+                                <button onclick="toggleStatus('${item.id}', ${isActive})" class="w-9 h-5 flex items-center rounded-full p-0.5 transition-colors duration-300 cursor-pointer ${isActive ? 'bg-emerald-600 justify-end' : 'bg-gray-300 justify-start'}">
+                                    <span class="w-4 h-4 rounded-full bg-white shadow-md transform transition-transform"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Fungsi untuk mengontrol kemunculan tombol Hapus berdasarkan checkbox yang dicentang
+        window.updateDeleteButtonState = function() {
+            const checkboxes = document.querySelectorAll('.checkbox-galeri:checked');
+            const btnHapus = document.getElementById('btnHapusTerpilih');
+            const txtJumlah = document.getElementById('txtJumlahHapus');
+            const count = checkboxes.length;
+
+            if (count > 0) {
+                btnHapus.classList.remove('hidden');
+                txtJumlah.textContent = `Hapus (${count})`;
+            } else {
+                btnHapus.classList.add('hidden');
+            }
+        }
+
+        // Fungsi Hapus Data Terpilih dari Firebase
+        window.hapusTerpilih = async function() {
+            const checkboxes = document.querySelectorAll('.checkbox-galeri:checked');
+            if (checkboxes.length === 0) return;
+
+            if (!confirm(`Yakin ingin menghapus ${checkboxes.length} event terpilih?`)) return;
+
+            try {
+                for (const cb of checkboxes) {
+                    await deleteDoc(doc(db, "galeri", cb.value));
+                }
+                showToast(`${checkboxes.length} event berhasil dihapus!`);
+                loadGaleri();
+            } catch (error) {
+                console.error("Gagal menghapus data:", error);
+                alert("Terjadi kesalahan saat menghapus data.");
+            }
+        }
+
+        window.filterGaleri = function() {
+            const keyword = document.getElementById('inputCari').value.toLowerCase();
+            const filtered = cacheGaleriData.filter(item => 
+                item.nama.toLowerCase().includes(keyword) || 
+                item.deskripsi.toLowerCase().includes(keyword)
+            );
+            renderGaleri(filtered);
+            updateDeleteButtonState();
+        }
+
+        window.simpanGaleri = async function(e) {
+            e.preventDefault();
+            const nama = document.getElementById('inputNamaEvent').value;
+            const deskripsi = document.getElementById('inputDeskripsi').value;
+            const imgEl = document.getElementById('imgPreview');
+            const gambar = imgEl.src || "";
+
+            const btn = document.getElementById('btnSimpan');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Menyimpan...`;
+
+            try {
+                await addDoc(collection(db, "galeri"), {
+                    nama: nama,
+                    deskripsi: deskripsi,
+                    gambar: gambar,
+                    status: true,
+                    createdAt: new Date().toISOString()
+                });
+
+                showToast('Event berhasil ditambahkan!');
+                closeModal();
+                loadGaleri();
+            } catch (error) {
+                console.error("Gagal menyimpan galeri:", error);
+                alert("Terjadi kesalahan saat menyimpan data.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>Simpan Event</span>`;
+            }
+        }
+
+        window.toggleStatus = async function(id, currentStatus) {
+            try {
+                const docRef = doc(db, "galeri", id);
+                await updateDoc(docRef, { status: !currentStatus });
+                showToast('Status event diperbarui!');
+                loadGaleri();
+            } catch (error) {
+                console.error("Gagal mengubah status:", error);
+            }
+        }
+
+        window.onload = () => {
+            loadGaleri();
+        };
+    </script>
+</body>
+</html>

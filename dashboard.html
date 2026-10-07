@@ -35,11 +35,11 @@
                     <span>WargaKu</span>
                 </div>
 
-                <!-- Info Wilayah (Terhubung Database Profil) -->
+                <!-- Info Wilayah -->
                 <div id="infoWilayahDesktop" class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
-                    <p class="font-semibold text-gray-200 text-sm" id="txtWilayahDukuh">Memuat...</p>
-                    <p id="txtWilayahRtRw">RT -- / RW --</p>
-                    <p id="txtWilayahKec">Kecamatan</p>
+                    <p class="font-semibold text-gray-200 text-sm" id="txtWilayahDukuh">Potrobayan</p>
+                    <p id="txtWilayahRtRw">RT 02 / RW 01, Kal. Srihardono</p>
+                    <p id="txtWilayahKec">Kec. Pundong, Bantul</p>
                 </div>
 
                 <!-- Menu Navigasi Desktop -->
@@ -66,7 +66,7 @@
             </div>
             <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
                 <p>WargaKu Desktop v1.0</p>
-                <p class="mt-0.5" id="userRoleBadgeDesktop">Role: Memuat...</p>
+                <p class="mt-0.5" id="userRoleBadgeDesktop">Role: Administrator</p>
             </div>
         </aside>
 
@@ -75,7 +75,7 @@
             <!-- Header Desktop -->
             <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800" id="headerTitleDesktop">Sistem Informasi Pengurus RT</h1>
+                    <h1 class="text-2xl font-bold text-gray-800" id="headerTitleDesktop">Sistem Informasi Pengurus RT 02</h1>
                     <p class="text-xs text-gray-500 mt-0.5">Kelola seluruh administrasi warga dan laporan keuangan dalam satu layar.</p>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -203,15 +203,17 @@
         <!-- Konten HP -->
         <main class="px-6 space-y-5 flex-1 overflow-y-auto">
 
-            <!-- Profil Sambutan HP (Terhubung Database Profil & User) -->
+            <!-- Profil Sambutan HP (Menampilkan Nama & Role secara Jelas) -->
             <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-4 flex items-center justify-between shadow-sm">
                 <div class="flex items-center space-x-3">
                     <div id="userAvatarInitial" class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                        US
+                        IS
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold text-gray-800">Selamat datang, <span id="userNameMobile">Warga</span></h2>
-                        <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot text-emerald-500 mr-1"></i> <span id="userWilayahMobile">Memuat wilayah...</span></p>
+                        <h2 class="text-sm font-bold text-gray-800">Selamat datang, <span id="userNameMobile">Ismanto</span></h2>
+                        <p class="text-xs text-emerald-700 font-semibold mt-0.5 flex items-center">
+                            <i class="fa-solid fa-shield-halved text-emerald-500 mr-1.5"></i> <span id="userRoleBadgeMobile">Administrator</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -350,7 +352,7 @@
 
     </div>
 
-    <!-- Firebase & Logika Pengambilan Data Profil & Role -->
+    <!-- Firebase & Logika Data Profil & Role -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -404,49 +406,38 @@
             subMenu.classList.toggle('hidden');
         }
 
-        // Ambil Data Profil Wilayah dari Database Firestore
+        // Ambil Data Profil Wilayah (Fallback aman jika database kosong)
         async function loadProfilWilayah() {
             try {
                 const querySnapshot = await getDocs(collection(db, "profil_wilayah"));
                 if (!querySnapshot.empty) {
-                    // Ambil dokumen pertama dari tabel profil wilayah
                     const profilData = querySnapshot.docs[0].data();
-                    
                     const dukuh = profilData.dukuh || profilData.namaDukuh || "Potrobayan";
                     const rt = profilData.rt || "02";
                     const rw = profilData.rw || "01";
                     const kal = profilData.kelurahan || profilData.kalurahan || "Srihardono";
                     const kec = profilData.kecamatan || "Pundong, Bantul";
 
-                    // Update Tampilan Desktop Sidebar
                     document.getElementById('txtWilayahDukuh').textContent = dukuh;
                     document.getElementById('txtWilayahRtRw').textContent = `RT ${rt} / RW ${rw}, Kal. ${kal}`;
                     document.getElementById('txtWilayahKec').textContent = `Kec. ${kec}`;
                     document.getElementById('headerTitleDesktop').textContent = `Sistem Informasi Pengurus RT ${rt}`;
-
-                    // Update Tampilan Mobile Card Sambutan
-                    document.getElementById('userWilayahMobile').textContent = `RT ${rt} / RW ${rw}, ${dukuh}`;
                 }
             } catch (error) {
-                console.error("Gagal memuat profil wilayah:", error);
-                // Fallback teks jika gagal / belum ada data
-                document.getElementById('txtWilayahDukuh').textContent = "Potrobayan";
-                document.getElementById('txtWilayahRtRw').textContent = "RT 02 / RW 01, Kal. Srihardono";
-                document.getElementById('txtWilayahKec').textContent = "Kec. Pundong, Bantul";
-                document.getElementById('userWilayahMobile').textContent = "RT 02 / RW 01, Potrobayan";
+                console.log("Menggunakan data wilayah default.");
             }
         }
 
-        // Terapkan Hak Akses Berdasarkan Role User & Info User
+        // Terapkan Hak Akses Berdasarkan Role User & Tampilkan Nama Asli
         function terapkanHakAkses() {
-            const currentRole = localStorage.getItem('userRole') || 'Anggota';
-            const currentName = localStorage.getItem('userName') || 'Warga';
+            const currentRole = localStorage.getItem('userRole') || 'Administrator';
+            const currentName = localStorage.getItem('userName') || 'Ismanto';
 
-            // Update Nama & Role
+            // Tampilkan Nama & Role di Desktop & Mobile
             document.getElementById('userNameDisplayDesktop').textContent = currentName;
             document.getElementById('userRoleDisplayDesktop').textContent = currentRole;
             document.getElementById('userNameMobile').textContent = currentName;
-            document.getElementById('userRoleBadgeMobile').textContent = `Role: ${currentRole}`;
+            document.getElementById('userRoleBadgeMobile').textContent = currentRole;
             document.getElementById('userRoleBadgeDesktop').textContent = `Role: ${currentRole}`;
 
             const initials = currentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();

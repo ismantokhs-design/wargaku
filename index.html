@@ -98,7 +98,7 @@
             loginBtn.disabled = true;
 
             try {
-                // Cek data di koleksi "users" berdasarkan email/username
+                // Query mencari berdasarkan field "email" di koleksi "users"
                 const q = query(collection(db, "users"), where("email", "==", inputUser));
                 const querySnapshot = await getDocs(q);
 
@@ -115,10 +115,11 @@
                     // Cek kecocokan password
                     if (userData.password === inputPass) {
                         userFound = true;
-                        // Simpan status login & role asli dari database ke localStorage
+                        
+                        // SIMPAN DATA ASLI DARI DATABASE KE LOCALSTORAGE
                         localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('userName', userData.nama);
-                        localStorage.setItem('userRole', userData.role); // 'Admin', 'Pengurus', atau 'Anggota'
+                        localStorage.setItem('userName', userData.nama); // Nama asli (misal: "Kita")
+                        localStorage.setItem('userRole', userData.role); // Role asli (misal: "Admin")
                         
                         window.location.href = 'dashboard.html';
                     }
@@ -136,7 +137,6 @@
             }
         });
 
-        // Pendaftaran Service Worker agar PWA bisa diinstal di HP
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')

@@ -35,11 +35,11 @@
                     <span>WargaKu</span>
                 </div>
 
-                <!-- Info Wilayah -->
-                <div class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
-                    <p class="font-semibold text-gray-200 text-sm">Potrobayan</p>
-                    <p>RT 02 / RW 01, Kal. Srihardono</p>
-                    <p>Kec. Pundong, Bantul</p>
+                <!-- Info Wilayah (Terhubung Database Profil) -->
+                <div id="infoWilayahDesktop" class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
+                    <p class="font-semibold text-gray-200 text-sm" id="txtWilayahDukuh">Memuat...</p>
+                    <p id="txtWilayahRtRw">RT -- / RW --</p>
+                    <p id="txtWilayahKec">Kecamatan</p>
                 </div>
 
                 <!-- Menu Navigasi Desktop -->
@@ -47,7 +47,7 @@
                     <a href="dashboard.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
                         <i class="fa-solid fa-gauge w-7 text-lg"></i><span>Dashboard Utama</span>
                     </a>
-                    <a href="input-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                    <a href="input-warga.html" id="menuDesktopWarga" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-user-plus w-7 text-lg"></i><span>Data Warga</span>
                     </a>
                     <a href="#" onclick="alert('Menu Pengumuman'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
@@ -66,7 +66,7 @@
             </div>
             <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
                 <p>WargaKu Desktop v1.0</p>
-                <p class="mt-0.5">Database Terhubung (Firebase)</p>
+                <p class="mt-0.5" id="userRoleBadgeDesktop">Role: Memuat...</p>
             </div>
         </aside>
 
@@ -75,13 +75,13 @@
             <!-- Header Desktop -->
             <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800">Sistem Informasi Pengurus RT 02</h1>
+                    <h1 class="text-2xl font-bold text-gray-800" id="headerTitleDesktop">Sistem Informasi Pengurus RT</h1>
                     <p class="text-xs text-gray-500 mt-0.5">Kelola seluruh administrasi warga dan laporan keuangan dalam satu layar.</p>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="text-right">
-                        <p class="text-sm font-bold text-gray-800">Ismanto</p>
-                        <p class="text-xs text-emerald-600 font-medium">Administrator RT</p>
+                        <p id="userNameDisplayDesktop" class="text-sm font-bold text-gray-800">Ismanto</p>
+                        <p id="userRoleDisplayDesktop" class="text-xs text-emerald-600 font-medium">Administrator RT</p>
                     </div>
                     <button id="logoutBtnDesktop" class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-xl text-sm font-semibold transition border border-red-200 cursor-pointer flex items-center space-x-2">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="grid grid-cols-3 gap-6">
-                    <div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                    <div id="desktopPintasanAdminContainer" class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                         <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-grid-2 mr-2 text-emerald-600"></i>Pintasan Menu Administrator</h3>
                         <div class="grid grid-cols-4 gap-4">
                             <a href="input-warga.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
@@ -203,15 +203,15 @@
         <!-- Konten HP -->
         <main class="px-6 space-y-5 flex-1 overflow-y-auto">
 
-            <!-- Profil Sambutan HP -->
+            <!-- Profil Sambutan HP (Terhubung Database Profil & User) -->
             <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-4 flex items-center justify-between shadow-sm">
                 <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                        IS
+                    <div id="userAvatarInitial" class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        US
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold text-gray-800">Selamat datang, <span id="userName">Ismanto</span></h2>
-                        <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot text-emerald-500 mr-1"></i> RT 02 / RW 01, Potrobayan</p>
+                        <h2 class="text-sm font-bold text-gray-800">Selamat datang, <span id="userNameMobile">Warga</span></h2>
+                        <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot text-emerald-500 mr-1"></i> <span id="userWilayahMobile">Memuat wilayah...</span></p>
                     </div>
                 </div>
             </div>
@@ -238,7 +238,7 @@
             <!-- Grid Menu HP -->
             <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
                 <div class="grid grid-cols-4 gap-4 text-center">
-                    <a href="input-warga.html" class="flex flex-col items-center space-y-1.5 group">
+                    <a href="input-warga.html" id="gridMenuWarga" class="flex flex-col items-center space-y-1.5 group">
                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
                             <i class="fa-solid fa-user-plus"></i>
                         </div>
@@ -283,29 +283,31 @@
 
         </main>
 
-        <!-- ================= FIXED BOTTOM NAVIGATION DENGAN MULTI-LEVEL MENU ================= -->
+        <!-- ================= FIXED BOTTOM NAVIGATION DENGAN 5 MENU & MULTI-LEVEL ================= -->
         <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
             
-            <!-- LEVEL 2: SUB-MENU MANAJEMEN (Setting User, Hak Akses, Profil Wilayah) -->
+            <!-- LEVEL 2: SUB-MENU MANAJEMEN -->
             <div id="subManajemenMenu" class="hidden bg-emerald-50/95 border-t border-emerald-200 px-6 py-3 shadow-lg rounded-t-2xl transition-all duration-300">
                 <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-200">
                     <span class="text-[11px] font-bold text-emerald-800"><i class="fa-solid fa-sitemap mr-1"></i> Sub-Menu Manajemen</span>
-                    <button onclick="toggleSubManajemen()" class="text-emerald-700 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-200">✕ Tutup</button>
+                    <button onclick="toggleSubManajemen()" class="text-emerald-700 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-200 cursor-pointer">✕ Tutup</button>
                 </div>
                 <div class="grid grid-cols-3 gap-2 text-center">
-                    <a href="#" onclick="alert('Membuka Setting User'); return false;" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
+                    <a href="setting-user.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
                         <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs">
                             <i class="fa-solid fa-user-gear"></i>
                         </div>
                         <span class="text-[10px] font-bold text-gray-700">Setting User</span>
                     </a>
-                    <a href="#" onclick="alert('Membuka Hak Akses'); return false;" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
+                    
+                    <a href="hak-akses.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
                         <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs">
                             <i class="fa-solid fa-shield-halved"></i>
                         </div>
                         <span class="text-[10px] font-bold text-gray-700">Hak Akses</span>
                     </a>
-                    <a href="#" onclick="alert('Membuka Profil Wilayah'); return false;" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
+
+                    <a href="profil-wilayah.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-white transition shadow-sm">
                         <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs">
                             <i class="fa-solid fa-map-location-dot"></i>
                         </div>
@@ -314,48 +316,22 @@
                 </div>
             </div>
 
-            <!-- LEVEL 1: MENU UTAMA "LAINNYA" (Urutan: Warga, Laporan, Manajemen, Database) -->
+            <!-- LEVEL 1: MENU UTAMA "LAINNYA" -->
             <div id="expandMenu" class="hidden bg-white border-t border-gray-200 px-6 py-4 shadow-xl rounded-t-3xl transition-all duration-300">
-                <div class="grid grid-cols-4 gap-2 text-center">
-                    <!-- 1. Warga -->
-                    <a href="input-warga.html" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
-                            <i class="fa-solid fa-user-plus"></i>
-                        </div>
-                        <span class="text-[11px] font-semibold text-gray-700">Warga</span>
-                    </a>
-
-                    <!-- 2. Laporan -->
-                    <a href="#" onclick="alert('Menu Laporan'); toggleLainnya(); return false;" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
-                            <i class="fa-solid fa-file-invoice-dollar"></i>
-                        </div>
-                        <span class="text-[11px] font-semibold text-gray-700">Laporan</span>
-                    </a>
-                    
-                    <!-- 3. Manajemen (Memicu Sub-Menu) -->
-                    <button onclick="toggleSubManajemen()" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition focus:outline-none cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
-                            <i class="fa-solid fa-sitemap"></i>
-                        </div>
-                        <span class="text-[11px] font-semibold text-gray-700">Manajemen</span>
-                    </button>
-
-                    <!-- 4. Database -->
-                    <a href="#" onclick="alert('Menu Database'); toggleLainnya(); return false;" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
-                            <i class="fa-solid fa-database"></i>
-                        </div>
-                        <span class="text-[11px] font-semibold text-gray-700">Database</span>
-                    </a>
+                <div id="expandMenuGrid" class="grid grid-cols-4 gap-2 text-center">
+                    <!-- Dinamis oleh JS -->
                 </div>
             </div>
 
             <!-- BILAH UTAMA BAWAH -->
-            <nav class="bg-white border-t border-gray-100 flex justify-around items-center h-16 px-4 shadow-2xl">
+            <nav class="bg-white border-t border-gray-100 flex justify-around items-center h-16 px-2 shadow-2xl">
                 <a href="dashboard.html" class="flex flex-col items-center text-emerald-600">
                     <i class="fa-solid fa-house text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="profil-wilayah.html" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
                 </a>
                 <a href="#" onclick="alert('Menu Galeri'); return false;" class="flex flex-col items-center text-gray-400 hover:text-emerald-600">
                     <i class="fa-solid fa-images text-lg"></i>
@@ -374,7 +350,7 @@
 
     </div>
 
-    <!-- Firebase & Logika Interaksi Bertingkat -->
+    <!-- Firebase & Logika Pengambilan Data Profil & Role -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -401,19 +377,19 @@
         
         const handleLogout = () => {
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userRole');
             window.location.href = 'index.html';
         };
 
         document.getElementById('logoutBtnDesktop').addEventListener('click', handleLogout);
         document.getElementById('logoutBtnMobile').addEventListener('click', handleLogout);
 
-        // Fungsi toggle dropdown profil HP
         window.toggleUserDropdown = function() {
             const dropdown = document.getElementById('userDropdown');
             dropdown.classList.toggle('hidden');
         }
 
-        // Fungsi toggle menu utama "Lainnya"
         window.toggleLainnya = function() {
             const menu = document.getElementById('expandMenu');
             const subMenu = document.getElementById('subManajemenMenu');
@@ -423,10 +399,113 @@
             }
         }
 
-        // Fungsi toggle sub-menu "Manajemen"
         window.toggleSubManajemen = function() {
             const subMenu = document.getElementById('subManajemenMenu');
             subMenu.classList.toggle('hidden');
+        }
+
+        // Ambil Data Profil Wilayah dari Database Firestore
+        async function loadProfilWilayah() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "profil_wilayah"));
+                if (!querySnapshot.empty) {
+                    // Ambil dokumen pertama dari tabel profil wilayah
+                    const profilData = querySnapshot.docs[0].data();
+                    
+                    const dukuh = profilData.dukuh || profilData.namaDukuh || "Potrobayan";
+                    const rt = profilData.rt || "02";
+                    const rw = profilData.rw || "01";
+                    const kal = profilData.kelurahan || profilData.kalurahan || "Srihardono";
+                    const kec = profilData.kecamatan || "Pundong, Bantul";
+
+                    // Update Tampilan Desktop Sidebar
+                    document.getElementById('txtWilayahDukuh').textContent = dukuh;
+                    document.getElementById('txtWilayahRtRw').textContent = `RT ${rt} / RW ${rw}, Kal. ${kal}`;
+                    document.getElementById('txtWilayahKec').textContent = `Kec. ${kec}`;
+                    document.getElementById('headerTitleDesktop').textContent = `Sistem Informasi Pengurus RT ${rt}`;
+
+                    // Update Tampilan Mobile Card Sambutan
+                    document.getElementById('userWilayahMobile').textContent = `RT ${rt} / RW ${rw}, ${dukuh}`;
+                }
+            } catch (error) {
+                console.error("Gagal memuat profil wilayah:", error);
+                // Fallback teks jika gagal / belum ada data
+                document.getElementById('txtWilayahDukuh').textContent = "Potrobayan";
+                document.getElementById('txtWilayahRtRw').textContent = "RT 02 / RW 01, Kal. Srihardono";
+                document.getElementById('txtWilayahKec').textContent = "Kec. Pundong, Bantul";
+                document.getElementById('userWilayahMobile').textContent = "RT 02 / RW 01, Potrobayan";
+            }
+        }
+
+        // Terapkan Hak Akses Berdasarkan Role User & Info User
+        function terapkanHakAkses() {
+            const currentRole = localStorage.getItem('userRole') || 'Anggota';
+            const currentName = localStorage.getItem('userName') || 'Warga';
+
+            // Update Nama & Role
+            document.getElementById('userNameDisplayDesktop').textContent = currentName;
+            document.getElementById('userRoleDisplayDesktop').textContent = currentRole;
+            document.getElementById('userNameMobile').textContent = currentName;
+            document.getElementById('userRoleBadgeMobile').textContent = `Role: ${currentRole}`;
+            document.getElementById('userRoleBadgeDesktop').textContent = `Role: ${currentRole}`;
+
+            const initials = currentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            document.getElementById('userAvatarInitial').textContent = initials;
+
+            const menuDesktopWarga = document.getElementById('menuDesktopWarga');
+            const desktopPintasanAdmin = document.getElementById('desktopPintasanAdminContainer');
+            const gridMenuWarga = document.getElementById('gridMenuWarga');
+            const expandMenuGrid = document.getElementById('expandMenuGrid');
+
+            if (currentRole === 'Anggota') {
+                if (menuDesktopWarga) menuDesktopWarga.style.display = 'none';
+                if (desktopPintasanAdmin) desktopPintasanAdmin.style.display = 'none';
+                if (gridMenuWarga) gridMenuWarga.style.display = 'none';
+
+                expandMenuGrid.className = "grid grid-cols-2 gap-2 text-center";
+                expandMenuGrid.innerHTML = `
+                    <a href="profil-wilayah.html" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-id-badge"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Profil Wilayah</span>
+                    </a>
+                    <a href="#" onclick="alert('Menu Bantuan'); toggleLainnya(); return false;" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Bantuan</span>
+                    </a>
+                `;
+            } else {
+                expandMenuGrid.className = "grid grid-cols-4 gap-2 text-center";
+                expandMenuGrid.innerHTML = `
+                    <a href="input-warga.html" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Warga</span>
+                    </a>
+                    <a href="#" onclick="alert('Menu Laporan'); toggleLainnya(); return false;" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Laporan</span>
+                    </a>
+                    <button onclick="toggleSubManajemen()" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition focus:outline-none cursor-pointer">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Manajemen</span>
+                    </button>
+                    <a href="#" onclick="alert('Menu Database'); toggleLainnya(); return false;" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-50 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base group-hover:bg-emerald-500 group-hover:text-white transition shadow-sm">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-700">Database</span>
+                    </a>
+                `;
+            }
         }
 
         async function loadAllStats() {
@@ -437,11 +516,15 @@
                 if (statTotalWargaDesktop) statTotalWargaDesktop.textContent = `${count} Jiwa`;
                 if (statTotalWargaMobile) statTotalWargaMobile.textContent = `${count} Jiwa`;
             } catch (error) {
-                console.error("Gagal memuat statistik:", error);
+                console.error("Gagal memuat statistik warga:", error);
             }
         }
 
-        window.onload = loadAllStats;
+        window.onload = () => {
+            terapkanHakAkses();
+            loadProfilWilayah();
+            loadAllStats();
+        };
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

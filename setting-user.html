@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WargaKu - Setting User</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-20px); opacity: 0; }
+        }
+        .toast-show {
+            animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .toast-hide {
+            animation: slideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- ELEMEN CUSTOM TOAST NOTIFICATION -->
+    <div id="toastNotification" class="hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-[90%] bg-gray-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md flex items-center space-x-3 border border-gray-700/50">
+        <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0 shadow-md">
+            <i class="fa-solid fa-check text-sm"></i>
+        </div>
+        <div class="flex-1">
+            <h4 class="text-xs font-bold text-white">Berhasil</h4>
+            <p id="toastMessage" class="text-[11px] text-gray-300">Aksi berhasil disimpan ke database!</p>
+        </div>
+    </div>
+
+    <!-- TAMPILAN UTAMA MOBILE CONTAINER -->
+    <div class="max-w-md mx-auto min-h-screen bg-[#f0fdf4] shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-12">
+        
+        <!-- HEADER HALAMAN -->
+        <header class="px-6 pt-6 pb-4 flex justify-between items-center bg-white sticky top-0 z-40 shadow-sm">
+            <div class="flex items-center space-x-3">
+                <a href="dashboard.html" class="w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition shadow-sm">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </a>
+                <h1 class="text-base font-bold text-gray-800 tracking-wide">Setting User & Akses</h1>
+            </div>
+            <button onclick="openAddModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl shadow-sm transition flex items-center space-x-1.5 cursor-pointer">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Tambah</span>
+            </button>
+        </header>
+
+        <!-- KONTEN UTAMA -->
+        <main class="px-6 space-y-4 flex-1 pt-4">
+
+            <!-- Banner Info -->
+            <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="bg-white/20 text-[10px] px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider">Database Firestore</span>
+                        <h2 class="text-lg font-extrabold mt-2">Kelola Akun & Hak Akses</h2>
+                        <p class="text-xs text-emerald-100 mt-1 leading-relaxed">Data pengguna tersimpan aman secara online dan real-time.</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-2xl text-emerald-200 shadow-inner flex-shrink-0 ml-3">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KARTU DAFTAR USER -->
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-5 py-4 bg-gray-50/80 border-b border-gray-100 flex items-center justify-between">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500"><i class="fa-solid fa-users mr-1.5 text-emerald-600"></i>Daftar Pengguna Cloud</h3>
+                    <span id="userCount" class="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-md">Memuat...</span>
+                </div>
+
+                <!-- List Container (Terhubung Firebase) -->
+                <div id="userListContainer" class="divide-y divide-gray-100 text-xs">
+                    <div class="p-6 text-center text-gray-400 italic">Mengambil data dari database...</div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER INFO -->
+        <footer class="text-center py-6 text-[11px] text-gray-400">
+            <p>WargaKu Sistem Informasi RT v1.0</p>
+        </footer>
+
+        <!-- ================= MODAL TAMBAH / EDIT USER ================= -->
+        <div id="userModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+            <div class="bg-white w-full max-w-md rounded-t-[2.55rem] sm:rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+                
+                <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-100">
+                    <div class="flex items-center space-x-2.5">
+                        <div id="modalIconContainer" class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <div>
+                            <h3 id="modalTitle" class="text-sm font-bold text-gray-800">Tambah User Baru</h3>
+                            <p class="text-[11px] text-gray-400">Masukkan data akun dan hak akses</p>
+                        </div>
+                    </div>
+                    <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center hover:bg-gray-200 transition cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Form User -->
+                <form id="userForm" onsubmit="saveUserToDatabase(event)" class="space-y-3.5 text-xs">
+                    <input type="hidden" id="editDocId" value="">
+
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Nama Lengkap</label>
+                        <input type="text" id="inputNama" placeholder="Contoh: Ismanto" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Email / Username</label>
+                        <input type="email" id="inputEmail" placeholder="Contoh: ismanto@gmail.com" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Password</label>
+                        <input type="password" id="inputPassword" placeholder="••••••••" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                        <span id="passwordHint" class="text-[10px] text-gray-400 mt-0.5 block hidden">Kosongkan jika tidak ingin mengubah password.</span>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-2">Hak Akses (Role)</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-2xl border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition cursor-pointer">
+                                <input type="radio" name="inputRole" value="Admin" class="text-purple-600 focus:ring-purple-400 w-4 h-4" required>
+                                <div class="ml-3">
+                                    <span class="font-bold text-gray-800 block">Admin</span>
+                                    <span class="text-[10px] text-gray-400">Akses penuh seluruh fitur & pengaturan sistem RT.</span>
+                                </div>
+                            </label>
+
+                            <label class="flex items-center p-3 rounded-2xl border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition cursor-pointer">
+                                <input type="radio" name="inputRole" value="Pengurus" class="text-blue-600 focus:ring-blue-400 w-4 h-4">
+                                <div class="ml-3">
+                                    <span class="font-bold text-gray-800 block">Pengurus</span>
+                                    <span class="text-[10px] text-gray-400">Akses input warga, keuangan kas, dan laporan.</span>
+                                </div>
+                            </label>
+
+                            <label class="flex items-center p-3 rounded-2xl border border-gray-200 hover:bg-amber-50 hover:border-amber-300 transition cursor-pointer">
+                                <input type="radio" name="inputRole" value="Anggota" class="text-amber-600 focus:ring-amber-400 w-4 h-4">
+                                <div class="ml-3">
+                                    <span class="font-bold text-gray-800 block">Anggota</span>
+                                    <span class="text-[10px] text-gray-400">Akses melihat informasi, profil wilayah, dan pesan.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 flex space-x-3">
+                        <button type="button" onclick="closeModal()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition cursor-pointer">Batal</button>
+                        <button type="submit" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow-md shadow-emerald-600/20 cursor-pointer">Simpan</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Firebase & Logika Interaksi Database -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Fungsi Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = message;
+            
+            toast.classList.remove('hidden', 'toast-hide');
+            toast.classList.add('toast-show');
+
+            setTimeout(() => {
+                toast.classList.remove('toast-show');
+                toast.classList.add('toast-hide');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 2500);
+        }
+
+        // Ambil Data User dari Firestore
+        async function fetchUsers() {
+            const container = document.getElementById('userListContainer');
+            try {
+                const querySnapshot = await getDocs(collection(db, "users"));
+                document.getElementById('userCount').textContent = `${querySnapshot.size} Akun`;
+                container.innerHTML = '';
+
+                if (querySnapshot.empty) {
+                    container.innerHTML = `<div class="p-6 text-center text-gray-400 italic">Belum ada akun pengguna di database.</div>`;
+                    return;
+                }
+
+                let index = 0;
+                querySnapshot.forEach((documentSnapshot) => {
+                    const user = documentSnapshot.data();
+                    const docId = documentSnapshot.id;
+                    const initials = user.nama ? user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'US';
+                    
+                    let badgeClass = "px-2.5 py-1 rounded-lg text-[10px] font-bold border ";
+                    if(user.role === 'Admin') badgeClass += "bg-purple-100 text-purple-700 border-purple-200";
+                    else if(user.role === 'Pengurus') badgeClass += "bg-blue-100 text-blue-700 border-blue-200";
+                    else badgeClass += "bg-amber-100 text-amber-700 border-amber-200";
+
+                    const avatarColors = ['bg-emerald-500', 'bg-blue-500', 'bg-amber-500', 'bg-purple-500', 'bg-teal-600'];
+                    const avatarColor = avatarColors[index % avatarColors.length];
+                    index++;
+
+                    const html = `
+                        <div class="p-4 flex items-center justify-between hover:bg-emerald-50/40 transition">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-full ${avatarColor} text-white flex items-center justify-center font-bold shadow-sm">${initials}</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">${user.nama}</h4>
+                                    <p class="text-[11px] text-gray-400">${user.email}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="${badgeClass}">${user.role}</span>
+                                <button onclick="window.openEditModal('${docId}', '${user.nama}', '${user.email}', '${user.role}')" class="w-8 h-8 rounded-xl bg-gray-100 text-gray-600 hover:bg-emerald-600 hover:text-white transition flex items-center justify-center cursor-pointer" title="Edit User">
+                                    <i class="fa-solid fa-pen text-xs"></i>
+                                </button>
+                                <button onclick="window.deleteUserFromDatabase('${docId}', '${user.nama}')" class="w-8 h-8 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition flex items-center justify-center cursor-pointer" title="Hapus User">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += html;
+                });
+            } catch (error) {
+                console.error("Gagal memuat user:", error);
+                container.innerHTML = `<div class="p-6 text-center text-red-500">Gagal memuat data dari database.</div>`;
+            }
+        }
+
+        window.openAddModal = function() {
+            document.getElementById('editDocId').value = '';
+            document.getElementById('modalTitle').textContent = 'Tambah User Baru';
+            document.getElementById('userForm').reset();
+            document.getElementById('passwordHint').classList.add('hidden');
+            document.getElementById('inputPassword').setAttribute('required', 'true');
+            document.getElementById('userModal').classList.remove('hidden');
+        }
+
+        window.openEditModal = function(docId, nama, email, role) {
+            document.getElementById('editDocId').value = docId;
+            document.getElementById('modalTitle').textContent = 'Edit User';
+            document.getElementById('inputNama').value = nama;
+            document.getElementById('inputEmail').value = email;
+            document.getElementById('inputPassword').value = '';
+            document.getElementById('passwordHint').classList.remove('hidden');
+            document.getElementById('inputPassword').removeAttribute('required');
+
+            const radios = document.querySelectorAll('input[name="inputRole"]');
+            radios.forEach(radio => {
+                if(radio.value === role) radio.checked = true;
+            });
+
+            document.getElementById('userModal').classList.remove('hidden');
+        }
+
+        window.closeModal = function() {
+            document.getElementById('userModal').classList.add('hidden');
+        }
+
+        // Simpan / Tambah / Update ke Firestore
+        window.saveUserToDatabase = async function(e) {
+            e.preventDefault();
+            const docId = document.getElementById('editDocId').value;
+            const nama = document.getElementById('inputNama').value;
+            const email = document.getElementById('inputEmail').value;
+            const password = document.getElementById('inputPassword').value;
+            const role = document.querySelector('input[name="inputRole"]:checked').value;
+
+            try {
+                if(!docId) {
+                    // Tambah data baru ke collection "users"
+                    await addDoc(collection(db, "users"), {
+                        nama: nama,
+                        email: email,
+                        password: password,
+                        role: role,
+                        createdAt: new Date().toISOString()
+                    });
+                    showToast('User baru berhasil disimpan ke database!');
+                } else {
+                    // Update data user yang sudah ada
+                    const userRef = doc(db, "users", docId);
+                    let updateData = { nama: nama, email: email, role: role };
+                    if(password.trim() !== '') {
+                        updateData.password = password;
+                    }
+                    await updateDoc(userRef, updateData);
+                    showToast('Data user berhasil diperbarui!');
+                }
+
+                closeModal();
+                fetchUsers();
+            } catch (error) {
+                console.error("Gagal menyimpan data:", error);
+                alert("Terjadi kesalahan saat menyimpan data ke database.");
+            }
+        }
+
+        // Hapus User dari Firestore
+        window.deleteUserFromDatabase = async function(docId, namaUser) {
+            if(confirm(`Apakah Anda yakin ingin menghapus akun ${namaUser} dari database?`)) {
+                try {
+                    await deleteDoc(doc(db, "users", docId));
+                    showToast('Akun user berhasil dihapus!');
+                    fetchUsers();
+                } catch (error) {
+                    console.error("Gagal menghapus user:", error);
+                    alert("Gagal menghapus data dari database.");
+                }
+            }
+        }
+
+        window.onload = fetchUsers;
+    </script>
+</body>
+</html>

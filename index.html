@@ -7,16 +7,14 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- PWA Manifest & Theme Color (PENTING untuk instalasi PWA) -->
+    <!-- PWA Manifest & Theme Color -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e90ff">
 
     <style>
-        /* Efek latar belakang langit bergradasi */
         body {
             background: linear-gradient(135deg, #70a1ff 0%, #1e90ff 100%);
         }
-        /* Efek kaca (Glassmorphism) */
         .glass-card {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(12px);
@@ -28,7 +26,7 @@
 <body class="flex items-center justify-center min-h-screen px-4">
 
     <!-- Card Login Glassmorphism -->
-    <div class="max-w-sm w-full glass-card rounded-2xl shadow-xl p-8 text-white">
+    <div class="max-w-sm w-full glass-card rounded-2xl shadow-xl p-8 text-white relative">
         
         <!-- Ikon User -->
         <div class="flex justify-center mb-2">
@@ -41,15 +39,15 @@
 
         <h1 class="text-2xl font-semibold text-center mb-6 tracking-wide">User Login</h1>
 
-        <!-- Form Login -->
+        <!-- Form Login Terhubung Firebase -->
         <form id="loginForm" class="space-y-4">
             <div>
-                <input type="text" id="username" required placeholder="Username" 
-                    class="w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner">
+                <input type="text" id="username" required placeholder="Email / Username" 
+                    class="w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner font-medium">
             </div>
             <div>
                 <input type="password" id="password" required placeholder="Password" 
-                    class="w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner">
+                    class="w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner font-medium">
             </div>
 
             <!-- Forgot Password -->
@@ -60,7 +58,7 @@
             </div>
 
             <!-- Tombol Login -->
-            <button type="submit" 
+            <button type="submit" id="loginBtn"
                 class="w-full py-3 bg-[#0a3d62] hover:bg-[#072d4a] text-white font-semibold rounded-xl shadow-lg transition duration-200 cursor-pointer">
                 Login
             </button>
@@ -69,23 +67,72 @@
         <div id="errorMsg" class="mt-4 text-center text-xs font-semibold text-red-200"></div>
     </div>
 
-    <!-- Skrip Validasi Login & Pendaftaran Service Worker PWA -->
-    <script>
+    <!-- Skrip Validasi Login Terhubung Firebase Firestore -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         const loginForm = document.getElementById('loginForm');
         const errorMsg = document.getElementById('errorMsg');
+        const loginBtn = document.getElementById('loginBtn');
 
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value.trim();
+            const inputUser = document.getElementById('username').value.trim();
+            const inputPass = document.getElementById('password').value.trim();
 
-            // Memeriksa kredensial: username = aku, password = Kita2527@
-            if (user === "aku" && pass === "Kita2527@") {
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userRole', 'Pengurus RT');
-                window.location.href = 'dashboard.html';
-            } else {
-                errorMsg.textContent = 'Username atau Password salah!';
+            errorMsg.textContent = 'Memeriksa database...';
+            loginBtn.disabled = true;
+
+            try {
+                // Cek data di koleksi "users" berdasarkan email/username
+                const q = query(collection(db, "users"), where("email", "==", inputUser));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    errorMsg.textContent = 'Akun tidak ditemukan di database!';
+                    loginBtn.disabled = false;
+                    return;
+                }
+
+                let userFound = false;
+                querySnapshot.forEach((doc) => {
+                    const userData = doc.data();
+                    
+                    // Cek kecocokan password
+                    if (userData.password === inputPass) {
+                        userFound = true;
+                        // Simpan status login & role asli dari database ke localStorage
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('userName', userData.nama);
+                        localStorage.setItem('userRole', userData.role); // 'Admin', 'Pengurus', atau 'Anggota'
+                        
+                        window.location.href = 'dashboard.html';
+                    }
+                });
+
+                if (!userFound) {
+                    errorMsg.textContent = 'Password salah!';
+                    loginBtn.disabled = false;
+                }
+
+            } catch (error) {
+                console.error("Gagal login:", error);
+                errorMsg.textContent = 'Terjadi kesalahan koneksi database.';
+                loginBtn.disabled = false;
             }
         });
 

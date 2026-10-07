@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Database - WargaKu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- ========================================================================= -->
+    <!-- 1. TAMPILAN DESKTOP / LAYAR LEBAR                                         -->
+    <!-- ========================================================================= -->
+    <div class="hidden md:flex h-screen overflow-hidden bg-slate-100">
+        
+        <!-- Sidebar Samping Desktop -->
+        <aside class="w-64 bg-[#1e2229] text-gray-300 flex flex-col justify-between shadow-xl flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 text-emerald-400 font-bold text-xl tracking-wide mb-4">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <i class="fa-solid fa-house-chimney text-lg"></i>
+                    </div>
+                    <span>WargaKu</span>
+                </div>
+                <div class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
+                    <p class="font-semibold text-gray-200 text-sm">Potrobayan</p>
+                    <p>RT -- / RW --, Kal. Srihardono</p>
+                    <p>Kec. Pundong, Bantul</p>
+                </div>
+                <nav class="mt-6 space-y-1.5">
+                    <a href="dashboard.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-gauge w-7 text-lg"></i><span>Dashboard Utama</span>
+                    </a>
+                    <a href="database.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
+                        <i class="fa-solid fa-database w-7 text-lg"></i><span>Manajemen Database</span>
+                    </a>
+                    <a href="kepala-keluarga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-user-tie w-7 text-lg"></i><span>Kepala Keluarga</span>
+                    </a>
+                    <a href="daftar-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-address-book w-7 text-lg"></i><span>Daftar Warga</span>
+                    </a>
+                    <a href="input-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-user-plus w-7 text-lg"></i><span>Input Data Warga</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
+                <p>WargaKu Desktop v1.0</p>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama Desktop -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Kontrol & Monitoring Database</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Pusat kendali kapasitas penyimpanan dan rekapitulasi data Cloud Firestore.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="location.href='dashboard.html'" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Dashboard
+                    </button>
+                </div>
+            </header>
+
+            <div class="p-10 max-w-7xl mx-auto w-full space-y-6">
+                
+                <!-- PANEL KONTROL KAPASITAS CLOUD FIRESTORE -->
+                <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-8 shadow-xl border border-slate-700 flex flex-col justify-between space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl border border-emerald-500/30 shadow-inner">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold tracking-wide">Status Kapasitas Firebase Cloud Firestore</h3>
+                                <p class="text-xs text-gray-400">Monitoring real-time penggunaan penyimpanan basis data aplikasi WargaKu</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-500/30 flex items-center">
+                                <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-emerald-400"></i> Server Sinkron
+                            </span>
+                            <button onclick="refreshDatabaseStats()" class="bg-slate-800 hover:bg-slate-700 text-gray-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition border border-slate-600 cursor-pointer flex items-center">
+                                <i class="fa-solid fa-rotate-right mr-1.5"></i> Perbarui
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-6 pt-4 border-t border-slate-700/60">
+                        <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                            <p class="text-[11px] text-gray-400 uppercase font-semibold">Total Dokumen

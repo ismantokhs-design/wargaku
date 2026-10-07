@@ -65,8 +65,8 @@
         <main class="flex-1 flex flex-col overflow-y-auto">
             <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800">Kontrol & Monitoring Database</h1>
-                    <p class="text-xs text-gray-500 mt-0.5">Pusat kendali kapasitas penyimpanan dan rekapitulasi data Cloud Firestore.</p>
+                    <h1 class="text-2xl font-bold text-gray-800">Kontrol & Monitoring Harddisk Firebase</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Pusat kendali kapasitas penyimpanan server dan rekapitulasi data Cloud Firestore.</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <button onclick="location.href='dashboard.html'" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">
@@ -77,28 +77,301 @@
 
             <div class="p-10 max-w-7xl mx-auto w-full space-y-6">
                 
-                <!-- PANEL KONTROL KAPASITAS CLOUD FIRESTORE -->
+                <!-- PANEL INFORMASI UTAMA HARDDISK FIREBASE -->
                 <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-8 shadow-xl border border-slate-700 flex flex-col justify-between space-y-6">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center space-x-3.5">
                             <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl border border-emerald-500/30 shadow-inner">
-                                <i class="fa-solid fa-server"></i>
+                                <i class="fa-solid fa-hard-drive"></i>
                             </div>
                             <div>
-                                <h3 class="text-base font-bold tracking-wide">Status Kapasitas Firebase Cloud Firestore</h3>
-                                <p class="text-xs text-gray-400">Monitoring real-time penggunaan penyimpanan basis data aplikasi WargaKu</p>
+                                <h3 class="text-base font-bold tracking-wide">Penyimpanan Harddisk Server Firebase</h3>
+                                <p class="text-xs text-gray-400">Project ID: <span class="text-emerald-400 font-mono">wargaku-860df</span> (Spark Plan - Free Tier)</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-500/30 flex items-center">
-                                <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-emerald-400"></i> Server Sinkron
-                            </span>
-                            <button onclick="refreshDatabaseStats()" class="bg-slate-800 hover:bg-slate-700 text-gray-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition border border-slate-600 cursor-pointer flex items-center">
-                                <i class="fa-solid fa-rotate-right mr-1.5"></i> Perbarui
-                            </button>
+                            <a href="https://console.firebase.google.com/project/wargaku-860df/firestore/usage" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md flex items-center cursor-pointer">
+                                <i class="fa-solid fa-external-link-alt mr-2"></i> Buka Grafik Harddisk di Firebase Console
+                            </a>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-6 pt-4 border-t border-slate-700/60">
-                        <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
-                            <p class="text-[11px] text-gray-400 uppercase font-semibold">Total Dokumen
+                    <div class="grid grid-cols-3 gap-6 pt-4 border-t border-slate-700/60">
+                        <div class="bg-slate-800/50 p-5 rounded-2xl border border-slate-700/50">
+                            <p class="text-xs text-gray-400 uppercase font-semibold">Batas Kuota Harddisk (Gratis)</p>
+                            <p class="text-3xl font-extrabold text-blue-400 mt-1.5">1.0 GB</p>
+                            <p class="text-[11px] text-gray-400 mt-1">Batas maksimum penyimpanan data teks & dokumen</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-5 rounded-2xl border border-slate-700/50">
+                            <p class="text-xs text-gray-400 uppercase font-semibold">Estimasi Pemakaian Saat Ini</p>
+                            <p id="dbStorageSize" class="text-3xl font-extrabold text-emerald-400 mt-1.5">0 KB</p>
+                            <p class="text-[11px] text-gray-400 mt-1" id="dbTotalDocsSub">Dari total dokumen lokal</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-5 rounded-2xl border border-slate-700/50">
+                            <p class="text-xs text-gray-400 uppercase font-semibold">Status Kuota Server</p>
+                            <p class="text-3xl font-extrabold text-emerald-400 mt-1.5">Aman / Normal</p>
+                            <p class="text-[11px] text-gray-400 mt-1">Jauh di bawah batas kuota harian</p>
+                        </div>
+                    </div>
+
+                    <!-- Keterangan Teknis -->
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 text-xs text-gray-300 flex items-start space-x-3">
+                        <i class="fa-solid fa-circle-info text-blue-400 text-sm mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-white">Catatan Pengembang:</span> Sesuai kebijakan keamanan Google Cloud, pembacaan kapasitas byte harddisk fisik secara real-time dari browser dibatasi. Untuk melihat grafik penggunaan ruang harddisk, bandwidth download, dan operasi baca/tulis secara mendetail, Anda dapat mengklik tombol <strong class="text-emerald-400">"Buka Grafik Harddisk di Firebase Console"</strong> di atas.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KOLEKSI DATABASE AKTIF (TERMASUK USERS) -->
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-3">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                            <h4 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-folder-open text-emerald-600 mr-2"></i>Koleksi: <code>warga</code></h4>
+                            <span id="badgeColWarga" class="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg font-bold">0 data</span>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed">Menyimpan seluruh data biodata penduduk, nomor Kartu Keluarga, jenis kelamin, dan informasi kependudukan.</p>
+                        <div class="pt-2">
+                            <a href="daftar-warga.html" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center">
+                                Kelola Data Warga <i class="fa-solid fa-arrow-right ml-1.5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-3">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                            <h4 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-folder-open text-blue-600 mr-2"></i>Koleksi: <code>info-kk</code></h4>
+                            <span id="badgeColInfoKK" class="text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg font-bold">0 data</span>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed">Menyimpan informasi tambahan Kartu Keluarga seperti status ekonomi, penerimaan bantuan sosial, dan jenis bantuan.</p>
+                        <div class="pt-2">
+                            <a href="kepala-keluarga.html" class="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center">
+                                Kelola Data KK <i class="fa-solid fa-arrow-right ml-1.5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-3">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                            <h4 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-folder-open text-purple-600 mr-2"></i>Koleksi: <code>users</code></h4>
+                            <span id="badgeColUsers" class="text-xs bg-purple-50 text-purple-700 px-2.5 py-1 rounded-lg font-bold">0 data</span>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed">Menyimpan data akun pengguna, email, password, dan hak akses login (role) bagi pengurus aplikasi.</p>
+                        <div class="pt-2">
+                            <a href="setting-user.html" class="text-xs font-bold text-purple-600 hover:text-purple-700 flex items-center">
+                                Kelola User <i class="fa-solid fa-arrow-right ml-1.5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                      -->
+    <!-- ========================================================================= -->
+    <div class="md:hidden max-w-md mx-auto min-h-screen shadow-2xl flex flex-col justify-between relative pb-32" style="background-color: #f0fdf4;">
+        
+        <!-- Header HP -->
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex items-center space-x-3">
+                <span class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-inner border border-white/30">
+                    <i class="fa-solid fa-hard-drive text-xs"></i>
+                </span>
+                <div>
+                    <h1 class="text-lg font-bold text-white tracking-wide">Harddisk Server</h1>
+                    <p class="text-[10px] text-emerald-100">Kapasitas Penyimpanan</p>
+                </div>
+            </div>
+            <button onclick="location.href='dashboard.html'" class="text-xs bg-white/20 backdrop-blur-md hover:bg-white/30 text-white px-3 py-1.5 rounded-xl font-medium transition border border-white/30 shadow-inner cursor-pointer">
+                Kembali
+            </button>
+        </header>
+
+        <!-- Konten HP -->
+        <main class="px-4 py-4 space-y-3 flex-1 overflow-y-auto">
+            
+            <!-- KARTU HARDDISK MOBILE -->
+            <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl p-4 shadow-md space-y-3 border border-slate-700">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-emerald-400 flex items-center">
+                        <i class="fa-solid fa-server mr-1.5"></i> Status Harddisk (1 GB)
+                    </span>
+                    <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">Normal</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-xs pt-1 border-t border-slate-700/60">
+                    <div>
+                        <p class="text-[10px] text-gray-400">Estimasi Terpakai:</p>
+                        <p id="dbStorageSizeMobile" class="font-extrabold text-emerald-400">0 KB</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400">Batas Kuota:</p>
+                        <p class="font-extrabold text-blue-400">1.0 GB</p>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <a href="https://console.firebase.google.com/project/wargaku-860df/firestore/usage" target="_blank" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-[11px] font-bold flex items-center justify-center space-x-1.5 shadow">
+                        <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+                        <span>Buka Konsol Firebase</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RINGKASAN KOLEKSI MOBILE -->
+            <div class="space-y-2.5 pt-1">
+                <h3 class="text-sm font-bold text-gray-800">Koleksi Basis Data</h3>
+                
+                <div class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm flex justify-between items-center">
+                    <div>
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Koleksi Utama</span>
+                        <h4 class="text-xs font-bold text-gray-800 mt-1"><i class="fa-solid fa-folder text-emerald-600 mr-1.5"></i>warga</h4>
+                        <p id="mobileColWargaDesc" class="text-[11px] text-gray-500 mt-0.5">Memuat jumlah data...</p>
+                    </div>
+                    <a href="daftar-warga.html" class="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-xl border border-emerald-200">Buka</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm flex justify-between items-center">
+                    <div>
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Koleksi Pendukung</span>
+                        <h4 class="text-xs font-bold text-gray-800 mt-1"><i class="fa-solid fa-folder text-blue-600 mr-1.5"></i>info-kk</h4>
+                        <p id="mobileColInfoKKDesc" class="text-[11px] text-gray-500 mt-0.5">Memuat jumlah data...</p>
+                    </div>
+                    <a href="kepala-keluarga.html" class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs font-semibold rounded-xl border border-blue-200">Buka</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 border border-purple-100 shadow-sm flex justify-between items-center">
+                    <div>
+                        <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-md">Koleksi Akun</span>
+                        <h4 class="text-xs font-bold text-gray-800 mt-1"><i class="fa-solid fa-folder text-purple-600 mr-1.5"></i>users</h4>
+                        <p id="mobileColUsersDesc" class="text-[11px] text-gray-500 mt-0.5">Memuat jumlah data...</p>
+                    </div>
+                    <a href="setting-user.html" class="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-semibold rounded-xl border border-purple-200">Buka</a>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="database.html" class="flex flex-col items-center text-emerald-300 font-bold">
+                    <i class="fa-solid fa-database text-lg"></i>
+                    <span class="text-[10px] mt-1">Database</span>
+                </a>
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Galeri</span>
+                </a>
+                <a href="#" onclick="showToast('Fitur Pesan segera hadir', 'info'); return false;" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+    <!-- ================= ELEGAN TOAST NOTIFICATION ================= -->
+    <div id="toastContainer" class="fixed top-5 right-5 z-[9999] flex flex-col space-y-2 pointer-events-none"></div>
+
+
+    <!-- ================= SCRIPT KONEKSI FIREBASE ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.showToast = function(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-emerald-900 text-white border-emerald-700';
+            let icon = '<i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>';
+            
+            if (type === 'error') {
+                bgClass = 'bg-red-900 text-white border-red-700';
+                icon = '<i class="fa-solid fa-circle-exclamation text-red-400 text-base"></i>';
+            } else if (type === 'info') {
+                bgClass = 'bg-slate-900 text-white border-slate-700';
+                icon = '<i class="fa-solid fa-circle-info text-blue-400 text-base"></i>';
+            }
+
+            toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-2xl shadow-2xl border backdrop-blur-md transform translate-y-2 opacity-0 transition-all duration-300 ${bgClass}`;
+            toast.innerHTML = `${icon}<div class="text-xs font-medium tracking-wide">${message}</div>`;
+            container.appendChild(toast);
+
+            setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        async function loadDatabaseStats() {
+            try {
+                // Memuat semua 3 koleksi: warga, info-kk, dan users
+                const wargaSnap = await getDocs(collection(db, "warga"));
+                const infoKKSnap = await getDocs(collection(db, "info-kk"));
+                const usersSnap = await getDocs(collection(db, "users"));
+
+                const totalDocsWarga = wargaSnap.size;
+                const totalDocsInfoKK = infoKKSnap.size;
+                const totalDocsUsers = usersSnap.size;
+                const totalDocsAll = totalDocsWarga + totalDocsInfoKK + totalDocsUsers;
+
+                // Estimasi ukuran penyimpanan (1.2 KB per dokumen)
+                const estimatedSizeKB = totalDocsAll * 1.2; 
+
+                document.getElementById('badgeColWarga').textContent = `${totalDocsWarga} dokumen`;
+                document.getElementById('badgeColInfoKK').textContent = `${totalDocsInfoKK} dokumen`;
+                document.getElementById('badgeColUsers').textContent = `${totalDocsUsers} dokumen`;
+
+                document.getElementById('mobileColWargaDesc').textContent = `${totalDocsWarga} data penduduk tersimpan`;
+                document.getElementById('mobileColInfoKKDesc').textContent = `${totalDocsInfoKK} data info KK tersimpan`;
+                document.getElementById('mobileColUsersDesc').textContent = `${totalDocsUsers} akun pengurus tersimpan`;
+                
+                let sizeDisplay = estimatedSizeKB < 1024 ? `${estimatedSizeKB.toFixed(1)} KB` : `${(estimatedSizeKB / 1024).toFixed(2)} MB`;
+                document.getElementById('dbStorageSize').textContent = sizeDisplay;
+                document.getElementById('dbStorageSizeMobile').textContent = sizeDisplay;
+                document.getElementById('dbTotalDocsSub').textContent = `Dari total ${totalDocsAll} dokumen aktif di server`;
+
+                showToast("Informasi penyimpanan harddisk & users dimuat!", "success");
+            } catch (error) {
+                console.error("Gagal memuat status harddisk:", error);
+                showToast("Gagal mengambil data dari server.", "error");
+            }
+        }
+
+        window.onload = () => {
+            loadDatabaseStats();
+        };
+    </script>
+</body>
+</html>

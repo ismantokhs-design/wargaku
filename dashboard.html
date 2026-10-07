@@ -62,6 +62,9 @@
                         </div>
                     </div>
 
+                    <a href="database.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                        <i class="fa-solid fa-database w-7 text-lg"></i><span>Database</span>
+                    </a>
                     <a href="#" onclick="alert('Menu Pengumuman'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-bullhorn w-7 text-lg"></i><span>Pengumuman</span>
                     </a>
@@ -70,9 +73,6 @@
                     </a>
                     <a href="#" onclick="alert('Menu Bantuan & Sosial'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-hand-holding-heart w-7 text-lg"></i><span>Bantuan Sosial</span>
-                    </a>
-                    <a href="#" onclick="alert('Menu Jadwal Kegiatan'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
-                        <i class="fa-solid fa-calendar-days w-7 text-lg"></i><span>Jadwal Kegiatan</span>
                     </a>
                 </nav>
             </div>
@@ -144,9 +144,9 @@
                     <div id="desktopPintasanAdminContainer" class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                         <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-grid-2 mr-2 text-emerald-600"></i>Pintasan Menu Administrator</h3>
                         <div class="grid grid-cols-4 gap-4">
-                            <a href="kepala-keluarga.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
-                                <i class="fa-solid fa-user-tie text-2xl"></i>
-                                <span class="text-xs font-semibold">Kepala Keluarga</span>
+                            <a href="database.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
+                                <i class="fa-solid fa-database text-2xl"></i>
+                                <span class="text-xs font-semibold">Database</span>
                             </a>
                             <a href="daftar-warga.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
                                 <i class="fa-solid fa-address-book text-2xl"></i>
@@ -364,9 +364,9 @@
                 </div>
             </div>
 
-            <!-- LEVEL 1: MENU UTAMA "LAINNYA" (LENGKAP DENGAN DATABASE & PENGATURAN) -->
+            <!-- LEVEL 1: MENU UTAMA "LAINNYA" (MENGARAHKAN DATABASE KE database.html) -->
             <div id="expandMenu" class="hidden bg-emerald-900/95 text-white border-t border-emerald-700 px-6 py-4 shadow-2xl rounded-t-3xl transition-all duration-300 backdrop-blur-md">
-                <div id="expandMenuGrid" class="grid grid-cols-5 gap-2 text-center">
+                <div id="expandMenuGrid" class="grid grid-cols-5 gap-1.5 text-center">
                     <!-- Dinamis oleh JS -->
                 </div>
             </div>
@@ -539,7 +539,7 @@
                         </div>
                         <span class="text-[10px] font-semibold text-emerald-100">Warga</span>
                     </button>
-                    <a href="kepala-keluarga.html" class="flex flex-col items-center space-y-1 group p-1.5 rounded-xl hover:bg-emerald-800/50 transition">
+                    <a href="database.html" class="flex flex-col items-center space-y-1 group p-1.5 rounded-xl hover:bg-emerald-800/50 transition">
                         <div class="w-9 h-9 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-sm shadow">
                             <i class="fa-solid fa-database"></i>
                         </div>

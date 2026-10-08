@@ -59,6 +59,7 @@
                             <a href="kepala-keluarga.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Kepala Keluarga</a>
                             <a href="daftar-warga.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Daftar Warga</a>
                             <a href="input-warga.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Input Data</a>
+                            <a href="input-pengumuman.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Info Wilayah</a>
                         </div>
                     </div>
 
@@ -79,7 +80,7 @@
                     <a href="laporan.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-file-invoice-dollar w-7 text-lg"></i><span>Laporan & Layanan</span>
                     </a>
-                    <a href="#" onclick="alert('Menu Pengumuman'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                    <a href="input-pengumuman.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-bullhorn w-7 text-lg"></i><span>Pengumuman</span>
                     </a>
                     <a href="#" onclick="alert('Menu Bantuan & Sosial'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
@@ -113,6 +114,7 @@
             </header>
 
             <div class="p-10 space-y-8 max-w-7xl mx-auto w-full">
+                <!-- 4 Statistik Kartu Atas -->
                 <div class="grid grid-cols-4 gap-6">
                     <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
                         <div>
@@ -132,22 +134,166 @@
                         <div class="text-5xl opacity-20"><i class="fa-solid fa-users"></i></div>
                     </div>
 
-                    <div class="bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Laki-laki</p>
-                            <h3 id="statTotalLakiDesktop" class="text-3xl font-extrabold mt-2">0 Jiwa</h3>
-                            <p class="text-[11px] mt-2 bg-white/20 px-2 py-0.5 rounded-md inline-block font-medium">Jenis Kelamin</p>
+                    <!-- Kartu Laki-laki -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 flex items-center space-x-4 relative overflow-hidden border-l-[6px] border-l-blue-600">
+                        <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-blue-50 shadow-inner">
+                            <i class="fa-solid fa-mars text-blue-600 text-2xl"></i>
                         </div>
-                        <div class="text-5xl opacity-20"><i class="fa-solid fa-mars"></i></div>
+                        <div>
+                            <p class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Penduduk Laki-Laki</p>
+                            <h3 id="statTotalLakiDesktop" class="text-2xl font-extrabold text-gray-800 mt-0.5">0 Jiwa</h3>
+                        </div>
                     </div>
 
-                    <div class="bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Perempuan</p>
-                            <h3 id="statTotalPerempuanDesktop" class="text-3xl font-extrabold mt-2">0 Jiwa</h3>
-                            <p class="text-[11px] mt-2 bg-white/20 px-2 py-0.5 rounded-md inline-block font-medium">Jenis Kelamin</p>
+                    <!-- Kartu Perempuan -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 flex items-center space-x-4 relative overflow-hidden border-l-[6px] border-l-rose-500">
+                        <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-rose-50 shadow-inner">
+                            <i class="fa-solid fa-venus text-rose-500 text-2xl"></i>
                         </div>
-                        <div class="text-5xl opacity-20"><i class="fa-solid fa-venus"></i></div>
+                        <div>
+                            <p class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Penduduk Perempuan</p>
+                            <h3 id="statTotalPerempuanDesktop" class="text-2xl font-extrabold text-gray-800 mt-0.5">0 Jiwa</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= STATISTIK BERDASARKAN USIA ================= -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
+                    <h3 class="text-base font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Statistik Penduduk Berdasarkan Usia
+                    </h3>
+                    <div class="grid grid-cols-4 gap-5">
+                        <!-- Balita -->
+                        <div class="bg-white rounded-2xl p-5 border border-blue-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-blue-500">
+                            <div class="space-y-2">
+                                <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-face-smile"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Balita (0-5 Thn)</p>
+                                    <h4 id="statBalita" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Balita')" class="mt-4 w-full py-1.5 border border-blue-300 text-blue-600 hover:bg-blue-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Anak -->
+                        <div class="bg-white rounded-2xl p-5 border border-emerald-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-emerald-500">
+                            <div class="space-y-2">
+                                <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-child"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Anak (6-17 Thn)</p>
+                                    <h4 id="statAnak" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Anak')" class="mt-4 w-full py-1.5 border border-emerald-300 text-emerald-600 hover:bg-emerald-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Dewasa -->
+                        <div class="bg-white rounded-2xl p-5 border border-amber-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-amber-500">
+                            <div class="space-y-2">
+                                <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Dewasa (18-59 Thn)</p>
+                                    <h4 id="statDewasa" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Dewasa')" class="mt-4 w-full py-1.5 border border-amber-300 text-amber-600 hover:bg-amber-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Lansia -->
+                        <div class="bg-white rounded-2xl p-5 border border-rose-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-rose-500">
+                            <div class="space-y-2">
+                                <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Lansia (60+ Thn)</p>
+                                    <h4 id="statLansia" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Lansia')" class="mt-4 w-full py-1.5 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= STATISTIK BERDASARKAN GOLONGAN DARAH ================= -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
+                    <h3 class="text-base font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-droplet text-rose-600 mr-2"></i> Statistik Penduduk Berdasarkan Golongan Darah
+                    </h3>
+                    <div class="grid grid-cols-5 gap-4">
+                        <!-- Gol A -->
+                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-rose-500">
+                            <div>
+                                <span class="text-sm font-extrabold text-rose-600">A</span>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. A</p>
+                                <h4 id="statGolA" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah A')" class="mt-4 py-1.5 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Gol B -->
+                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-blue-500">
+                            <div>
+                                <span class="text-sm font-extrabold text-blue-600">B</span>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. B</p>
+                                <h4 id="statGolB" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah B')" class="mt-4 py-1.5 border border-blue-300 text-blue-600 hover:bg-blue-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Gol AB -->
+                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-emerald-500">
+                            <div>
+                                <span class="text-sm font-extrabold text-emerald-600">AB</span>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. AB</p>
+                                <h4 id="statGolAB" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah AB')" class="mt-4 py-1.5 border border-emerald-300 text-emerald-600 hover:bg-emerald-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Gol O -->
+                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-amber-500">
+                            <div>
+                                <span class="text-sm font-extrabold text-amber-600">O</span>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. O</p>
+                                <h4 id="statGolO" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah O')" class="mt-4 py-1.5 border border-amber-300 text-amber-600 hover:bg-amber-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Tidak Tahu / - -->
+                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-gray-400">
+                            <div>
+                                <span class="text-sm font-extrabold text-gray-500">-</span>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Tidak Tahu</p>
+                                <h4 id="statGolLain" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah Tidak Tahu')" class="mt-4 py-1.5 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -175,15 +321,9 @@
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                        <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-calendar-check mr-2 text-emerald-600"></i>Agenda Terdekat</h3>
-                        <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-2">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-bold">12</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-gray-800">Kerja Bakti Lingkungan</h4>
-                                    <p class="text-[11px] text-gray-500">Minggu, Pukul 07.00 WIB</p>
-                                </div>
-                            </div>
+                        <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-bullhorn mr-2 text-emerald-600"></i>Informasi Wilayah Terbaru</h3>
+                        <div id="desktopInfoWilayahContainer" class="space-y-3">
+                            <p class="text-xs text-gray-400 italic">Memuat informasi wilayah...</p>
                         </div>
                     </div>
                 </div>
@@ -283,36 +423,91 @@
                 </div>
             </div>
 
+            <!-- Kartu Laki-laki & Perempuan Mobile -->
             <div class="grid grid-cols-2 gap-3">
-                <div class="bg-gradient-to-br from-sky-400 to-blue-500 text-white rounded-2xl p-3.5 shadow-md relative overflow-hidden flex flex-col justify-between">
+                <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-gray-200 flex items-center space-x-3 relative overflow-hidden border-l-[5px] border-l-blue-600">
+                    <div class="w-11 h-11 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-blue-50 shadow-inner">
+                        <i class="fa-solid fa-mars text-blue-600 text-lg"></i>
+                    </div>
                     <div>
-                        <span class="bg-white/20 text-[9px] px-2 py-0.5 rounded-full font-medium"><i class="fa-solid fa-mars"></i> Kelamin</span>
-                        <h3 class="text-xs font-medium opacity-90 mt-1.5">Laki-laki</h3>
-                        <p id="statTotalLakiMobile" class="text-sm font-bold mt-0.5">0 Jiwa</p>
+                        <p class="text-[9px] font-bold text-gray-400 tracking-wider uppercase">Laki-Laki</p>
+                        <p id="statTotalLakiMobile" class="text-sm font-extrabold text-gray-800 mt-0.5">0 Jiwa</p>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-pink-400 to-rose-500 text-white rounded-2xl p-3.5 shadow-md relative overflow-hidden flex flex-col justify-between">
+                <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-gray-200 flex items-center space-x-3 relative overflow-hidden border-l-[5px] border-l-rose-500">
+                    <div class="w-11 h-11 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-rose-50 shadow-inner">
+                        <i class="fa-solid fa-venus text-rose-500 text-lg"></i>
+                    </div>
                     <div>
-                        <span class="bg-white/20 text-[9px] px-2 py-0.5 rounded-full font-medium"><i class="fa-solid fa-venus"></i> Kelamin</span>
-                        <h3 class="text-xs font-medium opacity-90 mt-1.5">Perempuan</h3>
-                        <p id="statTotalPerempuanMobile" class="text-sm font-bold mt-0.5">0 Jiwa</p>
+                        <p class="text-[9px] font-bold text-gray-400 tracking-wider uppercase">Perempuan</p>
+                        <p id="statTotalPerempuanMobile" class="text-sm font-extrabold text-gray-800 mt-0.5">0 Jiwa</p>
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-3 pt-1">
-                <h3 class="text-sm font-bold text-gray-800">List Agenda Khusus</h3>
-                <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg">
-                            <i class="fa-solid fa-broom"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-800">Kerja bakti pembersihan lingkungan</h4>
-                            <p class="text-[11px] text-gray-500 mt-0.5">Minggu, 12 Oktober • Pukul 07.00 WIB</p>
-                        </div>
+            <!-- Statistik Usia Mobile -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200 space-y-3">
+                <h3 class="text-xs font-bold text-gray-800 flex items-center">
+                    <i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Berdasarkan Usia
+                </h3>
+                <div class="grid grid-cols-2 gap-2.5 text-center text-xs">
+                    <div class="p-3 bg-blue-50/50 border border-blue-100 rounded-xl">
+                        <p class="text-[10px] font-bold text-gray-500">BALITA (0-5)</p>
+                        <p id="statBalitaMobile" class="text-lg font-extrabold text-blue-600 mt-0.5">0</p>
                     </div>
+                    <div class="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl">
+                        <p class="text-[10px] font-bold text-gray-500">ANAK (6-17)</p>
+                        <p id="statAnakMobile" class="text-lg font-extrabold text-emerald-600 mt-0.5">0</p>
+                    </div>
+                    <div class="p-3 bg-amber-50/50 border border-amber-100 rounded-xl">
+                        <p class="text-[10px] font-bold text-gray-500">DEWASA (18-59)</p>
+                        <p id="statDewasaMobile" class="text-lg font-extrabold text-amber-600 mt-0.5">0</p>
+                    </div>
+                    <div class="p-3 bg-rose-50/50 border border-rose-100 rounded-xl">
+                        <p class="text-[10px] font-bold text-gray-500">LANSIA (60+)</p>
+                        <p id="statLansiaMobile" class="text-lg font-extrabold text-rose-600 mt-0.5">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistik Golongan Darah Mobile -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200 space-y-3">
+                <h3 class="text-xs font-bold text-gray-800 flex items-center">
+                    <i class="fa-solid fa-droplet text-rose-600 mr-2"></i> Berdasarkan Gol. Darah
+                </h3>
+                <div class="grid grid-cols-5 gap-1.5 text-center text-xs">
+                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
+                        <span class="font-bold text-rose-600 text-xs">A</span>
+                        <p id="statGolAMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
+                        <span class="font-bold text-blue-600 text-xs">B</span>
+                        <p id="statGolBMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
+                        <span class="font-bold text-emerald-600 text-xs">AB</span>
+                        <p id="statGolABMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
+                        <span class="font-bold text-amber-600 text-xs">O</span>
+                        <p id="statGolOMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
+                        <span class="font-bold text-gray-500 text-xs">-</span>
+                        <p id="statGolLainMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informasi Wilayah / Pengumuman dari Firebase -->
+            <div class="space-y-3 pt-1">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-gray-800"><i class="fa-solid fa-bullhorn text-emerald-600 mr-1.5"></i> Informasi Wilayah Terbaru</h3>
+                    <a href="profil-read.html" class="text-[11px] font-semibold text-emerald-600 hover:underline">Lihat Semua</a>
+                </div>
+                <div id="mobileInfoWilayahContainer" class="space-y-2.5">
+                    <p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Memuat informasi wilayah...</p>
                 </div>
             </div>
         </main>
@@ -326,29 +521,35 @@
                     <span class="text-[11px] font-bold text-emerald-200"><i class="fa-solid fa-users mr-1"></i> Sub-Menu Data Warga</span>
                     <button onclick="toggleSubWargaMobile()" class="text-emerald-200 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-800 cursor-pointer">✕ Tutup</button>
                 </div>
-                <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="grid grid-cols-4 gap-2 text-center">
                     <a href="kepala-keluarga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
                         <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
                             <i class="fa-solid fa-user-tie"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-100">Kepala Keluarga</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Kepala Keluarga</span>
                     </a>
                     <a href="daftar-warga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
                         <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
                             <i class="fa-solid fa-address-book"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-100">Daftar Warga</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Daftar Warga</span>
                     </a>
                     <a href="input-warga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
                         <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
                             <i class="fa-solid fa-user-plus"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-100">Input Data</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Input Data</span>
+                    </a>
+                    <a href="input-pengumuman.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <span class="text-[9px] font-bold text-emerald-100">Info Wilayah</span>
                     </a>
                 </div>
             </div>
 
-            <!-- SUB-MENU KEUANGAN (Kas RT & Kas Ronda) -->
+            <!-- SUB-MENU KEUANGAN -->
             <div id="subKeuanganMenu" class="hidden bg-emerald-900/95 text-white border-t border-emerald-700 px-6 py-3 shadow-2xl rounded-t-2xl transition-all duration-300 backdrop-blur-md">
                 <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-700/60">
                     <span class="text-[11px] font-bold text-emerald-200"><i class="fa-solid fa-wallet mr-1"></i> Sub-Menu Keuangan</span>
@@ -449,10 +650,28 @@
     <!-- Script Logika Menu & Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
+        }
+
+        // Minta izin notifikasi browser/HP saat membuka dashboard
+        if ("Notification" in window) {
+            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+        }
+
+        // Pendaftaran Service Worker untuk background push notification di HP
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('firebase-messaging-sw.js')
+            .then((registration) => {
+                console.log('Service Worker berhasil didaftarkan:', registration.scope);
+            })
+            .catch((err) => {
+                console.log('Pendaftaran Service Worker gagal:', err);
+            });
         }
 
         const firebaseConfig = {
@@ -467,6 +686,95 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        // Fungsi memuat Informasi Wilayah / Pengumuman dari Firebase secara Real-time
+        function loadInformasiWilayah() {
+            const q = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"), limit(3));
+            
+            onSnapshot(q, (snapshot) => {
+                const desktopContainer = document.getElementById('desktopInfoWilayahContainer');
+                const mobileContainer = document.getElementById('mobileInfoWilayahContainer');
+                
+                let desktopHTML = '';
+                let mobileHTML = '';
+
+                if (snapshot.empty) {
+                    const emptyMsg = '<p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Belum ada informasi wilayah.</p>';
+                    desktopContainer.innerHTML = emptyMsg;
+                    mobileContainer.innerHTML = emptyMsg;
+                    return;
+                }
+
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const judul = data.judul || 'Pengumuman';
+                    const waktu = data.waktuPelaksanaan || '-';
+                    const kategori = data.kategori || 'Info';
+                    const isi = data.isi || '';
+
+                    // Card Desktop
+                    desktopHTML += `
+                        <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
+                                <span class="text-[10px] text-gray-500"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
+                            </div>
+                            <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
+                            <p class="text-[11px] text-gray-600 line-clamp-2">${isi}</p>
+                        </div>
+                    `;
+
+                    // Card Mobile
+                    mobileHTML += `
+                        <div class="bg-white rounded-2xl p-3.5 border border-emerald-100 shadow-sm space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
+                                <span class="text-[9px] text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
+                            </div>
+                            <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
+                            <p class="text-[10px] text-gray-500 line-clamp-2">${isi}</p>
+                        </div>
+                    `;
+                });
+
+                desktopContainer.innerHTML = desktopHTML;
+                mobileContainer.innerHTML = mobileHTML;
+            }, (error) => {
+                console.error("Gagal memuat informasi wilayah:", error);
+            });
+        }
+
+        // Listener Real-time untuk push notification di HP
+        let isFirstLoad = true;
+        const qPengumuman = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"), limit(1));
+        onSnapshot(qPengumuman, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added") {
+                    if (isFirstLoad) {
+                        return; // Abaikan data lama saat pertama kali halaman dimuat
+                    }
+                    const data = change.doc.data();
+                    if ("Notification" in window && Notification.permission === "granted") {
+                        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                            navigator.serviceWorker.ready.then(registration => {
+                                registration.showNotification("📢 Pengumuman Baru WargaKu", {
+                                    body: `${data.judul}\nPelaksanaan: ${data.waktuPelaksanaan || '-'}`,
+                                    icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
+                                    vibrate: [200, 100, 200]
+                                });
+                            });
+                        } else {
+                            new Notification("📢 Pengumuman Baru WargaKu", {
+                                body: `${data.judul}\nPelaksanaan: ${data.waktuPelaksanaan || '-'}`,
+                                icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
+                                vibrate: [200, 100, 200]
+                            });
+                        }
+                    }
+                }
+            });
+            isFirstLoad = false;
+        });
 
         const handleLogout = () => {
             localStorage.removeItem('isLoggedIn');
@@ -642,6 +950,20 @@
             }
         }
 
+        // Fungsi bantu menghitung umur dari tanggal lahir
+        function hitungUmur(tanggalLahir) {
+            if (!tanggalLahir) return null;
+            const birthDate = new Date(tanggalLahir);
+            if (isNaN(birthDate)) return null;
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
         async function loadAllStats() {
             try {
                 const querySnapshot = await getDocs(collection(db, "warga"));
@@ -652,22 +974,54 @@
                 let countLaki = 0;
                 let countPerempuan = 0;
 
+                // Kategori Usia
+                let balita = 0;
+                let anak = 0;
+                let dewasa = 0;
+                let lansia = 0;
+
+                // Golongan Darah
+                let golA = 0;
+                let golB = 0;
+                let golAB = 0;
+                let golO = 0;
+                let golLain = 0;
+
                 querySnapshot.forEach(docSnap => {
                     const data = docSnap.data();
                     const wargaRt = data.rt ? String(data.rt).trim() : '';
                     
-                    // Cek apakah user wilayahnya "Semua Wilayah" atau cocok dengan RT warga
                     const isSemuaWilayah = currentWilayah.toLowerCase().includes('semua wilayah');
-                    const matchRt = wargaRt === currentWilayah.replace(/[^0-9]/g, ''); // Ambil angka RT misal "RT 01" jadi "01" atau "1"
+                    const matchRt = wargaRt === currentWilayah.replace(/[^0-9]/g, '');
 
                     if (isSemuaWilayah || currentWilayah.includes(wargaRt) || matchRt) {
                         totalWarga++;
                         if (data.noKK) setKK.add(data.noKK.trim());
+                        
+                        // Jenis Kelamin
                         if (data.gender === 'Laki-laki') countLaki++;
                         else if (data.gender === 'Perempuan') countPerempuan++;
+
+                        // Hitung Usia
+                        const umur = hitungUmur(data.tanggalLahir);
+                        if (umur !== null) {
+                            if (umur <= 5) balita++;
+                            else if (umur >= 6 && umur <= 17) anak++;
+                            else if (umur >= 18 && umur <= 59) dewasa++;
+                            else if (umur >= 60) lansia++;
+                        }
+
+                        // Golongan Darah
+                        const darah = data.golDarah ? String(data.golDarah).trim().toUpperCase() : '-';
+                        if (darah === 'A') golA++;
+                        else if (darah === 'B') golB++;
+                        else if (darah === 'AB') golAB++;
+                        else if (darah === 'O') golO++;
+                        else golLain++;
                     }
                 });
 
+                // Update Tampilan Desktop & Mobile
                 document.getElementById('statTotalWargaDesktop').textContent = `${totalWarga} Jiwa`;
                 document.getElementById('statTotalWargaMobile').textContent = `${totalWarga} Jiwa`;
                 document.getElementById('statTotalKKDesktop').textContent = `${setKK.size} KK`;
@@ -676,6 +1030,29 @@
                 document.getElementById('statTotalLakiMobile').textContent = `${countLaki} Jiwa`;
                 document.getElementById('statTotalPerempuanDesktop').textContent = `${countPerempuan} Jiwa`;
                 document.getElementById('statTotalPerempuanMobile').textContent = `${countPerempuan} Jiwa`;
+
+                // Update Usia Desktop & Mobile
+                document.getElementById('statBalita').textContent = balita;
+                document.getElementById('statBalitaMobile').textContent = balita;
+                document.getElementById('statAnak').textContent = anak;
+                document.getElementById('statAnakMobile').textContent = anak;
+                document.getElementById('statDewasa').textContent = dewasa;
+                document.getElementById('statDewasaMobile').textContent = dewasa;
+                document.getElementById('statLansia').textContent = lansia;
+                document.getElementById('statLansiaMobile').textContent = lansia;
+
+                // Update Golongan Darah Desktop & Mobile
+                document.getElementById('statGolA').textContent = golA;
+                document.getElementById('statGolAMobile').textContent = golA;
+                document.getElementById('statGolB').textContent = golB;
+                document.getElementById('statGolBMobile').textContent = golB;
+                document.getElementById('statGolAB').textContent = golAB;
+                document.getElementById('statGolABMobile').textContent = golAB;
+                document.getElementById('statGolO').textContent = golO;
+                document.getElementById('statGolOMobile').textContent = golO;
+                document.getElementById('statGolLain').textContent = golLain;
+                document.getElementById('statGolLainMobile').textContent = golLain;
+
             } catch (error) {
                 console.error("Gagal memuat statistik:", error);
             }
@@ -685,6 +1062,7 @@
             terapkanHakAkses();
             loadProfilWilayah();
             loadAllStats();
+            loadInformasiWilayah();
         };
     </script>
 </body>

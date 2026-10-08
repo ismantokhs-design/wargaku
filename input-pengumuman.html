@@ -291,12 +291,6 @@
             window.location.href = 'index.html';
         }
 
-        if ("Notification" in window) {
-            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
-                Notification.requestPermission();
-            }
-        }
-
         const firebaseConfig = {
             apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
             authDomain: "wargaku-860df.firebaseapp.com",
@@ -390,7 +384,7 @@
             }
         }
 
-        // Fungsi Simpan Pengumuman dengan validasi ID
+        // Fungsi Simpan Pengumuman (Aman di HP)
         async function simpanPengumuman(judul, kategori, waktuInput, isi) {
             try {
                 let formattedWaktu = "-";
@@ -414,14 +408,6 @@
                 });
 
                 if (docRef && docRef.id) {
-                    if ("Notification" in window && Notification.permission === "granted") {
-                        new Notification("📢 Pengumuman Baru WargaKu", {
-                            body: `${judul}\nPelaksanaan: ${formattedWaktu}`,
-                            icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
-                            vibrate: [200, 100, 200]
-                        });
-                    }
-
                     alert('Pengumuman berhasil dipublikasikan!');
                     
                     document.getElementById('formInputPengumumanDesktop').reset();

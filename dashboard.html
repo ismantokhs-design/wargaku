@@ -14,6 +14,7 @@
     <style>
         body {
             background-color: #f8fafc;
+            overflow-x: hidden;
         }
     </style>
 </head>
@@ -321,7 +322,11 @@
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                        <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-bullhorn mr-2 text-emerald-600"></i>Informasi Wilayah Terbaru</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-base font-bold text-gray-800"><i class="fa-solid fa-bullhorn mr-2 text-emerald-600"></i>Informasi Wilayah Terbaru</h3>
+                            <!-- Tombol Lihat Semua Desktop (Hidden default, muncul jika data > 3) -->
+                            <a href="info-pengumuman.html" id="btnLihatSemuaDesktop" class="hidden text-xs font-semibold text-emerald-600 hover:underline">Lihat Semua</a>
+                        </div>
                         <div id="desktopInfoWilayahContainer" class="space-y-3">
                             <p class="text-xs text-gray-400 italic">Memuat informasi wilayah...</p>
                         </div>
@@ -335,10 +340,10 @@
     <!-- ========================================================================= -->
     <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                      -->
     <!-- ========================================================================= -->
-    <div class="md:hidden max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-32" style="background-color: #f0fdf4;">
+    <div class="md:hidden max-w-md mx-auto h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-hidden" style="background-color: #f0fdf4;">
         
-        <!-- HEADER & PROFIL MOBILE MODERN -->
-        <header class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 px-6 pt-6 pb-6 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+        <!-- HEADER & PROFIL MOBILE MODERN (Menempel di atas & tidak ikut ter-scroll) -->
+        <header class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 px-6 pt-6 pb-6 flex-shrink-0 z-40 shadow-lg rounded-b-3xl">
             <div class="flex justify-between items-center mb-5">
                 <div class="flex items-center space-x-2.5">
                     <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-inner border border-white/30 flex-shrink-0">
@@ -403,8 +408,8 @@
             </div>
         </header>
 
-        <!-- Konten HP -->
-        <main class="px-6 pt-5 space-y-4 flex-1 overflow-y-auto">
+        <!-- KONTEN UTAMA HP (Bagian ini yang bisa digulir / di-scroll ke bawah secara mandiri) -->
+        <main class="px-6 pt-4 space-y-4 flex-1 overflow-y-auto pb-24">
             <div class="grid grid-cols-2 gap-3">
                 <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
                     <div>
@@ -504,7 +509,8 @@
             <div class="space-y-3 pt-1">
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-bold text-gray-800"><i class="fa-solid fa-bullhorn text-emerald-600 mr-1.5"></i> Informasi Wilayah Terbaru</h3>
-                    <a href="profil-read.html" class="text-[11px] font-semibold text-emerald-600 hover:underline">Lihat Semua</a>
+                    <!-- Tombol Lihat Semua Mobile (Hidden default, muncul jika data > 3) -->
+                    <a href="info-pengumuman.html" id="btnLihatSemuaMobile" class="hidden text-[11px] font-semibold text-emerald-600 hover:underline">Lihat Semua</a>
                 </div>
                 <div id="mobileInfoWilayahContainer" class="space-y-2.5">
                     <p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Memuat informasi wilayah...</p>
@@ -512,8 +518,8 @@
             </div>
         </main>
 
-        <!-- ================= FIXED BOTTOM NAVIGATION ================= -->
-        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+        <!-- ================= FIXED BOTTOM NAVIGATION (Menempel di bawah) ================= -->
+        <div class="absolute bottom-0 left-0 right-0 max-w-md mx-auto z-50">
             
             <!-- SUB-MENU WARGA -->
             <div id="subWargaMenu" class="hidden bg-emerald-900/95 text-white border-t border-emerald-700 px-6 py-3 shadow-2xl rounded-t-2xl transition-all duration-300 backdrop-blur-md">
@@ -663,17 +669,6 @@
             }
         }
 
-        // Pendaftaran Service Worker untuk background push notification di HP
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('firebase-messaging-sw.js')
-            .then((registration) => {
-                console.log('Service Worker berhasil didaftarkan:', registration.scope);
-            })
-            .catch((err) => {
-                console.log('Pendaftaran Service Worker gagal:', err);
-            });
-        }
-
         const firebaseConfig = {
             apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
             authDomain: "wargaku-860df.firebaseapp.com",
@@ -687,22 +682,45 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Fungsi memuat Informasi Wilayah / Pengumuman dari Firebase secara Real-time
+        // Fungsi memuat Informasi Wilayah / Pengumuman dari Firebase (Difilter sesuai wilayah user login)
         function loadInformasiWilayah() {
-            const q = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"), limit(3));
+            const q = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"));
             
             onSnapshot(q, (snapshot) => {
                 const desktopContainer = document.getElementById('desktopInfoWilayahContainer');
                 const mobileContainer = document.getElementById('mobileInfoWilayahContainer');
+                const btnLihatSemuaDesktop = document.getElementById('btnLihatSemuaDesktop');
+                const btnLihatSemuaMobile = document.getElementById('btnLihatSemuaMobile');
                 
                 let desktopHTML = '';
                 let mobileHTML = '';
 
-                if (snapshot.empty) {
-                    const emptyMsg = '<p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Belum ada informasi wilayah.</p>';
-                    desktopContainer.innerHTML = emptyMsg;
-                    mobileContainer.innerHTML = emptyMsg;
-                    return;
+                const currentRole = localStorage.getItem('userRole') || 'Administrator';
+                const currentUserWilayah = localStorage.getItem('userWilayah') || 'RT 01';
+
+                let countTampil = 0;
+                let totalMatch = 0; // Menghitung total data yang cocok setelah difilter
+
+                // Hitung dulu jumlah total data yang lolos filter
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const wilayahPengumuman = data.wilayah || 'Semua Wilayah';
+                    const isSemua = wilayahPengumuman.toLowerCase().includes('semua');
+                    const isMatchWilayah = wilayahPengumuman.trim().toLowerCase() === currentUserWilayah.trim().toLowerCase();
+                    const isAdmin = currentRole.toLowerCase().includes('admin');
+
+                    if (isSemua || isMatchWilayah || isAdmin) {
+                        totalMatch++;
+                    }
+                });
+
+                // Tampilkan atau sembunyikan tombol "Lihat Semua" berdasarkan total data yang cocok (> 3)
+                if (totalMatch > 3) {
+                    btnLihatSemuaDesktop.classList.remove('hidden');
+                    btnLihatSemuaMobile.classList.remove('hidden');
+                } else {
+                    btnLihatSemuaDesktop.classList.add('hidden');
+                    btnLihatSemuaMobile.classList.add('hidden');
                 }
 
                 snapshot.forEach((doc) => {
@@ -710,32 +728,53 @@
                     const judul = data.judul || 'Pengumuman';
                     const waktu = data.waktuPelaksanaan || '-';
                     const kategori = data.kategori || 'Info';
+                    const wilayahPengumuman = data.wilayah || 'Semua Wilayah';
                     const isi = data.isi || '';
 
-                    // Card Desktop
-                    desktopHTML += `
-                        <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-1.5">
-                            <div class="flex justify-between items-center">
-                                <span class="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
-                                <span class="text-[10px] text-gray-500"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
-                            </div>
-                            <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
-                            <p class="text-[11px] text-gray-600 line-clamp-2">${isi}</p>
-                        </div>
-                    `;
+                    const isSemua = wilayahPengumuman.toLowerCase().includes('semua');
+                    const isMatchWilayah = wilayahPengumuman.trim().toLowerCase() === currentUserWilayah.trim().toLowerCase();
+                    const isAdmin = currentRole.toLowerCase().includes('admin');
 
-                    // Card Mobile
-                    mobileHTML += `
-                        <div class="bg-white rounded-2xl p-3.5 border border-emerald-100 shadow-sm space-y-1.5">
-                            <div class="flex justify-between items-center">
-                                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
-                                <span class="text-[9px] text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
-                            </div>
-                            <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
-                            <p class="text-[10px] text-gray-500 line-clamp-2">${isi}</p>
-                        </div>
-                    `;
+                    if (isSemua || isMatchWilayah || isAdmin) {
+                        countTampil++;
+                        if (countTampil <= 3) { // Batasi maksimal 3 pengumuman terbaru di dashboard
+                            desktopHTML += `
+                                <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-1.5">
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex space-x-1.5">
+                                            <span class="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">${wilayahPengumuman}</span>
+                                        </div>
+                                        <span class="text-[10px] text-gray-500"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
+                                    </div>
+                                    <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
+                                    <p class="text-[11px] text-gray-600 line-clamp-2">${isi}</p>
+                                </div>
+                            `;
+
+                            mobileHTML += `
+                                <div class="bg-white rounded-2xl p-3.5 border border-emerald-100 shadow-sm space-y-1.5">
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex space-x-1">
+                                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
+                                            <span class="bg-blue-50 text-blue-700 text-[9px] font-semibold px-2 py-0.5 rounded-full">${wilayahPengumuman}</span>
+                                        </div>
+                                        <span class="text-[9px] text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
+                                    </div>
+                                    <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
+                                    <p class="text-[10px] text-gray-500 line-clamp-2">${isi}</p>
+                                </div>
+                            `;
+                        }
+                    }
                 });
+
+                if (countTampil === 0) {
+                    const emptyMsg = '<p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Belum ada informasi wilayah untuk RT Anda.</p>';
+                    desktopContainer.innerHTML = emptyMsg;
+                    mobileContainer.innerHTML = emptyMsg;
+                    return;
+                }
 
                 desktopContainer.innerHTML = desktopHTML;
                 mobileContainer.innerHTML = mobileHTML;

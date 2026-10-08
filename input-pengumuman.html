@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informasi & Daftar Pengumuman - WargaKu</title>
+    <title>Input & Kelola Pengumuman - WargaKu</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome untuk Ikon -->
@@ -45,10 +45,10 @@
                     <a href="daftar-warga.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-address-book w-7 text-lg"></i><span>Daftar Warga</span>
                     </a>
-                    <a href="input-pengumuman.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                    <a href="input-pengumuman.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
                         <i class="fa-solid fa-bullhorn w-7 text-lg"></i><span>Input Pengumuman</span>
                     </a>
-                    <a href="profil-read.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
+                    <a href="info-pengumuman.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
                         <i class="fa-solid fa-circle-info w-7 text-lg"></i><span>Info Wilayah</span>
                     </a>
                 </nav>
@@ -62,30 +62,68 @@
         <main class="flex-1 flex flex-col overflow-y-auto">
             <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800">Informasi & Pengumuman Wilayah</h1>
-                    <p class="text-xs text-gray-500 mt-0.5">Daftar seluruh pengumuman resmi dan kegiatan warga RT.</p>
+                    <h1 class="text-2xl font-bold text-gray-800">Kelola & Buat Pengumuman Baru</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Publikasikan, ubah, atau hapus pengumuman kegiatan warga.</p>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <button onclick="location.href='input-pengumuman.html'" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer flex items-center space-x-2">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Buat Pengumuman</span>
-                    </button>
-                    <button onclick="location.href='dashboard.html'" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">
-                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
-                    </button>
-                </div>
+                <button onclick="location.href='dashboard.html'" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Dashboard
+                </button>
             </header>
 
-            <div class="p-10 max-w-4xl mx-auto w-full space-y-6">
-                <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-gray-800 text-base">Semua Pengumuman RT</h3>
-                    <span id="totalPengumumanDesktop" class="text-xs text-gray-500 font-medium">Memuat data...</span>
+            <div class="p-10 max-w-4xl mx-auto w-full space-y-8">
+                <!-- Form Input -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 space-y-6">
+                    <div class="flex items-center space-x-3 border-b border-gray-100 pb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-base">Formulir Informasi Warga</h3>
+                            <p class="text-xs text-gray-500">Pengumuman akan langsung tampil di dashboard dan Info Wilayah.</p>
+                        </div>
+                    </div>
+
+                    <form id="formInputPengumumanDesktop" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Judul Pengumuman</label>
+                            <input type="text" id="judulDesktop" required placeholder="Contoh: Kerja Bakti Minggu Pagi" class="w-full rounded-xl border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 mb-1">Kategori / Topik</label>
+                                <select id="kategoriDesktop" class="w-full rounded-xl border border-gray-300 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                    <option value="Kerja Bakti">Kerja Bakti</option>
+                                    <option value="Rapat RT">Rapat RT</option>
+                                    <option value="Keamanan / Ronda">Keamanan / Ronda</option>
+                                    <option value="Bantuan Sosial">Bantuan Sosial</option>
+                                    <option value="Informasi Umum">Informasi Umum</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 mb-1">Tanggal & Waktu Pelaksanaan</label>
+                                <input type="datetime-local" id="waktuDesktop" required class="w-full rounded-xl border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Isi Lengkap Pengumuman</label>
+                            <textarea id="isiDesktop" required rows="4" placeholder="Tuliskan detail pengumuman..." class="w-full rounded-xl border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                        </div>
+
+                        <div class="pt-4 flex justify-end">
+                            <button type="submit" id="btnSubmitDesktop" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-md transition cursor-pointer">
+                                <i class="fa-solid fa-paper-plane mr-1.5"></i> Publikasikan Pengumuman
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
-                <div id="containerListPengumumanDesktop" class="space-y-4">
-                    <!-- Data dimuat secara dinamis oleh JavaScript -->
-                    <div class="bg-white p-6 rounded-2xl border border-gray-200 text-center text-gray-400 text-sm">
-                        Memuat pengumuman...
+                <!-- Daftar Pengumuman & Tombol Aksi (Edit/Hapus) -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-gray-800 text-base">Daftar Pengumuman Aktif</h3>
+                    <div id="containerListPengumumanDesktop" class="space-y-3">
+                        <p class="text-xs text-gray-400 italic">Memuat daftar pengumuman...</p>
                     </div>
                 </div>
             </div>
@@ -105,27 +143,63 @@
                     <i class="fa-solid fa-bullhorn text-xs"></i>
                 </span>
                 <div>
-                    <h1 class="text-lg font-bold text-white tracking-wide">Info Wilayah</h1>
-                    <p class="text-[10px] text-emerald-100">Daftar pengumuman & kegiatan</p>
+                    <h1 class="text-lg font-bold text-white tracking-wide">Input Pengumuman</h1>
+                    <p class="text-[10px] text-emerald-100">Buat & kelola info warga</p>
                 </div>
             </div>
-            <button onclick="location.href='input-pengumuman.html'" class="text-xs bg-white/20 backdrop-blur-md hover:bg-white/30 text-white px-3 py-1.5 rounded-xl font-medium transition border border-white/30 shadow-inner flex items-center space-x-1">
-                <i class="fa-solid fa-plus text-[10px]"></i>
-                <span>Tambah</span>
+            <button onclick="location.href='dashboard.html'" class="text-xs bg-white/20 backdrop-blur-md hover:bg-white/30 text-white px-3 py-1.5 rounded-xl font-medium transition border border-white/30 shadow-inner">
+                Kembali
             </button>
         </header>
 
         <!-- Konten HP -->
-        <main class="px-4 py-4 space-y-3 flex-1 overflow-y-auto">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="font-bold text-gray-800 text-xs">Pengumuman Terbaru</h3>
-                <span id="totalPengumumanMobile" class="text-[10px] text-gray-500 font-medium">Memuat data...</span>
+        <main class="px-4 py-4 space-y-4 flex-1 overflow-y-auto">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-emerald-100 space-y-3">
+                <h3 class="font-bold text-gray-800 text-xs flex items-center">
+                    <i class="fa-solid fa-pen-to-square text-emerald-600 mr-2"></i> Buat Informasi Baru
+                </h3>
+                
+                <form id="formInputPengumumanMobile" class="space-y-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold text-gray-600 mb-1">Judul Pengumuman</label>
+                        <input type="text" id="judulMobile" required placeholder="Misal: Senam Sehat" class="w-full rounded-xl border border-gray-300 p-2.5 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1">Kategori</label>
+                            <select id="kategoriMobile" class="w-full rounded-xl border border-gray-300 p-2.5 text-xs bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <option value="Kerja Bakti">Kerja Bakti</option>
+                                <option value="Rapat RT">Rapat RT</option>
+                                <option value="Keamanan / Ronda">Keamanan / Ronda</option>
+                                <option value="Bantuan Sosial">Bantuan Sosial</option>
+                                <option value="Informasi Umum">Informasi Umum</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1">Tgl & Waktu</label>
+                            <input type="datetime-local" id="waktuMobile" required class="w-full rounded-xl border border-gray-300 p-2.5 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-semibold text-gray-600 mb-1">Isi Pengumuman</label>
+                        <textarea id="isiMobile" required rows="3" placeholder="Tuliskan detail info..." class="w-full rounded-xl border border-gray-300 p-2.5 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" id="btnSubmitMobile" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow transition cursor-pointer">
+                            <i class="fa-solid fa-paper-plane mr-1"></i> Publikasikan
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div id="containerListPengumumanMobile" class="space-y-3">
-                <!-- Data dimuat secara dinamis oleh JavaScript -->
-                <div class="bg-white p-5 rounded-2xl border border-emerald-100 text-center text-gray-400 text-xs shadow-sm">
-                    Memuat pengumuman...
+            <!-- List Pengumuman Mobile dengan Tombol Edit & Hapus -->
+            <div class="space-y-3 pt-2">
+                <h3 class="font-bold text-gray-800 text-xs px-1">Daftar Pengumuman Aktif</h3>
+                <div id="containerListPengumumanMobile" class="space-y-2.5">
+                    <p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Memuat daftar...</p>
                 </div>
             </div>
         </main>
@@ -138,9 +212,9 @@
                     <span class="text-[10px] font-medium mt-1">Beranda</span>
                 </a>
                 
-                <a href="profil-read.html" class="flex flex-col items-center text-emerald-300 font-bold">
-                    <i class="fa-solid fa-id-badge text-lg drop-shadow"></i>
-                    <span class="text-[10px] mt-1">Profil</span>
+                <a href="info-pengumuman.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
                 </a>
 
                 <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
@@ -166,12 +240,12 @@
     <!-- MODAL EDIT PENGUMUMAN                                                     -->
     <!-- ========================================================================= -->
     <div id="modalEdit" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 class="font-bold text-gray-800 text-sm flex items-center">
                     <i class="fa-solid fa-pen-to-square text-emerald-600 mr-2"></i> Edit Pengumuman
                 </h3>
-                <button onclick="tutupModalEdit()" class="text-gray-400 hover:text-gray-600 text-xs font-bold px-2 py-1">✕</button>
+                <button onclick="tutupModalEdit()" class="text-gray-400 hover:text-gray-600 text-xs font-bold px-2 py-1 cursor-pointer">✕</button>
             </div>
 
             <form id="formEditPengumuman" class="space-y-3">
@@ -191,7 +265,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-semibold text-gray-600 mb-1">Tgl & Waktu Pelaksanaan</label>
+                    <label class="block text-[10px] font-semibold text-gray-600 mb-1">Waktu Pelaksanaan</label>
                     <input type="text" id="editWaktu" required class="w-full rounded-xl border border-gray-300 p-2.5 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Contoh: Minggu, 12 Oktober 2026 Pukul 07.00 WIB">
                 </div>
                 <div>
@@ -200,8 +274,8 @@
                 </div>
 
                 <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="tutupModalEdit()" class="w-1/2 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-xs transition">Batal</button>
-                    <button type="submit" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow transition">Simpan Perubahan</button>
+                    <button type="button" onclick="tutupModalEdit()" class="w-1/2 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-xs transition cursor-pointer">Batal</button>
+                    <button type="submit" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow transition cursor-pointer">Simpan</button>
                 </div>
             </form>
         </div>
@@ -211,10 +285,16 @@
     <!-- ================= SCRIPT KONEKSI FIREBASE & LOGIKA CRUD ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
+        }
+
+        if ("Notification" in window) {
+            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
         }
 
         const firebaseConfig = {
@@ -231,87 +311,74 @@
         const db = getFirestore(app);
 
         // Fungsi Memuat Daftar Pengumuman
-        async function loadPengumuman() {
+        async function loadPengumumanList() {
             try {
                 const q = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
 
                 const containerDesktop = document.getElementById('containerListPengumumanDesktop');
                 const containerMobile = document.getElementById('containerListPengumumanMobile');
-                const totalDesktop = document.getElementById('totalPengumumanDesktop');
-                const totalMobile = document.getElementById('totalPengumumanMobile');
 
                 let htmlDesktop = '';
                 let htmlMobile = '';
-                let count = 0;
 
                 if (querySnapshot.empty) {
-                    const emptyHtml = '<div class="bg-white p-6 rounded-2xl border border-gray-200 text-center text-gray-400 text-xs">Belum ada pengumuman yang dipublikasikan.</div>';
-                    containerDesktop.innerHTML = emptyHtml;
-                    containerMobile.innerHTML = emptyHtml;
-                    totalDesktop.textContent = '0 Pengumuman';
-                    totalMobile.textContent = '0 Pengumuman';
+                    const emptyMsg = '<p class="text-xs text-gray-400 italic bg-white p-4 rounded-2xl border border-gray-100">Belum ada pengumuman.</p>';
+                    containerDesktop.innerHTML = emptyMsg;
+                    containerMobile.innerHTML = emptyMsg;
                     return;
                 }
 
                 querySnapshot.forEach((docSnap) => {
-                    count++;
                     const data = docSnap.data();
                     const id = docSnap.id;
                     const judul = data.judul || '-';
                     const kategori = data.kategori || 'Umum';
                     const waktu = data.waktuPelaksanaan || '-';
                     const isi = data.isi || '-';
-                    const penulis = data.penulis || 'Pengurus';
 
-                    // HTML untuk Desktop
+                    // HTML Desktop List Item
                     htmlDesktop += `
-                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-3 relative">
-                            <div class="flex justify-between items-start">
-                                <div class="space-y-1">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">${kategori}</span>
-                                        <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
-                                    </div>
-                                    <h4 class="text-base font-bold text-gray-800">${judul}</h4>
+                        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 flex justify-between items-start">
+                            <div class="space-y-1 pr-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">${kategori}</span>
+                                    <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
                                 </div>
-                                <div class="flex space-x-2">
-                                    <button onclick="bukaModalEdit('${id}', '${encodeURIComponent(judul)}', '${encodeURIComponent(kategori)}', '${encodeURIComponent(waktu)}', '${encodeURIComponent(isi)}')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center space-x-1">
-                                        <i class="fa-solid fa-pen-to-square"></i><span>Edit</span>
-                                    </button>
-                                    <button onclick="hapusPengumuman('${id}')" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center space-x-1">
-                                        <i class="fa-solid fa-trash"></i><span>Hapus</span>
-                                    </button>
-                                </div>
+                                <h4 class="text-sm font-bold text-gray-800">${judul}</h4>
+                                <p class="text-xs text-gray-600 line-clamp-2">${isi}</p>
                             </div>
-                            <p class="text-xs text-gray-600 leading-relaxed whitespace-pre-line">${isi}</p>
-                            <div class="pt-2 border-t border-gray-100 flex justify-between items-center text-[11px] text-gray-400">
-                                <span>Dipublikasikan oleh: <strong class="text-gray-600">${penulis}</strong></span>
+                            <div class="flex space-x-2 flex-shrink-0">
+                                <button onclick="bukaModalEdit('${id}', '${encodeURIComponent(judul)}', '${encodeURIComponent(kategori)}', '${encodeURIComponent(waktu)}', '${encodeURIComponent(isi)}')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center space-x-1">
+                                    <i class="fa-solid fa-pen"></i><span>Edit</span>
+                                </button>
+                                <button onclick="hapusPengumuman('${id}')" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center space-x-1">
+                                    <i class="fa-solid fa-trash"></i><span>Hapus</span>
+                                </button>
                             </div>
                         </div>
                     `;
 
-                    // HTML untuk Mobile
+                    // HTML Mobile List Item
                     htmlMobile += `
-                        <div class="bg-white rounded-2xl p-4 shadow-sm border border-emerald-100 space-y-2.5 relative">
-                            <div class="flex justify-between items-start">
+                        <div class="bg-white rounded-2xl p-3.5 border border-emerald-100 shadow-sm space-y-2">
+                            <div class="flex justify-between items-center">
                                 <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
-                                <div class="flex space-x-1.5">
-                                    <button onclick="bukaModalEdit('${id}', '${encodeURIComponent(judul)}', '${encodeURIComponent(kategori)}', '${encodeURIComponent(waktu)}', '${encodeURIComponent(isi)}')" class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg text-xs flex items-center justify-center">
+                                <div class="flex space-x-1">
+                                    <button onclick="bukaModalEdit('${id}', '${encodeURIComponent(judul)}', '${encodeURIComponent(kategori)}', '${encodeURIComponent(waktu)}', '${encodeURIComponent(isi)}')" class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg text-xs flex items-center justify-center cursor-pointer">
                                         <i class="fa-solid fa-pen text-[10px]"></i>
                                     </button>
-                                    <button onclick="hapusPengumuman('${id}')" class="w-7 h-7 bg-red-50 text-red-600 rounded-lg text-xs flex items-center justify-center">
+                                    <button onclick="hapusPengumuman('${id}')" class="w-7 h-7 bg-red-50 text-red-600 rounded-lg text-xs flex items-center justify-center cursor-pointer">
                                         <i class="fa-solid fa-trash text-[10px]"></i>
                                     </button>
                                 </div>
                             </div>
                             <div>
                                 <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
-                                <p class="text-[10px] text-gray-500 mt-1 line-clamp-3">${isi}</p>
+                                <p class="text-[10px] text-gray-500 mt-0.5 line-clamp-2">${isi}</p>
                             </div>
-                            <div class="pt-2 border-t border-gray-100 flex justify-between items-center text-[9px] text-gray-400">
-                                <span><i class="fa-regular fa-clock mr-0.5"></i>${waktu}</span>
-                                <strong class="text-gray-500">${penulis}</strong>
+                            <div class="text-[9px] text-gray-400 border-t border-gray-100 pt-1.5">
+                                <i class="fa-regular fa-clock mr-1"></i>${waktu}
                             </div>
                         </div>
                     `;
@@ -319,11 +386,53 @@
 
                 containerDesktop.innerHTML = htmlDesktop;
                 containerMobile.innerHTML = htmlMobile;
-                totalDesktop.textContent = `${count} Pengumuman`;
-                totalMobile.textContent = `${count} Pengumuman`;
 
             } catch (error) {
-                console.error("Gagal memuat pengumuman:", error);
+                console.error("Gagal memuat daftar:", error);
+            }
+        }
+
+        // Fungsi Simpan Pengumuman Baru
+        async function simpanPengumuman(judul, kategori, waktuInput, isi) {
+            try {
+                let formattedWaktu = "-";
+                if (waktuInput) {
+                    const dateObj = new Date(waktuInput);
+                    if (!isNaN(dateObj)) {
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                        formattedWaktu = dateObj.toLocaleDateString('id-ID', options) + ' WIB';
+                    } else {
+                        formattedWaktu = waktuInput;
+                    }
+                }
+
+                await addDoc(collection(db, "pengumuman"), {
+                    judul: judul,
+                    kategori: kategori,
+                    isi: isi,
+                    penulis: localStorage.getItem('userName') || 'Pengurus RT',
+                    waktuPelaksanaan: formattedWaktu,
+                    createdAt: new Date().toISOString()
+                });
+
+                if ("Notification" in window && Notification.permission === "granted") {
+                    new Notification("📢 Pengumuman Baru WargaKu", {
+                        body: `${judul}\nPelaksanaan: ${formattedWaktu}`,
+                        icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
+                        vibrate: [200, 100, 200]
+                    });
+                }
+
+                alert('Pengumuman berhasil dipublikasikan!');
+                
+                // Reset form & muat ulang daftar
+                document.getElementById('formInputPengumumanDesktop').reset();
+                document.getElementById('formInputPengumumanMobile').reset();
+                loadPengumumanList();
+
+            } catch (error) {
+                console.error("Gagal menyimpan pengumuman:", error);
+                alert('Gagal mengirim pengumuman ke database.');
             }
         }
 
@@ -333,7 +442,7 @@
                 try {
                     await deleteDoc(doc(db, "pengumuman", id));
                     alert("Pengumuman berhasil dihapus!");
-                    loadPengumuman();
+                    loadPengumumanList();
                 } catch (error) {
                     console.error("Gagal menghapus:", error);
                     alert("Gagal menghapus pengumuman.");
@@ -356,7 +465,7 @@
             document.getElementById('modalEdit').classList.add('hidden');
         }
 
-        // Handle Submit Form Edit
+        // Submit Form Edit
         document.getElementById('formEditPengumuman').addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('editId').value;
@@ -376,15 +485,35 @@
 
                 alert("Pengumuman berhasil diperbarui!");
                 tutupModalEdit();
-                loadPengumuman();
+                loadPengumumanList();
             } catch (error) {
                 console.error("Gagal memperbarui:", error);
                 alert("Gagal memperbarui pengumuman.");
             }
         });
 
+        document.getElementById('formInputPengumumanDesktop').addEventListener('submit', (e) => {
+            e.preventDefault();
+            simpanPengumuman(
+                document.getElementById('judulDesktop').value,
+                document.getElementById('kategoriDesktop').value,
+                document.getElementById('waktuDesktop').value,
+                document.getElementById('isiDesktop').value
+            );
+        });
+
+        document.getElementById('formInputPengumumanMobile').addEventListener('submit', (e) => {
+            e.preventDefault();
+            simpanPengumuman(
+                document.getElementById('judulMobile').value,
+                document.getElementById('kategoriMobile').value,
+                document.getElementById('waktuMobile').value,
+                document.getElementById('isiMobile').value
+            );
+        });
+
         window.onload = () => {
-            loadPengumuman();
+            loadPengumumanList();
         };
     </script>
 </body>

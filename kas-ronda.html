@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input & Data Kas Ronda - WargaKu PWA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Kontainer Utama Tampilan Mobile / PWA -->
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-28" style="background-color: #f0fdf4;">
+        
+        <!-- Header Halaman -->
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex items-center space-x-3">
+                <a href="dashboard.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </a>
+                <h1 class="text-lg font-bold text-white tracking-wide">Kas Ronda</h1>
+            </div>
+            
+            <div class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/30 flex items-center space-x-1 shadow-inner">
+                <i class="fa-solid fa-shield-halved text-amber-300 text-xs"></i>
+                <span id="badgeWilayahHeader">Wilayah</span>
+            </div>
+        </header>
+
+        <!-- Konten Utama -->
+        <main class="px-6 space-y-5 flex-1 py-6 overflow-y-auto">
+
+            <!-- Form Input Kas Ronda -->
+            <div class="bg-white rounded-3xl p-6 border border-emerald-100 shadow-sm space-y-4">
+                <div class="flex items-center space-x-2 text-emerald-800 font-bold text-xs pb-2 border-b border-gray-100">
+                    <i class="fa-solid fa-pen-to-square text-emerald-600"></i>
+                    <span>FORM PENCATATAN KAS RONDA</span>
+                </div>
+
+                <form id="formKasRonda" class="space-y-4">
+                    <!-- Petugas (Otomatis sesuai login) -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold text-gray-700">Nama Petugas / Warga</label>
+                        <input type="text" id="inputPetugas" readonly 
+                            class="w-full bg-gray-100 border border-gray-200 rounded-2xl px-4 py-3 text-xs font-bold text-gray-700 cursor-not-allowed shadow-inner">
+                    </div>
+
+                    <!-- Wilayah (Otomatis sesuai akun, atau bisa dipilih jika Semua) -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold text-gray-700">Wilayah RT</label>
+                        <input type="text" id="inputWilayah" readonly 
+                            class="w-full bg-gray-100 border border-gray-200 rounded-2xl px-4 py-3 text-xs font-bold text-emerald-700 cursor-not-allowed shadow-inner">
+                    </div>
+
+                    <!-- Jadwal -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold text-gray-700">Jadwal Ronda / Shift</label>
+                        <select id="inputJadwal" required 
+                            class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 text-xs font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100 shadow-sm transition">
+                            <option value="" disabled selected>Pilih Jadwal Ronda</option>
+                            <option value="Senin (Shift 1)">Senin (Malam)</option>
+                            <option value="Selasa (Shift 1)">Selasa (Malam)</option>
+                            <option value="Rabu (Shift 1)">Rabu (Malam)</option>
+                            <option value="Kamis (Shift 1)">Kamis (Malam)</option>
+                            <option value="Jumat (Shift 1)">Jumat (Malam)</option>
+                            <option value="Sabtu (Shift 1)">Sabtu (Malam)</option>
+                            <option value="Minggu (Shift 1)">Minggu (Malam)</option>
+                        </select>
+                    </div>
+
+                    <!-- Tanggal -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold text-gray-700">Tanggal Setoran</label>
+                        <input type="date" id="inputTanggal" required 
+                            class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 text-xs font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100 shadow-sm transition">
+                    </div>
+
+                    <!-- Nominal -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold text-gray-700">Nominal (Rp)</label>
+                        <input type="number" id="inputNominal" required placeholder="Contoh: 5000" 
+                            class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 text-xs font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100 shadow-sm transition">
+                    </div>
+
+                    <button type="submit" id="btnSimpan" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-xs transition shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2 cursor-pointer mt-2">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Simpan Data Kas Ronda</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Bagian Filter & Daftar Data Kas Ronda -->
+            <div class="bg-white rounded-3xl p-6 border border-emerald-100 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+                    <div class="flex items-center space-x-2 text-gray-800 font-bold text-xs">
+                        <i class="fa-solid fa-list-check text-emerald-600"></i>
+                        <span>DAFTAR KAS RONDA</span>
+                    </div>
+                    <!-- Dropdown Filter Wilayah khusus untuk Pak Dukuh / Akses Semua -->
+                    <div id="filterWilayahContainer" class="hidden">
+                        <select id="selectFilterWilayah" onchange="loadDataKasRonda()" class="bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold rounded-xl px-2.5 py-1 focus:outline-none">
+                            <option value="Semua">Semua Wilayah</option>
+                            <option value="RT 01">RT 01</option>
+                            <option value="RT 02">RT 02</option>
+                            <option value="RT 03">RT 03</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- List Data -->
+                <div id="listDataKas" class="space-y-2.5">
+                    <p class="text-xs text-center text-gray-400 py-4">Memuat data...</p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Navigasi Bawah -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-300 font-bold">
+                    <i class="fa-solid fa-house text-lg drop-shadow"></i>
+                    <span class="text-[10px] mt-1">Beranda</span>
+                </a>
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Galeri</span>
+                </a>
+                <a href="pesan.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Script Koneksi Firebase & Logika -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Ambil data user yang sedang login dari localStorage
+        // Format yang disimpan saat login/tambah user nanti: userName, userWilayah (misal: "RT 01" atau "Semua")
+        const loggedInUser = localStorage.getItem('userName') || 'Ismanto';
+        const userWilayah = localStorage.getItem('userWilayah') || 'RT 01'; // Default RT 01 jika belum diatur
+
+        document.getElementById('inputPetugas').value = loggedInUser;
+        document.getElementById('inputWilayah').value = userWilayah;
+        document.getElementById('badgeWilayahHeader').textContent = userWilayah;
+
+        // Jika user adalah Pak Dukuh atau memiliki akses "Semua", tampilkan filter pilihan wilayah
+        if (userWilayah === 'Semua' || userWilayah === 'Semua Wilayah' || localStorage.getItem('userRole') === 'Pak Dukuh') {
+            document.getElementById('filterWilayahContainer').classList.remove('hidden');
+        }
+
+        // Set tanggal default ke hari ini
+        document.getElementById('inputTanggal').valueAsDate = new Date();
+
+        // Fungsi Load Data Kas Ronda Berdasarkan Wilayah
+        window.loadDataKasRonda = async function() {
+            const container = document.getElementById('listDataKas');
+            container.innerHTML = `<p class="text-xs text-center text-gray-400 py-4">Memuat data...</p>`;
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "kas_ronda"));
+                container.innerHTML = "";
+                
+                let dataCount = 0;
+                const selectedFilter = document.getElementById('selectFilterWilayah') ? document.getElementById('selectFilterWilayah').value : userWilayah;
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    
+                    // Filter berdasarkan wilayah
+                    if (userWilayah !== 'Semua' && userWilayah !== 'Semua Wilayah' && data.wilayah !== userWilayah) {
+                        return; // Lewati jika tidak sesuai wilayah user biasa
+                    }
+                    if (selectedFilter !== 'Semua' && data.wilayah !== selectedFilter) {
+                        return; // Lewati jika difilter khusus oleh Pak Dukuh
+                    }
+
+                    dataCount++;
+                    const formattedNominal = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(data.nominal || 0);
+
+                    container.innerHTML += `
+                        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3 flex justify-between items-center shadow-xs">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs font-bold text-gray-800">${data.petugas}</span>
+                                    <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${data.wilayah}</span>
+                                </div>
+                                <p class="text-[11px] text-gray-500"><i class="fa-regular fa-calendar mr-1"></i>${data.tanggal} • <span class="font-medium text-gray-700">${data.jadwal}</span></p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-extrabold text-emerald-600">${formattedNominal}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                if (dataCount === 0) {
+                    container.innerHTML = `<p class="text-xs text-center text-gray-400 py-4">Belum ada data kas ronda untuk wilayah ini.</p>`;
+                }
+            } catch (error) {
+                console.error("Gagal memuat data:", error);
+                container.innerHTML = `<p class="text-xs text-center text-red-500 py-4">Gagal memuat data dari database.</p>`;
+            }
+        };
+
+        // Simpan Data
+        document.getElementById('formKasRonda').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btnSimpan = document.getElementById('btnSimpan');
+            btnSimpan.disabled = true;
+            btnSimpan.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Menyimpan...</span>`;
+
+            const petugas = document.getElementById('inputPetugas').value;
+            const wilayah = document.getElementById('inputWilayah').value;
+            const jadwal = document.getElementById('inputJadwal').value;
+            const tanggal = document.getElementById('inputTanggal').value;
+            const nominal = Number(document.getElementById('inputNominal').value);
+
+            try {
+                await addDoc(collection(db, "kas_ronda"), {
+                    petugas: petugas,
+                    wilayah: wilayah,
+                    jadwal: jadwal,
+                    tanggal: tanggal,
+                    nominal: nominal,
+                    createdAt: new Date().toISOString()
+                });
+
+                alert("Data kas ronda berhasil disimpan!");
+                document.getElementById('inputJadwal').value = "";
+                document.getElementById('inputNominal').value = "";
+                document.getElementById('inputTanggal').valueAsDate = new Date();
+                loadDataKasRonda();
+            } catch (error) {
+                console.error("Gagal menyimpan data:", error);
+                alert("Terjadi kesalahan saat menyimpan data.");
+            } finally {
+                btnSimpan.disabled = false;
+                btnSimpan.innerHTML = `<i class="fa-solid fa-floppy-dialog"></i> <span>Simpan Data Kas Ronda</span>`;
+            }
+        });
+
+        // Load data saat pertama buka
+        loadDataKasRonda();
+    </script>
+</body>
+</html>

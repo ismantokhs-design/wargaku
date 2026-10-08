@@ -88,6 +88,7 @@
                                     <th class="p-3.5 text-center w-12">No</th>
                                     <th class="p-3.5">NIK</th>
                                     <th class="p-3.5">Nama Lengkap</th>
+                                    <th class="p-3.5 text-center">RT/RW</th>
                                     <th class="p-3.5">Jenis Kelamin</th>
                                     <th class="p-3.5">Tempat Lahir</th>
                                     <th class="p-3.5">Tanggal Lahir</th>
@@ -110,7 +111,7 @@
 
 
     <!-- ========================================================================= -->
-    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL (Mobile UI Modern dengan Fixed Nav)  -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                      -->
     <!-- ========================================================================= -->
     <div class="md:hidden max-w-md mx-auto min-h-screen shadow-2xl flex flex-col justify-between relative pb-32" style="background-color: #f0fdf4;">
         
@@ -209,6 +210,18 @@
                     <input type="text" id="editNama" required class="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
 
+                <!-- Input Wilayah RT & RW -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">RT</label>
+                        <input type="text" id="editRt" placeholder="Contoh: 01" class="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">RW</label>
+                        <input type="text" id="editRw" placeholder="Contoh: 05" class="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Tempat Lahir</label>
@@ -290,7 +303,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Cek Sesi Login
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
         }
@@ -308,7 +320,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Simpan data warga global untuk akses detail & edit
         window.wargaDataStore = {};
 
         async function loadDaftarWarga() {
@@ -323,7 +334,7 @@
                 document.getElementById('totalWargaBadgeMobile').textContent = `Total: ${totalWarga} Jiwa`;
 
                 if (querySnapshot.empty) {
-                    tabelBodyDesktop.innerHTML = `<tr><td colspan="11" class="text-center py-8 text-gray-400">Belum ada data warga yang tersimpan.</td></tr>`;
+                    tabelBodyDesktop.innerHTML = `<tr><td colspan="12" class="text-center py-8 text-gray-400">Belum ada data warga yang tersimpan.</td></tr>`;
                     listWargaMobile.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-gray-400 shadow-sm">Belum ada data warga.</div>`;
                     return;
                 }
@@ -336,11 +347,11 @@
                     const id = docSnap.id;
                     const d = docSnap.data();
                     
-                    // Simpan ke store global
                     window.wargaDataStore[id] = d;
 
                     const nik = d.nik || '-';
                     const nama = d.nama || '-';
+                    const rtRw = `RT ${d.rt || '-'} / RW ${d.rw || '-'}`;
                     const gender = d.gender ? d.gender.toUpperCase() : '-';
                     const tempatLahir = d.tempatLahir ? d.tempatLahir.toUpperCase() : '-';
                     const tanggalLahir = d.tanggalLahir || '-';
@@ -349,12 +360,12 @@
                     const statusPerkawinan = d.statusPerkawinan ? d.statusPerkawinan.toUpperCase() : '-';
                     const statusKeluarga = d.hubunganKK ? d.hubunganKK.toUpperCase() : '-';
 
-                    // Baris Tabel Desktop (Tombol Detail & Edit Berdampingan)
                     rowsDesktop += `
                         <tr class="hover:bg-slate-50 transition">
                             <td class="p-3.5 text-center font-medium">${no}</td>
                             <td class="p-3.5 font-mono text-emerald-600 font-semibold">${nik}</td>
                             <td class="p-3.5 font-bold text-gray-800">${nama}</td>
+                            <td class="p-3.5 text-center font-semibold text-emerald-800">${rtRw}</td>
                             <td class="p-3.5">${gender}</td>
                             <td class="p-3.5">${tempatLahir}</td>
                             <td class="p-3.5">${tanggalLahir}</td>
@@ -373,7 +384,6 @@
                         </tr>
                     `;
 
-                    // Kartu Mobile (Tombol Detail & Edit Berdampingan)
                     cardsMobile += `
                         <div class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm space-y-2">
                             <div class="flex justify-between items-start">
@@ -385,6 +395,7 @@
                             </div>
                             <div class="text-[11px] text-gray-500 space-y-0.5 pt-1 border-t border-gray-100">
                                 <p><strong class="text-gray-700">NIK:</strong> <span class="font-mono text-emerald-600">${nik}</span></p>
+                                <p><strong class="text-gray-700">Wilayah:</strong> <span class="font-bold text-emerald-700">${rtRw}</span></p>
                                 <p><strong class="text-gray-700">TTL:</strong> ${tempatLahir}, ${tanggalLahir}</p>
                                 <p><strong class="text-gray-700">Agama / Darah:</strong> ${agama} / <span class="font-bold">${golDarah}</span></p>
                                 <p><strong class="text-gray-700">Status:</strong> ${statusPerkawinan}</p>
@@ -409,11 +420,10 @@
 
             } catch (error) {
                 console.error("Gagal memuat data warga:", error);
-                tabelBodyDesktop.innerHTML = `<tr><td colspan="11" class="text-center py-8 text-red-500">Gagal memuat data dari database.</td></tr>`;
+                tabelBodyDesktop.innerHTML = `<tr><td colspan="12" class="text-center py-8 text-red-500">Gagal memuat data dari database.</td></tr>`;
             }
         }
 
-        // Fungsi Buka Modal Detail
         window.openDetailModal = function(id) {
             const d = window.wargaDataStore[id];
             if (!d) return;
@@ -423,6 +433,7 @@
                     <p><strong>Nama Lengkap:</strong> ${d.nama || '-'}</p>
                     <p><strong>NIK:</strong> <span class="font-mono text-emerald-600">${d.nik || '-'}</span></p>
                     <p><strong>No. KK:</strong> <span class="font-mono">${d.noKK || '-'}</span></p>
+                    <p><strong>Wilayah:</strong> RT ${d.rt || '-'} / RW ${d.rw || '-'}</p>
                     <p><strong>Tempat/Tanggal Lahir:</strong> ${d.tempatLahir || '-'}, ${d.tanggalLahir || '-'}</p>
                     <p><strong>Jenis Kelamin:</strong> ${d.gender || '-'}</p>
                     <p><strong>Golongan Darah:</strong> ${d.golDarah || '-'}</p>
@@ -443,7 +454,6 @@
             document.getElementById('detailModal').classList.add('hidden');
         }
 
-        // Fungsi Buka Modal Edit
         window.openEditModal = function(id) {
             const data = window.wargaDataStore[id];
             if (!data) return;
@@ -451,6 +461,8 @@
             document.getElementById('editDocId').value = id;
             document.getElementById('editNik').value = data.nik || '';
             document.getElementById('editNama').value = data.nama || '';
+            document.getElementById('editRt').value = data.rt || '';
+            document.getElementById('editRw').value = data.rw || '';
             document.getElementById('editTempatLahir').value = data.tempatLahir || '';
             document.getElementById('editTanggalLahir').value = data.tanggalLahir || '';
             document.getElementById('editGender').value = data.gender || 'Laki-laki';
@@ -462,12 +474,10 @@
             document.getElementById('editModal').classList.remove('hidden');
         }
 
-        // Fungsi Tutup Modal Edit
         window.closeEditModal = function() {
             document.getElementById('editModal').classList.add('hidden');
         }
 
-        // Tangani Submit Form Edit
         document.getElementById('editForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('editDocId').value;
@@ -481,6 +491,8 @@
                 await updateDoc(docRef, {
                     nik: document.getElementById('editNik').value,
                     nama: document.getElementById('editNama').value,
+                    rt: document.getElementById('editRt').value,
+                    rw: document.getElementById('editRw').value,
                     tempatLahir: document.getElementById('editTempatLahir').value,
                     tanggalLahir: document.getElementById('editTanggalLahir').value,
                     gender: document.getElementById('editGender').value,

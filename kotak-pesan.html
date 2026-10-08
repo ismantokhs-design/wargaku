@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kotak Pesan & Aspirasi - WargaKu PWA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Kontainer Utama Tampilan Mobile / PWA -->
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-28" style="background-color: #f0fdf4;">
+        
+        <!-- Header Halaman -->
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex items-center space-x-3">
+                <a href="pesan.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </a>
+                <h1 class="text-lg font-bold text-white tracking-wide">Kotak Pesan</h1>
+            </div>
+            
+            <div class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/30 flex items-center space-x-1 shadow-inner">
+                <i class="fa-solid fa-comments text-amber-300 text-xs"></i>
+                <span>Aspirasi Warga</span>
+            </div>
+        </header>
+
+        <!-- Konten Utama: Form Kirim & List Pesan -->
+        <main class="px-6 space-y-6 flex-1 py-6 overflow-y-auto">
+
+            <!-- Form Kirim Pesan Baru -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-4">
+                <div class="flex items-center space-x-2 text-gray-800 font-bold text-xs pb-2 border-b border-gray-100">
+                    <i class="fa-solid fa-pen-to-square text-emerald-600"></i>
+                    <span>TULIS PESAN / ASPIRASI BARU</span>
+                </div>
+
+                <form id="formKirimPesan" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">Nama Pengirim / Warga</label>
+                        <input type="text" id="namaPengirim" required readonly placeholder="Nama Anda..." 
+                            class="w-full bg-gray-100 border border-gray-200 rounded-2xl px-4 py-2.5 text-xs text-gray-600 cursor-not-allowed focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">Kategori Pesan</label>
+                        <select id="kategoriPesan" class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition">
+                            <option value="Aspirasi / Saran">Aspirasi / Saran</option>
+                            <option value="Pengaduan Lingkungan">Pengaduan Lingkungan</option>
+                            <option value="Pertanyaan Umum">Pertanyaan Umum</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">Isi Pesan / Aspirasi</label>
+                        <textarea id="isiPesan" rows="3" required placeholder="Tuliskan pesan, saran, atau laporan Anda di sini..." 
+                            class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition resize-none"></textarea>
+                    </div>
+                    <button type="submit" id="btnKirim" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-2xl text-xs shadow-md transition cursor-pointer flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Kirim Pesan</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Daftar Riwayat Kotak Pesan Masuk (Sesuai User yang Masuk) -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Riwayat Pesan Anda</h3>
+                    <span id="badgeJumlahPesan" class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">0 Pesan</span>
+                </div>
+
+                <div id="listPesanContainer" class="space-y-3">
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center text-xs text-gray-400">
+                        <i class="fa-solid fa-spinner animate-spin mr-2"></i> Memuat daftar pesan...
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Navigasi Bawah -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Galeri</span>
+                </a>
+                <a href="pesan.html" class="flex flex-col items-center text-emerald-300 font-bold">
+                    <i class="fa-regular fa-comment-dots text-lg drop-shadow"></i>
+                    <span class="text-[10px] mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Toast Notifikasi Elegan -->
+    <div id="toastContainer" class="fixed top-5 right-5 z-[9999] flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- Script Koneksi Firebase & Logika Filter User -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Ambil nama user yang sedang login dari localStorage
+        const currentLoggedInUser = localStorage.getItem('userName') || 'Warga';
+        document.getElementById('namaPengirim').value = currentLoggedInUser;
+
+        window.showToast = function(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            let bgClass = 'bg-emerald-900 text-white border-emerald-700';
+            let icon = '<i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>';
+            
+            if (type === 'error') {
+                bgClass = 'bg-red-900 text-white border-red-700';
+                icon = '<i class="fa-solid fa-circle-exclamation text-red-400 text-base"></i>';
+            }
+
+            toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-2xl shadow-2xl border backdrop-blur-md transform translate-y-2 opacity-0 transition-all duration-300 ${bgClass}`;
+            toast.innerHTML = `${icon}<div class="text-xs font-medium tracking-wide">${message}</div>`;
+            container.appendChild(toast);
+
+            setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Kirim Pesan ke Firestore
+        const formKirim = document.getElementById('formKirimPesan');
+        formKirim.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnKirim');
+            const kategori = document.getElementById('kategoriPesan').value;
+            const isi = document.getElementById('isiPesan').value.trim();
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mengirim...';
+
+            try {
+                await addDoc(collection(db, "pesan"), {
+                    nama: currentLoggedInUser,
+                    kategori: kategori,
+                    isi: isi,
+                    createdAt: new Date().toISOString()
+                });
+
+                showToast("Pesan berhasil dikirim!", "success");
+                document.getElementById('isiPesan').value = '';
+                loadDaftarPesan();
+            } catch (error) {
+                console.error("Gagal mengirim pesan:", error);
+                showToast("Gagal mengirim pesan. Coba lagi.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-1"></i> Kirim Pesan';
+            }
+        });
+
+        // Muat Daftar Pesan & Filter Hanya Milik User yang Login
+        async function loadDaftarPesan() {
+            const container = document.getElementById('listPesanContainer');
+            try {
+                const querySnapshot = await getDocs(collection(db, "pesan"));
+                let pesanList = [];
+
+                querySnapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    // FILTER: Hanya ambil data yang nama pengirimnya sama persis dengan user yang sedang login
+                    if (data.nama && data.nama.toLowerCase() === currentLoggedInUser.toLowerCase()) {
+                        pesanList.push({ id: docSnap.id, ...data });
+                    }
+                });
+
+                // Urutkan berdasarkan waktu terbaru
+                pesanList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                document.getElementById('badgeJumlahPesan').textContent = `${pesanList.length} Pesan`;
+
+                if (pesanList.length === 0) {
+                    container.innerHTML = `<div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center text-xs text-gray-400">Belum ada riwayat pesan yang Anda kirimkan.</div>`;
+                    return;
+                }
+
+                container.innerHTML = "";
+                pesanList.forEach(item => {
+                    let tanggalStr = "Baru saja";
+                    if (item.createdAt) {
+                        const d = new Date(item.createdAt);
+                        if (!isNaN(d)) {
+                            tanggalStr = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                        }
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm space-y-2";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">${item.kategori || 'Aspirasi'}</span>
+                            <span class="text-[10px] text-gray-400">${tanggalStr}</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-gray-800"><i class="fa-solid fa-user-circle text-emerald-600 mr-1"></i> ${item.nama} (Anda)</h4>
+                            <p class="text-xs text-gray-600 mt-1 leading-relaxed bg-gray-50 p-3 rounded-xl border border-gray-100">${item.isi}</p>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Gagal memuat pesan:", error);
+                container.innerHTML = `<div class="bg-white rounded-2xl p-6 border border-red-100 shadow-sm text-center text-xs text-red-500">Gagal memuat daftar pesan.</div>`;
+            }
+        }
+
+        window.onload = () => {
+            loadDaftarPesan();
+        };
+    </script>
+</body>
+</html>

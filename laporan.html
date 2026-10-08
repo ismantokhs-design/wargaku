@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan & Layanan - WargaKu PWA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Kontainer Utama Tampilan Mobile / PWA -->
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-28" style="background-color: #f0fdf4;">
+        
+        <!-- Header Halaman -->
+        <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex items-center space-x-3">
+                <a href="dashboard.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </a>
+                <h1 class="text-lg font-bold text-white tracking-wide">Laporan & Layanan</h1>
+            </div>
+            
+            <div class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/30 flex items-center space-x-1 shadow-inner">
+                <i class="fa-solid fa-file-invoice-dollar text-amber-300 text-xs"></i>
+                <span>Pusat Laporan</span>
+            </div>
+        </header>
+
+        <!-- Konten Utama: Kotak Surat & Kotak Pesan -->
+        <main class="px-6 space-y-6 flex-1 py-6 overflow-y-auto">
+
+            <!-- Section Title -->
+            <div>
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Menu Laporan & Administrasi</h2>
+                
+                <!-- Grid Kotak Pilihan Bergaya Kartu Profesional -->
+                <div class="grid grid-cols-2 gap-4">
+                    
+                    <!-- Kotak Surat -->
+                    <a href="#" onclick="showFeatureInfo('Kotak Surat', 'Fitur rekapitulasi pengajuan surat pengantar RT/RW, surat domisili, dan administrasi surat kependudukan.'); return false;" 
+                       class="bg-white hover:bg-emerald-50/50 border border-emerald-100 hover:border-emerald-300 rounded-3xl p-6 shadow-sm transition-all duration-300 flex flex-col items-center justify-center text-center space-y-3 group cursor-pointer">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white flex items-center justify-center text-xl transition-all duration-300 shadow-inner border border-emerald-100">
+                            <i class="fa-solid fa-envelope-circle-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-bold text-gray-800 group-hover:text-emerald-700 transition">Kotak Surat</h3>
+                            <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Rekap Pengantar & Layanan Surat</p>
+                        </div>
+                    </a>
+
+                    <!-- Kotak Pesan (Diubah mengarah ke lap-kotak-pesan.html) -->
+                    <a href="lap-kotak-pesan.html" 
+                       class="bg-white hover:bg-emerald-50/50 border border-emerald-100 hover:border-emerald-300 rounded-3xl p-6 shadow-sm transition-all duration-300 flex flex-col items-center justify-center text-center space-y-3 group cursor-pointer">
+                        <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 group-hover:bg-teal-600 group-hover:text-white flex items-center justify-center text-xl transition-all duration-300 shadow-inner border border-teal-100">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-bold text-gray-800 group-hover:text-teal-700 transition">Kotak Pesan</h3>
+                            <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Rekap Aspirasi & Pengaduan Warga</p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Informasi Tambahan -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-2.5">
+                <div class="flex items-center space-x-2 text-gray-800 font-bold text-xs pb-2 border-b border-gray-100">
+                    <i class="fa-solid fa-circle-info text-emerald-600"></i>
+                    <span>INFORMASI PUSAT LAPORAN</span>
+                </div>
+                <p class="text-xs text-gray-600 leading-relaxed">
+                    Halaman laporan ini menyediakan rekapitulasi data administrasi persuratan dan arsip pesan/aspirasi warga wilayah Potrobayan.
+                </p>
+            </div>
+
+        </main>
+
+        <!-- Navigasi Bawah (Fixed Bottom Navigation) -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Galeri</span>
+                </a>
+                <a href="pesan.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Custom Modal Informasi Fitur -->
+    <div id="featureModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 text-white rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl border border-slate-700">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-lg border border-emerald-500/30">
+                <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <div>
+                <h3 id="modalTitle" class="text-sm font-bold">Judul Fitur</h3>
+                <p id="modalDesc" class="text-xs text-gray-300 mt-1 leading-relaxed">Deskripsi fitur...</p>
+            </div>
+            <button onclick="closeFeatureModal()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition cursor-pointer">
+                Mengerti
+            </button>
+        </div>
+    </div>
+
+    <!-- Script Sederhana -->
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        window.showFeatureInfo = function(title, desc) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('featureModal').classList.remove('hidden');
+        }
+
+        window.closeFeatureModal = function() {
+            document.getElementById('featureModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

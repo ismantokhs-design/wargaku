@@ -2,72 +2,123 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - WargaKu PWA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WargaKu - Portal Masuk Pengurus</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- PWA Manifest & Theme Color -->
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1e90ff">
+    <meta name="theme-color" content="#065f46">
 
     <style>
         body {
-            background: linear-gradient(135deg, #70a1ff 0%, #1e90ff 100%);
+            background: linear-gradient(135deg, #065f46 0%, #047857 50%, #0f172a 100%);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .smooth-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen px-4">
+<body class="flex items-center justify-center min-h-screen px-4 py-6">
 
-    <!-- Card Login Glassmorphism -->
-    <div class="max-w-sm w-full glass-card rounded-2xl shadow-xl p-8 text-white relative">
+    <!-- Container Utama Login -->
+    <div class="max-w-sm w-full glass-panel smooth-shadow rounded-3xl p-8 text-white relative overflow-hidden transition-all duration-500">
         
-        <!-- Ikon User -->
-        <div class="flex justify-center mb-2">
-            <div class="bg-blue-900/40 p-3 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+        <!-- Efek Cahaya Latar Belakang (Aesthetic Glow) -->
+        <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-teal-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <!-- Header / Logo Aplikasi -->
+        <div class="relative z-10 flex flex-col items-center text-center mb-8">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg border border-white/30 mb-3 transform hover:scale-105 transition duration-300">
+                <i class="fa-solid fa-house-chimney text-2xl text-white"></i>
             </div>
+            <h1 class="text-2xl font-extrabold tracking-tight text-white">WargaKu</h1>
+            <p class="text-xs text-emerald-100/80 font-medium mt-1">Sistem Informasi Administrasi & Kependudukan</p>
         </div>
 
-        <h1 class="text-2xl font-semibold text-center mb-6 tracking-wide">User Login</h1>
-
-        <!-- Form Login Terhubung Firebase -->
-        <form id="loginForm" class="space-y-4">
-            <div>
-                <input type="text" id="username" required placeholder="Email / Username" 
-                    class="w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner font-medium">
+        <!-- Form Login Terhubung Firebase Firestore -->
+        <form id="loginForm" class="relative z-10 space-y-4">
+            
+            <!-- Input Email / Username -->
+            <div class="space-y-1">
+                <label class="block text-[11px] font-semibold text-emerald-100 uppercase tracking-wider ml-1">Email / Username</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400 pointer-events-none">
+                        <i class="fa-solid fa-envelope text-xs"></i>
+                    </span>
+                    <input type="text" id="username" required placeholder="Contoh: admin@wargaku.com" 
+                        class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white/90 text-gray-800 placeholder-gray-400 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-inner transition duration-200">
+                </div>
             </div>
-            <div>
-                <input type="password" id="password" required placeholder="Password" 
-                    class="w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner font-medium">
+
+            <!-- Input Password dengan Tombol Toggle Mata -->
+            <div class="space-y-1">
+                <label class="block text-[11px] font-semibold text-emerald-100 uppercase tracking-wider ml-1">Password</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400 pointer-events-none">
+                        <i class="fa-solid fa-lock text-xs"></i>
+                    </span>
+                    <input type="password" id="password" required placeholder="••••••••" 
+                        class="w-full pl-10 pr-10 py-3 rounded-2xl bg-white/90 text-gray-800 placeholder-gray-400 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-inner transition duration-200">
+                    <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer focus:outline-none">
+                        <i id="eyeIcon" class="fa-solid fa-eye-slash text-xs"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Forgot Password -->
-            <div class="text-right">
-                <a href="#" onclick="alert('Silakan hubungi Administrator RT untuk reset password.'); return false;" class="text-xs text-white/90 hover:underline">
-                    Forgot <span class="text-blue-900 font-medium">Password?</span>
+            <!-- Forgot Password / Bantuan -->
+            <div class="flex justify-end pt-1">
+                <a href="#" onclick="showCustomAlert('Silakan hubungi Administrator RT untuk bantuan reset password.'); return false;" class="text-[11px] text-emerald-200 hover:text-white font-medium transition">
+                    Lupa Password?
                 </a>
             </div>
 
-            <!-- Tombol Login -->
+            <!-- Tombol Login Berkilau Profesional -->
             <button type="submit" id="loginBtn"
-                class="w-full py-3 bg-[#0a3d62] hover:bg-[#072d4a] text-white font-semibold rounded-xl shadow-lg transition duration-200 cursor-pointer">
-                Login
+                class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold uppercase tracking-wider rounded-2xl shadow-lg shadow-emerald-900/30 transition-all duration-300 transform active:scale-95 cursor-pointer flex items-center justify-center space-x-2">
+                <span>Masuk Sistem</span>
+                <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
             </button>
         </form>
 
-        <div id="errorMsg" class="mt-4 text-center text-xs font-semibold text-red-200"></div>
+        <!-- Pesan Status / Error yang Elegan -->
+        <div id="errorMsg" class="mt-4 text-center text-xs font-semibold text-rose-200 transition-all duration-300"></div>
+
+        <!-- Footer / Copyright -->
+        <div class="mt-6 text-center text-[10px] text-emerald-200/60 border-t border-white/10 pt-4 space-y-0.5">
+            <p>Potrobayan • Srihardono • Pundong • Bantul</p>
+            <p class="font-medium text-emerald-100/70">Copyright This Application 2026</p>
+        </div>
     </div>
 
-    <!-- Skrip Validasi Login Terhubung Firebase Firestore -->
+    <!-- Custom Modal/Alert Elegan -->
+    <div id="customAlertModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 text-white rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl border border-slate-700">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-lg border border-emerald-500/30">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div>
+                <h3 class="text-sm font-bold">Informasi Akses</h3>
+                <p id="customAlertText" class="text-xs text-gray-300 mt-1 leading-relaxed">Pesan informasi...</p>
+            </div>
+            <button onclick="closeCustomAlert()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition cursor-pointer">
+                Mengerti
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Skrip Validasi Login & Toggle Password -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -89,16 +140,40 @@
         const errorMsg = document.getElementById('errorMsg');
         const loginBtn = document.getElementById('loginBtn');
 
+        // Fungsi untuk menampilkan/menyembunyikan password
+        window.togglePasswordVisibility = function() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        }
+
+        window.showCustomAlert = function(text) {
+            document.getElementById('customAlertText').textContent = text;
+            document.getElementById('customAlertModal').classList.remove('hidden');
+        }
+
+        window.closeCustomAlert = function() {
+            document.getElementById('customAlertModal').classList.add('hidden');
+        }
+
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const inputUser = document.getElementById('username').value.trim();
             const inputPass = document.getElementById('password').value.trim();
 
-            errorMsg.textContent = 'Memeriksa database...';
+            errorMsg.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Memeriksa database...';
             loginBtn.disabled = true;
 
             try {
-                // Query mencari berdasarkan field "email" di koleksi "users"
                 const q = query(collection(db, "users"), where("email", "==", inputUser));
                 const querySnapshot = await getDocs(q);
 
@@ -112,21 +187,20 @@
                 querySnapshot.forEach((doc) => {
                     const userData = doc.data();
                     
-                    // Cek kecocokan password
                     if (userData.password === inputPass) {
                         userFound = true;
                         
-                        // SIMPAN DATA ASLI DARI DATABASE KE LOCALSTORAGE
                         localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('userName', userData.nama); // Nama asli (misal: "Kita")
-                        localStorage.setItem('userRole', userData.role); // Role asli (misal: "Admin")
+                        localStorage.setItem('userName', userData.nama);
+                        localStorage.setItem('userRole', userData.role);
+                        localStorage.setItem('userWilayah', userData.wilayah || 'RT 01'); // Menyimpan wilayah sesuai database
                         
                         window.location.href = 'dashboard.html';
                     }
                 });
 
                 if (!userFound) {
-                    errorMsg.textContent = 'Password salah!';
+                    errorMsg.textContent = 'Password yang Anda masukkan salah!';
                     loginBtn.disabled = false;
                 }
 

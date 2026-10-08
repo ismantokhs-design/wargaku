@@ -337,7 +337,6 @@
                     const waktu = data.waktuPelaksanaan || '-';
                     const isi = data.isi || '-';
 
-                    // HTML Desktop List Item
                     htmlDesktop += `
                         <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 flex justify-between items-start">
                             <div class="space-y-1 pr-4">
@@ -359,7 +358,6 @@
                         </div>
                     `;
 
-                    // HTML Mobile List Item
                     htmlMobile += `
                         <div class="bg-white rounded-2xl p-3.5 border border-emerald-100 shadow-sm space-y-2">
                             <div class="flex justify-between items-center">
@@ -392,7 +390,7 @@
             }
         }
 
-        // Fungsi Simpan Pengumuman Baru
+        // Fungsi Simpan Pengumuman dengan validasi ID
         async function simpanPengumuman(judul, kategori, waktuInput, isi) {
             try {
                 let formattedWaktu = "-";
@@ -406,7 +404,7 @@
                     }
                 }
 
-                await addDoc(collection(db, "pengumuman"), {
+                const docRef = await addDoc(collection(db, "pengumuman"), {
                     judul: judul,
                     kategori: kategori,
                     isi: isi,
@@ -415,24 +413,26 @@
                     createdAt: new Date().toISOString()
                 });
 
-                if ("Notification" in window && Notification.permission === "granted") {
-                    new Notification("📢 Pengumuman Baru WargaKu", {
-                        body: `${judul}\nPelaksanaan: ${formattedWaktu}`,
-                        icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
-                        vibrate: [200, 100, 200]
-                    });
-                }
+                if (docRef && docRef.id) {
+                    if ("Notification" in window && Notification.permission === "granted") {
+                        new Notification("📢 Pengumuman Baru WargaKu", {
+                            body: `${judul}\nPelaksanaan: ${formattedWaktu}`,
+                            icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
+                            vibrate: [200, 100, 200]
+                        });
+                    }
 
-                alert('Pengumuman berhasil dipublikasikan!');
-                
-                // Reset form & muat ulang daftar
-                document.getElementById('formInputPengumumanDesktop').reset();
-                document.getElementById('formInputPengumumanMobile').reset();
-                loadPengumumanList();
+                    alert('Pengumuman berhasil dipublikasikan!');
+                    
+                    document.getElementById('formInputPengumumanDesktop').reset();
+                    document.getElementById('formInputPengumumanMobile').reset();
+                    
+                    loadPengumumanList();
+                }
 
             } catch (error) {
                 console.error("Gagal menyimpan pengumuman:", error);
-                alert('Gagal mengirim pengumuman ke database.');
+                alert('Gagal mengirim pengumuman ke database: ' + (error.message || 'Kesalahan jaringan'));
             }
         }
 

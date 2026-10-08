@@ -291,6 +291,22 @@
             window.location.href = 'index.html';
         }
 
+        // Daftarkan Service Worker untuk notifikasi sistem topbar HP
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((reg) => console.log('Service Worker terdaftar:', reg.scope))
+                    .catch((err) => console.log('Gagal daftar Service Worker:', err));
+            });
+        }
+
+        // Minta Izin Notifikasi Browser HP
+        if ("Notification" in window) {
+            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+        }
+
         const firebaseConfig = {
             apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
             authDomain: "wargaku-860df.firebaseapp.com",
@@ -384,7 +400,7 @@
             }
         }
 
-        // Fungsi Simpan Pengumuman (Aman di HP)
+        // Fungsi Simpan Pengumuman & Panggil Notifikasi Topbar via Service Worker
         async function simpanPengumuman(judul, kategori, waktuInput, isi) {
             try {
                 let formattedWaktu = "-";
@@ -408,6 +424,19 @@
                 });
 
                 if (docRef && docRef.id) {
+                    // Memicu Notifikasi Topbar HP lewat Service Worker
+                    if ('serviceWorker' in navigator) {
+                        const registration = await navigator.serviceWorker.ready;
+                        if (registration && registration.active) {
+                            registration.showNotification("📢 Pengumuman Baru WargaKu", {
+                                body: `${judul}\nPelaksanaan: ${formattedWaktu}`,
+                                icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
+                                badge: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
+                                vibrate: [200, 100, 200]
+                            });
+                        }
+                    }
+
                     alert('Pengumuman berhasil dipublikasikan!');
                     
                     document.getElementById('formInputPengumumanDesktop').reset();

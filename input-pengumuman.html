@@ -229,7 +229,6 @@
             window.location.href = 'index.html';
         }
 
-        // Meminta izin notifikasi browser/HP saat pertama kali halaman dimuat
         if ("Notification" in window) {
             if (Notification.permission !== "granted" && Notification.permission !== "denied") {
                 Notification.requestPermission();
@@ -282,7 +281,12 @@
                 }
 
                 alert('Pengumuman berhasil dipublikasikan dan notifikasi terkirim!');
-                window.location.href = 'profil-read.html'; 
+                
+                // Beri jeda 500ms agar stabil di HP sebelum pindah halaman
+                setTimeout(() => {
+                    window.location.href = 'profil-read.html'; 
+                }, 500);
+
             } catch (error) {
                 console.error("Gagal menyimpan pengumuman:", error);
                 alert('Gagal mengirim pengumuman ke database.');

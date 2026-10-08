@@ -21,7 +21,7 @@
 <body class="font-sans antialiased">
 
     <!-- ========================================================================= -->
-    <!-- 1. TAMPILAN KHUSUS LAYAR MONITOR KOMPUTER / DESKTOP                       -->
+    <!-- 1. TAMPILAN KHUSUS LAYAR MONITOR KOMPUTER / DESKTOP                        -->
     <!-- ========================================================================= -->
     <div class="hidden md:flex h-screen overflow-hidden bg-gray-100">
         
@@ -115,6 +115,43 @@
             </header>
 
             <div class="p-10 space-y-8 max-w-7xl mx-auto w-full">
+
+                <!-- REKAPITULASI KAS & FILTER WILAYAH DESKTOP -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-base font-bold text-gray-800 flex items-center">
+                            <i class="fa-solid fa-chart-pie mr-2 text-emerald-600"></i> Rekapitulasi Kas
+                        </h3>
+                        <div class="w-72">
+                            <select id="filterWilayahDesktop" onchange="gantiWilayahDashboard(this.value)" class="w-full bg-gray-50 border border-gray-300 rounded-2xl px-4 py-2.5 text-xs font-bold text-emerald-800 focus:outline-none focus:border-emerald-500 transition cursor-pointer shadow-sm">
+                                <option value="Semua">Semua Wilayah</option>
+                                <option value="RT 01">RT 01 - Potrobayan</option>
+                                <option value="RT 02">RT 02 - Potrobayan</option>
+                                <option value="RT 03">RT 03 - Potrobayan</option>
+                                <option value="Kas Umum Padukuhan">Kas Umum Padukuhan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6">
+                        <!-- Total Masuk -->
+                        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
+                            <p class="text-[11px] font-semibold tracking-wider opacity-90 uppercase">Total Masuk</p>
+                            <h3 id="lblTotalMasukDesktop" class="text-2xl font-extrabold mt-2">Rp 0</h3>
+                        </div>
+                        <!-- Total Keluar -->
+                        <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
+                            <p class="text-[11px] font-semibold tracking-wider opacity-90 uppercase">Total Keluar</p>
+                            <h3 id="lblTotalKeluarDesktop" class="text-2xl font-extrabold mt-2">Rp 0</h3>
+                        </div>
+                        <!-- Saldo Akhir -->
+                        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
+                            <p class="text-[11px] font-semibold tracking-wider opacity-90 uppercase">Saldo Akhir</p>
+                            <h3 id="lblSaldoAkhirDesktop" class="text-2xl font-extrabold mt-2">Rp 0</h3>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 4 Statistik Kartu Atas -->
                 <div class="grid grid-cols-4 gap-6">
                     <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
@@ -338,7 +375,7 @@
 
 
     <!-- ========================================================================= -->
-    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                      -->
+    <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                     -->
     <!-- ========================================================================= -->
     <div class="md:hidden max-w-md mx-auto h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-hidden" style="background-color: #f0fdf4;">
         
@@ -410,6 +447,43 @@
 
         <!-- KONTEN UTAMA HP (Bagian ini yang bisa digulir / di-scroll ke bawah secara mandiri) -->
         <main class="px-6 pt-4 space-y-4 flex-1 overflow-y-auto pb-24">
+
+            <!-- REKAPITULASI KAS & FILTER WILAYAH MOBILE -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-emerald-100 space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-chart-pie mr-1 text-emerald-600"></i> Rekapitulasi Kas
+                    </h3>
+                    <div class="w-36">
+                        <select id="filterWilayahMobile" onchange="gantiWilayahDashboard(this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-2 py-1 text-[11px] font-bold text-emerald-800 focus:outline-none focus:border-emerald-500 transition cursor-pointer">
+                            <option value="Semua">Semua Wilayah</option>
+                            <option value="RT 01">RT 01</option>
+                            <option value="RT 02">RT 02</option>
+                            <option value="RT 03">RT 03</option>
+                            <option value="Kas Umum Padukuhan">Kas Umum</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <!-- Total Masuk -->
+                    <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-xl p-2.5 shadow-sm text-center">
+                        <p class="text-[8px] font-medium opacity-80 uppercase">Total Masuk</p>
+                        <h3 id="lblTotalMasukMobile" class="text-[11px] font-extrabold mt-1">Rp 0</h3>
+                    </div>
+                    <!-- Total Keluar -->
+                    <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-xl p-2.5 shadow-sm text-center">
+                        <p class="text-[8px] font-medium opacity-80 uppercase">Total Keluar</p>
+                        <h3 id="lblTotalKeluarMobile" class="text-[11px] font-extrabold mt-1">Rp 0</h3>
+                    </div>
+                    <!-- Saldo Akhir -->
+                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl p-2.5 shadow-sm text-center">
+                        <p class="text-[8px] font-medium opacity-80 uppercase">Saldo Akhir</p>
+                        <h3 id="lblSaldoAkhirMobile" class="text-[11px] font-extrabold mt-1">Rp 0</h3>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-2 gap-3">
                 <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
                     <div>
@@ -650,7 +724,6 @@
                 </button>
             </nav>
         </div>
-
     </div>
 
     <!-- Script Logika Menu & Firebase -->
@@ -682,7 +755,63 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Fungsi memuat Informasi Wilayah / Pengumuman dari Firebase (Difilter sesuai wilayah user login)
+        let activeWilayah = "Semua";
+
+        window.gantiWilayahDashboard = function(wilayahBaru) {
+            activeWilayah = wilayahBaru;
+            const selDesktop = document.getElementById('filterWilayahDesktop');
+            const selMobile = document.getElementById('filterWilayahMobile');
+            if (selDesktop) selDesktop.value = wilayahBaru;
+            if (selMobile) selMobile.value = wilayahBaru;
+
+            loadAllStats();
+            loadRekapKeuangan();
+            loadInformasiWilayah();
+        }
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
+        }
+
+        async function loadRekapKeuangan() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "keuangan"));
+                let totalMasuk = 0;
+                let totalKeluar = 0;
+
+                querySnapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    const wilayahItem = data.wilayah || 'Semua';
+                    const matchWilayah = (activeWilayah === "Semua" || wilayahItem === activeWilayah);
+
+                    if (matchWilayah) {
+                        const nominal = Number(data.nominal) || 0;
+                        if (data.jenisTransaksi === 'Masuk') {
+                            totalMasuk += nominal;
+                        } else if (data.jenisTransaksi === 'Keluar') {
+                            totalKeluar += nominal;
+                        }
+                    }
+                });
+
+                const saldoAkhir = totalMasuk - totalKeluar;
+
+                // Update Desktop
+                document.getElementById('lblTotalMasukDesktop').textContent = formatRupiah(totalMasuk);
+                document.getElementById('lblTotalKeluarDesktop').textContent = formatRupiah(totalKeluar);
+                document.getElementById('lblSaldoAkhirDesktop').textContent = formatRupiah(saldoAkhir);
+
+                // Update Mobile
+                document.getElementById('lblTotalMasukMobile').textContent = formatRupiah(totalMasuk);
+                document.getElementById('lblTotalKeluarMobile').textContent = formatRupiah(totalKeluar);
+                document.getElementById('lblSaldoAkhirMobile').textContent = formatRupiah(saldoAkhir);
+
+            } catch (error) {
+                console.error("Gagal memuat rekap keuangan:", error);
+            }
+        }
+
+        // Fungsi memuat Informasi Wilayah / Pengumuman dari Firebase
         function loadInformasiWilayah() {
             const q = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"));
             
@@ -694,27 +823,22 @@
                 
                 let desktopHTML = '';
                 let mobileHTML = '';
-
-                const currentRole = localStorage.getItem('userRole') || 'Administrator';
                 const currentUserWilayah = localStorage.getItem('userWilayah') || 'RT 01';
 
                 let countTampil = 0;
-                let totalMatch = 0; // Menghitung total data yang cocok setelah difilter
+                let totalMatch = 0;
 
-                // Hitung dulu jumlah total data yang lolos filter
                 snapshot.forEach((doc) => {
                     const data = doc.data();
                     const wilayahPengumuman = data.wilayah || 'Semua Wilayah';
                     const isSemua = wilayahPengumuman.toLowerCase().includes('semua');
                     const isMatchWilayah = wilayahPengumuman.trim().toLowerCase() === currentUserWilayah.trim().toLowerCase();
-                    const isAdmin = currentRole.toLowerCase().includes('admin');
 
-                    if (isSemua || isMatchWilayah || isAdmin) {
+                    if (isSemua || isMatchWilayah) {
                         totalMatch++;
                     }
                 });
 
-                // Tampilkan atau sembunyikan tombol "Lihat Semua" berdasarkan total data yang cocok (> 3)
                 if (totalMatch > 3) {
                     btnLihatSemuaDesktop.classList.remove('hidden');
                     btnLihatSemuaMobile.classList.remove('hidden');
@@ -733,11 +857,10 @@
 
                     const isSemua = wilayahPengumuman.toLowerCase().includes('semua');
                     const isMatchWilayah = wilayahPengumuman.trim().toLowerCase() === currentUserWilayah.trim().toLowerCase();
-                    const isAdmin = currentRole.toLowerCase().includes('admin');
 
-                    if (isSemua || isMatchWilayah || isAdmin) {
+                    if (isSemua || isMatchWilayah) {
                         countTampil++;
-                        if (countTampil <= 3) { // Batasi maksimal 3 pengumuman terbaru di dashboard
+                        if (countTampil <= 3) {
                             desktopHTML += `
                                 <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-1.5">
                                     <div class="flex justify-between items-center">
@@ -783,14 +906,13 @@
             });
         }
 
-        // Listener Real-time untuk push notification di HP
         let isFirstLoad = true;
         const qPengumuman = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"), limit(1));
         onSnapshot(qPengumuman, (snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if (change.type === "added") {
                     if (isFirstLoad) {
-                        return; // Abaikan data lama saat pertama kali halaman dimuat
+                        return;
                     }
                     const data = change.doc.data();
                     if ("Notification" in window && Notification.permission === "granted") {
@@ -989,7 +1111,6 @@
             }
         }
 
-        // Fungsi bantu menghitung umur dari tanggal lahir
         function hitungUmur(tanggalLahir) {
             if (!tanggalLahir) return null;
             const birthDate = new Date(tanggalLahir);
@@ -1006,20 +1127,18 @@
         async function loadAllStats() {
             try {
                 const querySnapshot = await getDocs(collection(db, "warga"));
-                const currentWilayah = localStorage.getItem('userWilayah') || 'Semua Wilayah';
+                const currentWilayah = localStorage.getItem('userWilayah') || 'RT 01';
                 
                 let totalWarga = 0;
                 const setKK = new Set();
                 let countLaki = 0;
                 let countPerempuan = 0;
 
-                // Kategori Usia
                 let balita = 0;
                 let anak = 0;
                 let dewasa = 0;
                 let lansia = 0;
 
-                // Golongan Darah
                 let golA = 0;
                 let golB = 0;
                 let golAB = 0;
@@ -1030,18 +1149,16 @@
                     const data = docSnap.data();
                     const wargaRt = data.rt ? String(data.rt).trim() : '';
                     
-                    const isSemuaWilayah = currentWilayah.toLowerCase().includes('semua wilayah');
+                    const isSemuaWilayah = currentWilayah.toLowerCase().includes('semua');
                     const matchRt = wargaRt === currentWilayah.replace(/[^0-9]/g, '');
 
                     if (isSemuaWilayah || currentWilayah.includes(wargaRt) || matchRt) {
                         totalWarga++;
                         if (data.noKK) setKK.add(data.noKK.trim());
                         
-                        // Jenis Kelamin
                         if (data.gender === 'Laki-laki') countLaki++;
                         else if (data.gender === 'Perempuan') countPerempuan++;
 
-                        // Hitung Usia
                         const umur = hitungUmur(data.tanggalLahir);
                         if (umur !== null) {
                             if (umur <= 5) balita++;
@@ -1050,7 +1167,6 @@
                             else if (umur >= 60) lansia++;
                         }
 
-                        // Golongan Darah
                         const darah = data.golDarah ? String(data.golDarah).trim().toUpperCase() : '-';
                         if (darah === 'A') golA++;
                         else if (darah === 'B') golB++;
@@ -1060,7 +1176,6 @@
                     }
                 });
 
-                // Update Tampilan Desktop & Mobile
                 document.getElementById('statTotalWargaDesktop').textContent = `${totalWarga} Jiwa`;
                 document.getElementById('statTotalWargaMobile').textContent = `${totalWarga} Jiwa`;
                 document.getElementById('statTotalKKDesktop').textContent = `${setKK.size} KK`;
@@ -1070,7 +1185,6 @@
                 document.getElementById('statTotalPerempuanDesktop').textContent = `${countPerempuan} Jiwa`;
                 document.getElementById('statTotalPerempuanMobile').textContent = `${countPerempuan} Jiwa`;
 
-                // Update Usia Desktop & Mobile
                 document.getElementById('statBalita').textContent = balita;
                 document.getElementById('statBalitaMobile').textContent = balita;
                 document.getElementById('statAnak').textContent = anak;
@@ -1080,7 +1194,6 @@
                 document.getElementById('statLansia').textContent = lansia;
                 document.getElementById('statLansiaMobile').textContent = lansia;
 
-                // Update Golongan Darah Desktop & Mobile
                 document.getElementById('statGolA').textContent = golA;
                 document.getElementById('statGolAMobile').textContent = golA;
                 document.getElementById('statGolB').textContent = golB;
@@ -1101,6 +1214,7 @@
             terapkanHakAkses();
             loadProfilWilayah();
             loadAllStats();
+            loadRekapKeuangan();
             loadInformasiWilayah();
         };
     </script>

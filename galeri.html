@@ -29,17 +29,29 @@
         </header>
 
         <!-- Konten Utama (Read-Only untuk Warga) -->
-        <main class="px-6 space-y-5 flex-1 py-6 overflow-y-auto">
+        <main class="px-6 space-y-4 flex-1 py-6 overflow-y-auto">
 
-            <!-- Bar Pencarian Event -->
-            <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
-                </span>
-                <input type="text" id="inputCari" oninput="filterGaleriWarga()" placeholder="Cari event..." class="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-4 py-3 text-xs font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 shadow-sm transition">
+            <!-- Bar Pencarian Event & Filter Periode -->
+            <div class="space-y-3">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input type="text" id="inputCari" oninput="filterGaleriWarga()" placeholder="Cari event..." class="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-4 py-3 text-xs font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 shadow-sm transition">
+                </div>
+
+                <!-- Dropdown Filter Periode (Bulan & Tahun) -->
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-emerald-600">
+                        <i class="fa-regular fa-calendar-days text-sm"></i>
+                    </span>
+                    <select id="selectPeriode" onchange="filterGaleriWarga()" class="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-4 py-3 text-xs font-semibold text-gray-700 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 shadow-sm transition cursor-pointer">
+                        <option value="">Semua Periode (Bulan & Tahun)</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- Daftar List Event / Galeri (Format Card Besar Sesuai Gambar Referensi) -->
+            <!-- Daftar List Event / Galeri -->
             <div id="listGaleriWargaContainer" class="space-y-5">
                 <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm text-center text-xs text-gray-400 py-12">
                     <i class="fa-solid fa-spinner animate-spin mr-2"></i> Memuat info & event terbaru...
@@ -48,7 +60,7 @@
 
         </main>
 
-        <!-- Navigasi Bawah (Diperbarui: Menu Pesan terhubung ke pesan.html) -->
+        <!-- Navigasi Bawah -->
         <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
             <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
                 <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
@@ -64,7 +76,6 @@
                     <span class="text-[10px] mt-1">Galeri</span>
                 </a>
                 
-                <!-- Menu Pesan yang Diperbarui -->
                 <a href="pesan.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-regular fa-comment-dots text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Pesan</span>
@@ -79,7 +90,7 @@
 
     </div>
 
-    <!-- Script Ambil Data Firestore (Hanya Menampilkan yang Berstatus Aktif) -->
+    <!-- Script Ambil Data Firestore & Modal Detail -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -107,12 +118,12 @@
 
                 querySnapshot.forEach(docSnap => {
                     const data = docSnap.data();
-                    // Hanya ambil data yang statusnya aktif (true atau tidak di-set false)
                     if (data.status !== false) {
                         cacheGaleriWarga.push({ id: docSnap.id, ...data });
                     }
                 });
 
+                populatePeriodeDropdown(cacheGaleriWarga);
                 renderGaleriWarga(cacheGaleriWarga);
             } catch (error) {
                 console.error("Gagal memuat galeri:", error);
@@ -120,10 +131,45 @@
             }
         }
 
+        // Fungsi untuk mengisi opsi dropdown periode secara otomatis berdasarkan data
+        function populatePeriodeDropdown(dataList) {
+            const select = document.getElementById('selectPeriode');
+            const periodeSet = new Set();
+
+            dataList.forEach(item => {
+                if (item.createdAt) {
+                    const d = new Date(item.createdAt);
+                    if (!isNaN(d)) {
+                        const year = d.getFullYear();
+                        const month = String(d.getMonth() + 1).padStart(2, '0');
+                        const monthYearKey = `${year}-${month}`; // Format YYYY-MM untuk nilai
+                        periodeSet.add(monthYearKey);
+                    }
+                }
+            });
+
+            // Urutkan periode terbaru ke terlama
+            const sortedPeriode = Array.from(periodeSet).sort().reverse();
+
+            // Kosongkan opsi kecuali yang pertama
+            select.innerHTML = `<option value="">Semua Periode (Bulan & Tahun)</option>`;
+
+            sortedPeriode.forEach(key => {
+                const [year, month] = key.split('-');
+                const dateObj = new Date(year, month - 1, 1);
+                const monthName = dateObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = monthName;
+                select.appendChild(option);
+            });
+        }
+
         function renderGaleriWarga(dataList) {
             const container = document.getElementById('listGaleriWargaContainer');
             if (dataList.length === 0) {
-                container.innerHTML = `<div class="text-center text-xs text-gray-400 py-12 bg-white rounded-3xl border border-gray-200">Belum ada info atau event terbaru saat ini.</div>`;
+                container.innerHTML = `<div class="text-center text-xs text-gray-400 py-12 bg-white rounded-3xl border border-gray-200">Belum ada info atau event untuk periode ini.</div>`;
                 return;
             }
 
@@ -148,7 +194,7 @@
                         <h2 class="text-sm font-extrabold text-gray-900">${item.nama}</h2>
                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">${item.deskripsi}</p>
                         <div class="pt-2">
-                            <button onclick="alert('Detail Event: ${item.nama}\\n\\n${item.deskripsi}')" class="text-xs font-bold text-[#0b3c65] hover:text-[#082a48] inline-flex items-center space-x-1 cursor-pointer">
+                            <button onclick='bukaModalDetail(${JSON.stringify(item).replace(/'/g, "&#39;")}, "${tanggalStr}")' class="text-xs font-bold text-[#0b3c65] hover:text-[#082a48] inline-flex items-center space-x-1 cursor-pointer">
                                 <span>Baca selengkapnya</span>
                                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
@@ -159,12 +205,75 @@
             });
         }
 
+        // Fungsi untuk menampilkan Modal Detail Event
+        window.bukaModalDetail = function(item, tanggalStr) {
+            const existingModal = document.getElementById('modalDetailEvent');
+            if (existingModal) existingModal.remove();
+
+            const modalHTML = `
+                <div id="modalDetailEvent" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-fadeIn">
+                    <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col">
+                        <!-- Tombol Silang (X) di Pojok Kanan Atas -->
+                        <button onclick="tutupModalDetail()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition cursor-pointer z-10">
+                            <i class="fa-solid fa-xmark text-sm"></i>
+                        </button>
+
+                        <!-- Gambar Event -->
+                        <div class="w-full h-52 bg-gray-100 relative flex-shrink-0">
+                            <img src="${item.gambar || 'https://via.placeholder.com/600x300'}" class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Konten Teks -->
+                        <div class="p-6 space-y-3 overflow-y-auto flex-1">
+                            <h2 class="text-base font-extrabold text-gray-900 leading-snug">${item.nama}</h2>
+                            <p class="text-xs text-gray-400 font-medium">${tanggalStr}</p>
+                            <p class="text-xs text-gray-600 leading-relaxed whitespace-pre-line pt-1">${item.deskripsi}</p>
+                        </div>
+
+                        <!-- Tombol Tutup di Bawah -->
+                        <div class="p-4 bg-white border-t border-gray-100 flex justify-end flex-shrink-0">
+                            <button onclick="tutupModalDetail()" class="bg-[#0b3c65] hover:bg-[#082a48] text-white px-6 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">
+                                Tutup
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        window.tutupModalDetail = function() {
+            const modal = document.getElementById('modalDetailEvent');
+            if (modal) modal.remove();
+        }
+
         window.filterGaleriWarga = function() {
             const keyword = document.getElementById('inputCari').value.toLowerCase();
-            const filtered = cacheGaleriWarga.filter(item => 
-                item.nama.toLowerCase().includes(keyword) || 
-                item.deskripsi.toLowerCase().includes(keyword)
-            );
+            const selectedPeriode = document.getElementById('selectPeriode').value; // Format: YYYY-MM
+
+            const filtered = cacheGaleriWarga.filter(item => {
+                const matchKeyword = item.nama.toLowerCase().includes(keyword) || 
+                                     item.deskripsi.toLowerCase().includes(keyword);
+                
+                let matchPeriode = true;
+                if (selectedPeriode && item.createdAt) {
+                    const d = new Date(item.createdAt);
+                    if (!isNaN(d)) {
+                        const year = d.getFullYear();
+                        const month = String(d.getMonth() + 1).padStart(2, '0');
+                        const itemPeriode = `${year}-${month}`;
+                        matchPeriode = (itemPeriode === selectedPeriode);
+                    } else {
+                        matchPeriode = false;
+                    }
+                } else if (selectedPeriode && !item.createdAt) {
+                    matchPeriode = false;
+                }
+
+                return matchKeyword && matchPeriode;
+            });
+
             renderGaleriWarga(filtered);
         }
 

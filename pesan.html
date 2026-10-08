@@ -47,8 +47,8 @@
                 <!-- Grid Kotak Pilihan Bergaya Kartu Profesional -->
                 <div class="grid grid-cols-2 gap-4">
                     
-                    <!-- Kotak Surat -->
-                    <a href="#" onclick="showFeatureInfo('Kotak Surat', 'Fitur pengajuan surat pengantar RT/RW, surat domisili, dan administrasi surat menyurat.'); return false;" 
+                    <!-- Kotak Surat (Menuju ke kotak-suara.html) -->
+                    <a href="kotak-suara.html" 
                        class="bg-white hover:bg-emerald-50/50 border border-emerald-100 hover:border-emerald-300 rounded-3xl p-6 shadow-sm transition-all duration-300 flex flex-col items-center justify-center text-center space-y-3 group cursor-pointer">
                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white flex items-center justify-center text-xl transition-all duration-300 shadow-inner border border-emerald-100">
                             <i class="fa-solid fa-envelope-circle-check"></i>
@@ -59,7 +59,7 @@
                         </div>
                     </a>
 
-                    <!-- Kotak Pesan (Diubah mengarah langsung ke kotak-pesan.html) -->
+                    <!-- Kotak Pesan (Menuju ke kotak-pesan.html) -->
                     <a href="kotak-pesan.html" 
                        class="bg-white hover:bg-emerald-50/50 border border-emerald-100 hover:border-emerald-300 rounded-3xl p-6 shadow-sm transition-all duration-300 flex flex-col items-center justify-center text-center space-y-3 group cursor-pointer">
                         <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 group-hover:bg-teal-600 group-hover:text-white flex items-center justify-center text-xl transition-all duration-300 shadow-inner border border-teal-100">
@@ -111,43 +111,17 @@
 
                 <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-solid fa-bars-staggered text-lg"></i>
-                    <span class="text-[10px] font-medium mt-1">Lainnya</span>
+                    <span class="text-[10px] mt-1">Lainnya</span>
                 </a>
             </nav>
         </div>
 
     </div>
 
-    <!-- Custom Modal Informasi Fitur (Hanya digunakan untuk Kotak Surat) -->
-    <div id="featureModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-900 text-white rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl border border-slate-700">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-lg border border-emerald-500/30">
-                <i class="fa-solid fa-envelope-open-text"></i>
-            </div>
-            <div>
-                <h3 id="modalTitle" class="text-sm font-bold">Judul Fitur</h3>
-                <p id="modalDesc" class="text-xs text-gray-300 mt-1 leading-relaxed">Deskripsi fitur...</p>
-            </div>
-            <button onclick="closeFeatureModal()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition cursor-pointer">
-                Mengerti
-            </button>
-        </div>
-    </div>
-
     <!-- Script Sederhana -->
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
-        }
-
-        window.showFeatureInfo = function(title, desc) {
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalDesc').textContent = desc;
-            document.getElementById('featureModal').classList.remove('hidden');
-        }
-
-        window.closeFeatureModal = function() {
-            document.getElementById('featureModal').classList.add('hidden');
         }
     </script>
 </body>

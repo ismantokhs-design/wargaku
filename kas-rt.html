@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kas RT & Keuangan - WargaKu PWA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Kontainer Utama Tampilan Mobile / PWA -->
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-28" style="background-color: #f0fdf4;">
+        
+        <!-- Header Halaman -->
+        <header class="px-6 pt-6 pb-5 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
+            <div class="flex justify-between items-center mb-3">
+                <div class="flex items-center space-x-3">
+                    <a href="dashboard.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </a>
+                    <h1 class="text-lg font-bold text-white tracking-wide">Pencatatan Kas RT</h1>
+                </div>
+                
+                <div class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/30 flex items-center space-x-1 shadow-inner">
+                    <i class="fa-solid fa-wallet text-amber-300 text-xs"></i>
+                    <span>Keuangan</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Konten Utama: Form Input & Daftar Transaksi -->
+        <main class="px-6 space-y-5 flex-1 py-6 overflow-y-auto">
+
+            <!-- Form Input Transaksi Kas -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-emerald-100 space-y-4">
+                <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center">
+                    <i class="fa-solid fa-file-invoice-dollar text-emerald-600 mr-2"></i> Input Transaksi Kas Masuk / Keluar
+                </h3>
+
+                <form id="formInputKas" onsubmit="simpanTransaksi(event)" class="space-y-3.5 text-xs">
+                    
+                    <!-- Pilihan Wilayah / RT -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Pilih Wilayah / RT</label>
+                        <select id="wilayahKas" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-semibold text-gray-800 focus:outline-none focus:border-emerald-500 transition cursor-pointer">
+                            <option value="RT 01">RT 01 - Potrobayan</option>
+                            <option value="RT 02">RT 02 - Potrobayan</option>
+                            <option value="RT 03">RT 03 - Potrobayan</option>
+                            <option value="Kas Umum Padukuhan">Kas Umum Padukuhan</option>
+                        </select>
+                    </div>
+
+                    <!-- Pilihan Jenis Transaksi -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Jenis Transaksi</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center justify-center p-2.5 border border-emerald-300 rounded-xl bg-emerald-50 cursor-pointer font-bold text-emerald-700">
+                                <input type="radio" name="jenisTransaksi" value="Masuk" checked class="mr-2" onclick="toggleKategori('Masuk')"> Kas Masuk
+                            </label>
+                            <label class="flex items-center justify-center p-2.5 border border-rose-300 rounded-xl bg-rose-50 cursor-pointer font-bold text-rose-700">
+                                <input type="radio" name="jenisTransaksi" value="Keluar" class="mr-2" onclick="toggleKategori('Keluar')"> Kas Keluar
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Tanggal Transaksi -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Tanggal Transaksi</label>
+                        <input type="date" id="tglTransaksi" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <!-- Kategori Akun -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Kategori Transaksi</label>
+                        <select id="kategoriTransaksi" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 cursor-pointer">
+                            <!-- Diisi via JS -->
+                        </select>
+                    </div>
+
+                    <!-- Sumber / Penerima Dana -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1" id="labelPihak">Nama Warga / Donatur (Sumber Dana)</label>
+                        <input type="text" id="pihakTerkait" placeholder="Contoh: Bpk. Budi / Donatur" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <!-- Nominal / Jumlah dengan Format Ribuan Otomatis -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Nominal (Rp)</label>
+                        <input type="text" id="nominalInput" placeholder="Contoh: 150.000" required onkeyup="formatRupiahInput(this)" class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-bold text-gray-900 text-sm focus:outline-none focus:border-emerald-500">
+                        <input type="hidden" id="nominalAsli" value="0">
+                    </div>
+
+                    <!-- Keterangan / Uraian Detail -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Uraian / Keterangan Detail</label>
+                        <textarea id="keterangan" placeholder="Tuliskan keterangan detail transaksi..." required class="w-full bg-gray-50 border border-gray-200 rounded-2xl p-3 font-medium text-gray-800 h-20 resize-none focus:outline-none focus:border-emerald-500"></textarea>
+                    </div>
+
+                    <!-- Tombol Simpan -->
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition shadow-md cursor-pointer flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-floppy-disk text-sm"></i>
+                        <span>Simpan Transaksi Kas</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Filter & Rekapitulasi Saldo -->
+            <div class="space-y-3 pt-2">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-gray-700 uppercase tracking-wider"><i class="fa-solid fa-chart-pie mr-1 text-emerald-600"></i> Rekapitulasi Kas</h3>
+                    <select id="filterWilayahKas" onchange="renderKeuangan()" class="bg-white border border-gray-200 rounded-xl px-3 py-1.5 text-xs font-bold text-emerald-800 focus:outline-none cursor-pointer shadow-sm">
+                        <option value="Semua">Semua Wilayah</option>
+                        <option value="RT 01">RT 01</option>
+                        <option value="RT 02">RT 02</option>
+                        <option value="RT 03">RT 03</option>
+                        <option value="Kas Umum Padukuhan">Kas Umum Padukuhan</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2.5">
+                    <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-3 shadow-sm text-center">
+                        <p class="text-[9px] font-medium opacity-80 uppercase">Total Masuk</p>
+                        <h3 id="lblTotalMasuk" class="text-xs font-extrabold mt-1">Rp 0</h3>
+                    </div>
+                    <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-2xl p-3 shadow-sm text-center">
+                        <p class="text-[9px] font-medium opacity-80 uppercase">Total Keluar</p>
+                        <h3 id="lblTotalKeluar" class="text-xs font-extrabold mt-1">Rp 0</h3>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-3 shadow-sm text-center">
+                        <p class="text-[9px] font-medium opacity-80 uppercase">Saldo Akhir</p>
+                        <h3 id="lblSaldoAkhir" class="text-xs font-extrabold mt-1">Rp 0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daftar Riwayat Transaksi -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center justify-between">
+                    <span><i class="fa-solid fa-clock-rotate-left mr-1 text-emerald-600"></i> Riwayat Transaksi</span>
+                    <span id="jmlTransaksi" class="text-[10px] text-gray-400 font-normal">0 transaksi</span>
+                </h3>
+
+                <div id="listTransaksiContainer" class="space-y-3">
+                    <div class="bg-white rounded-2xl p-6 text-center text-xs text-gray-400 border border-gray-200">
+                        <i class="fa-solid fa-spinner animate-spin mr-1"></i> Memuat data keuangan...
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Navigasi Bawah (Fixed Bottom Navigation) -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
+            <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Beranda</span>
+                </a>
+                <a href="profil-read.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-id-badge text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Profil</span>
+                </a>
+                <a href="galeri.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-solid fa-images text-lg"></i>
+                    <span class="text-[10px] mt-1">Galeri</span>
+                </a>
+                <a href="pesan.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots text-lg"></i>
+                    <span class="text-[10px] font-medium mt-1">Pesan</span>
+                </a>
+                <a href="dashboard.html" class="flex flex-col items-center text-emerald-300 font-bold">
+                    <i class="fa-solid fa-bars-staggered text-lg drop-shadow"></i>
+                    <span class="text-[10px] mt-1">Lainnya</span>
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Script Logika Form & Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
+            authDomain: "wargaku-860df.firebaseapp.com",
+            projectId: "wargaku-860df",
+            storageBucket: "wargaku-860df.firebasestorage.app",
+            messagingSenderId: "690711985685",
+            appId: "1:690711985685:web:a2d227636b2747b54851c",
+            measurementId: "G-CNK6RSPM53"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let cacheKeuangan = [];
+
+        // Fungsi format ribuan otomatis pada input nominal
+        window.formatRupiahInput = function(input) {
+            let angkaBersih = input.value.replace(/[^,\d]/g, '').toString();
+            let split = angkaBersih.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            input.value = rupiah;
+
+            // Simpan nilai angka asli tanpa titik ke hidden input
+            document.getElementById('nominalAsli').value = split[0].replace(/\./g, '');
+        }
+
+        window.toggleKategori = function(jenis) {
+            const selectKategori = document.getElementById('kategoriTransaksi');
+            const labelPihak = document.getElementById('labelPihak');
+            
+            if (!selectKategori) return;
+
+            selectKategori.innerHTML = "";
+            if (jenis === 'Masuk') {
+                labelPihak.textContent = "Nama Warga / Donatur (Sumber Dana)";
+                const opsiMasuk = [
+                    "Iuran Warga / Bulanan",
+                    "Sumbangan / Donasi",
+                    "Kas Kegiatan / Acara",
+                    "Pendapatan Lain-lain"
+                ];
+                opsiMasuk.forEach(opt => {
+                    const el = document.createElement('option');
+                    el.value = opt;
+                    el.textContent = opt;
+                    selectKategori.appendChild(el);
+                });
+            } else {
+                labelPihak.textContent = "Penerima / Toko Tempat Belanja";
+                const opsiKeluar = [
+                    "Biaya Operasional & Kebersihan",
+                    "Perbaikan Fasilitas Umum / Pos Ronda",
+                    "Kegiatan Sosial / Warga Sakit / Melayat",
+                    "Konsumsi Rapat RT",
+                    "Pengeluaran Lain-lain"
+                ];
+                opsiKeluar.forEach(opt => {
+                    const el = document.createElement('option');
+                    el.value = opt;
+                    el.textContent = opt;
+                    selectKategori.appendChild(el);
+                });
+            }
+        }
+
+        window.simpanTransaksi = async function(event) {
+            event.preventDefault();
+
+            const wilayah = document.getElementById('wilayahKas').value;
+            const jenis = document.querySelector('input[name="jenisTransaksi"]:checked').value;
+            const tanggal = document.getElementById('tglTransaksi').value;
+            const kategori = document.getElementById('kategoriTransaksi').value;
+            const pihak = document.getElementById('pihakTerkait').value;
+            const nominal = parseFloat(document.getElementById('nominalAsli').value) || 0;
+            const keterangan = document.getElementById('keterangan').value;
+
+            try {
+                await addDoc(collection(db, "keuangan"), {
+                    wilayah: wilayah,
+                    jenisTransaksi: jenis,
+                    tanggal: tanggal,
+                    kategori: kategori,
+                    pihakTerkait: pihak,
+                    nominal: nominal,
+                    keterangan: keterangan,
+                    createdAt: new Date().toISOString()
+                });
+
+                alert("Transaksi keuangan berhasil disimpan!");
+                document.getElementById('formInputKas').reset();
+                document.getElementById('tglTransaksi').valueAsDate = new Date();
+                document.getElementById('nominalAsli').value = "0";
+                toggleKategori('Masuk');
+                loadDataKas();
+            } catch (error) {
+                console.error("Gagal menyimpan transaksi:", error);
+                alert("Terjadi kesalahan saat menyimpan data keuangan.");
+            }
+        }
+
+        async function loadDataKas() {
+            const container = document.getElementById('listTransaksiContainer');
+            try {
+                const q = query(collection(db, "keuangan"), orderBy("tanggal", "desc"));
+                const querySnapshot = await getDocs(q);
+                cacheKeuangan = [];
+
+                querySnapshot.forEach(docSnap => {
+                    cacheKeuangan.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                renderKeuangan();
+            } catch (error) {
+                console.error("Gagal memuat keuangan:", error);
+                container.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-red-500 border border-gray-200">Gagal memuat data transaksi kas.</div>`;
+            }
+        }
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
+        }
+
+        window.renderKeuangan = function() {
+            const container = document.getElementById('listTransaksiContainer');
+            const filterWilayah = document.getElementById('filterWilayahKas').value;
+
+            let totalMasuk = 0;
+            let totalKeluar = 0;
+            let htmlList = "";
+            let countFiltered = 0;
+
+            cacheKeuangan.forEach(item => {
+                const matchWilayah = (filterWilayah === "Semua" || item.wilayah === filterWilayah);
+
+                if (matchWilayah) {
+                    countFiltered++;
+                    const nominal = Number(item.nominal) || 0;
+                    if (item.jenisTransaksi === 'Masuk') {
+                        totalMasuk += nominal;
+                    } else {
+                        totalKeluar += nominal;
+                    }
+
+                    const isMasuk = (item.jenisTransaksi === 'Masuk');
+                    const badgeColor = isMasuk ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-rose-100 text-rose-800 border-rose-200';
+                    const nominalColor = isMasuk ? 'text-emerald-600' : 'text-rose-600';
+                    const sign = isMasuk ? '+' : '-';
+
+                    htmlList += `
+                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${badgeColor}">${item.jenisTransaksi} (${item.wilayah})</span>
+                                <span class="text-[10px] text-gray-400"><i class="fa-regular fa-calendar mr-1"></i>${item.tanggal}</span>
+                            </div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-xs font-bold text-gray-800">${item.kategori}</h4>
+                                    <p class="text-[11px] text-gray-500 mt-0.5"><strong>Sumber/Pihak:</strong> ${item.pihakTerkait}</p>
+                                    <p class="text-[11px] text-gray-600 italic mt-1">"${item.keterangan}"</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs font-extrabold ${nominalColor}">${sign} ${formatRupiah(nominal)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            const saldoAkhir = totalMasuk - totalKeluar;
+
+            document.getElementById('lblTotalMasuk').textContent = formatRupiah(totalMasuk);
+            document.getElementById('lblTotalKeluar').textContent = formatRupiah(totalKeluar);
+            document.getElementById('lblSaldoAkhir').textContent = formatRupiah(saldoAkhir);
+            document.getElementById('jmlTransaksi').textContent = `${countFiltered} transaksi`;
+
+            if (countFiltered === 0) {
+                container.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-gray-400 border border-gray-200">Belum ada transaksi kas untuk wilayah ini.</div>`;
+            } else {
+                container.innerHTML = htmlList;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('tglTransaksi').valueAsDate = new Date();
+            toggleKategori('Masuk');
+            loadDataKas();
+        });
+    </script>
+</body>
+</html>

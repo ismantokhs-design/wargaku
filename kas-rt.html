@@ -160,6 +160,72 @@
 
         </main>
 
+        <!-- Modal Edit Transaksi -->
+        <div id="modalEdit" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-6 w-full max-w-sm space-y-4 shadow-2xl animate-fade-in text-xs max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-pen-to-square text-emerald-600 mr-1.5"></i> Edit Transaksi Kas</h3>
+                    <button onclick="tutupModalEdit()" class="text-gray-400 hover:text-gray-600 font-bold text-sm cursor-pointer">✕</button>
+                </div>
+
+                <form id="formEditKas" onsubmit="updateTransaksi(event)" class="space-y-3.5">
+                    <input type="hidden" id="editId">
+                    
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Pilih Wilayah / RT</label>
+                        <select id="editWilayah" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-semibold text-gray-800 focus:outline-none focus:border-emerald-500 cursor-pointer">
+                            <option value="RT 01">RT 01 - Potrobayan</option>
+                            <option value="RT 02">RT 02 - Potrobayan</option>
+                            <option value="RT 03">RT 03 - Potrobayan</option>
+                            <option value="Kas Umum Padukuhan">Kas Umum Padukuhan</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Jenis Transaksi</label>
+                        <select id="editJenis" required onchange="toggleKategoriEdit(this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-semibold text-gray-800 focus:outline-none focus:border-emerald-500 cursor-pointer">
+                            <option value="Masuk">Kas Masuk</option>
+                            <option value="Keluar">Kas Keluar</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Tanggal Transaksi</label>
+                        <input type="date" id="editTanggal" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <!-- Dropdown Kategori Edit -->
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Kategori Transaksi</label>
+                        <select id="editKategori" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 cursor-pointer">
+                            <!-- Diisi via JS -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1" id="editLabelPihak">Sumber / Pihak Terkait</label>
+                        <input type="text" id="editPihak" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Nominal (Rp)</label>
+                        <input type="text" id="editNominalInput" required onkeyup="formatRupiahEdit(this)" class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 font-bold text-gray-900 text-sm focus:outline-none focus:border-emerald-500">
+                        <input type="hidden" id="editNominalAsli">
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Uraian / Keterangan</label>
+                        <textarea id="editKeterangan" required class="w-full bg-gray-50 border border-gray-200 rounded-2xl p-3 font-medium text-gray-800 h-20 resize-none focus:outline-none focus:border-emerald-500"></textarea>
+                    </div>
+
+                    <div class="flex space-x-2 pt-2">
+                        <button type="button" onclick="tutupModalEdit()" class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2.5 rounded-2xl transition cursor-pointer">Batal</button>
+                        <button type="submit" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-2xl transition cursor-pointer shadow-md">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Navigasi Bawah (Fixed Bottom Navigation) -->
         <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
             <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
@@ -191,7 +257,7 @@
     <!-- Script Logika Form & Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
@@ -212,7 +278,7 @@
 
         let cacheKeuangan = [];
 
-        // Fungsi format ribuan otomatis pada input nominal
+        // Format ribuan untuk input tambah
         window.formatRupiahInput = function(input) {
             let angkaBersih = input.value.replace(/[^,\d]/g, '').toString();
             let split = angkaBersih.split(',');
@@ -227,48 +293,98 @@
 
             rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
             input.value = rupiah;
-
-            // Simpan nilai angka asli tanpa titik ke hidden input
             document.getElementById('nominalAsli').value = split[0].replace(/\./g, '');
+        }
+
+        // Format ribuan untuk input modal edit
+        window.formatRupiahEdit = function(input) {
+            let angkaBersih = input.value.replace(/[^,\d]/g, '').toString();
+            let split = angkaBersih.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            input.value = rupiah;
+            document.getElementById('editNominalAsli').value = split[0].replace(/\./g, '');
         }
 
         window.toggleKategori = function(jenis) {
             const selectKategori = document.getElementById('kategoriTransaksi');
             const labelPihak = document.getElementById('labelPihak');
-            
             if (!selectKategori) return;
 
             selectKategori.innerHTML = "";
+            const opsiMasuk = [
+                "Iuran Warga / Bulanan",
+                "Sumbangan / Donasi",
+                "Kas Kegiatan / Acara",
+                "Pendapatan Lain-lain"
+            ];
+            const opsiKeluar = [
+                "Biaya Operasional & Kebersihan",
+                "Perbaikan Fasilitas Umum / Pos Ronda",
+                "Kegiatan Sosial / Warga Sakit / Melayat",
+                "Konsumsi Rapat RT",
+                "Pengeluaran Lain-lain"
+            ];
+
+            const listOpsi = (jenis === 'Masuk') ? opsiMasuk : opsiKeluar;
             if (jenis === 'Masuk') {
                 labelPihak.textContent = "Nama Warga / Donatur (Sumber Dana)";
-                const opsiMasuk = [
-                    "Iuran Warga / Bulanan",
-                    "Sumbangan / Donasi",
-                    "Kas Kegiatan / Acara",
-                    "Pendapatan Lain-lain"
-                ];
-                opsiMasuk.forEach(opt => {
-                    const el = document.createElement('option');
-                    el.value = opt;
-                    el.textContent = opt;
-                    selectKategori.appendChild(el);
-                });
             } else {
                 labelPihak.textContent = "Penerima / Toko Tempat Belanja";
-                const opsiKeluar = [
-                    "Biaya Operasional & Kebersihan",
-                    "Perbaikan Fasilitas Umum / Pos Ronda",
-                    "Kegiatan Sosial / Warga Sakit / Melayat",
-                    "Konsumsi Rapat RT",
-                    "Pengeluaran Lain-lain"
-                ];
-                opsiKeluar.forEach(opt => {
-                    const el = document.createElement('option');
-                    el.value = opt;
-                    el.textContent = opt;
-                    selectKategori.appendChild(el);
-                });
             }
+
+            listOpsi.forEach(opt => {
+                const el = document.createElement('option');
+                el.value = opt;
+                el.textContent = opt;
+                selectKategori.appendChild(el);
+            });
+        }
+
+        window.toggleKategoriEdit = function(jenis, selectedVal = '') {
+            const selectKategori = document.getElementById('editKategori');
+            const labelPihak = document.getElementById('editLabelPihak');
+            if (!selectKategori) return;
+
+            selectKategori.innerHTML = "";
+            const opsiMasuk = [
+                "Iuran Warga / Bulanan",
+                "Sumbangan / Donasi",
+                "Kas Kegiatan / Acara",
+                "Pendapatan Lain-lain"
+            ];
+            const opsiKeluar = [
+                "Biaya Operasional & Kebersihan",
+                "Perbaikan Fasilitas Umum / Pos Ronda",
+                "Kegiatan Sosial / Warga Sakit / Melayat",
+                "Konsumsi Rapat RT",
+                "Pengeluaran Lain-lain"
+            ];
+
+            const listOpsi = (jenis === 'Masuk') ? opsiMasuk : opsiKeluar;
+            if (jenis === 'Masuk') {
+                labelPihak.textContent = "Sumber / Pihak Terkait";
+            } else {
+                labelPihak.textContent = "Penerima / Toko Tempat Belanja";
+            }
+
+            listOpsi.forEach(opt => {
+                const el = document.createElement('option');
+                el.value = opt;
+                el.textContent = opt;
+                if (opt === selectedVal) {
+                    el.selected = true;
+                }
+                selectKategori.appendChild(el);
+            });
         }
 
         window.simpanTransaksi = async function(event) {
@@ -370,6 +486,15 @@
                                     <p class="text-xs font-extrabold ${nominalColor}">${sign} ${formatRupiah(nominal)}</p>
                                 </div>
                             </div>
+                            <!-- Tombol Edit & Hapus -->
+                            <div class="flex justify-end space-x-2 pt-2 border-t border-gray-100">
+                                <button onclick="bukaModalEdit('${item.id}')" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-[10px] font-bold transition flex items-center space-x-1 cursor-pointer">
+                                    <i class="fa-solid fa-pen-to-square"></i><span>Edit</span>
+                                </button>
+                                <button onclick="hapusTransaksi('${item.id}')" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg text-[10px] font-bold transition flex items-center space-x-1 cursor-pointer">
+                                    <i class="fa-solid fa-trash"></i><span>Hapus</span>
+                                </button>
+                            </div>
                         </div>
                     `;
                 }
@@ -386,6 +511,76 @@
                 container.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-gray-400 border border-gray-200">Belum ada transaksi kas untuk wilayah ini.</div>`;
             } else {
                 container.innerHTML = htmlList;
+            }
+        }
+
+        window.bukaModalEdit = function(id) {
+            const item = cacheKeuangan.find(t => t.id === id);
+            if (!item) return;
+
+            document.getElementById('editId').value = item.id;
+            document.getElementById('editWilayah').value = item.wilayah;
+            document.getElementById('editJenis').value = item.jenisTransaksi;
+            document.getElementById('editTanggal').value = item.tanggal;
+            
+            // Populate dropdown kategori edit berdasarkan jenis transaksi yang dipilih
+            toggleKategoriEdit(item.jenisTransaksi, item.kategori);
+
+            document.getElementById('editPihak').value = item.pihakTerkait;
+            document.getElementById('editNominalAsli').value = item.nominal;
+            document.getElementById('editNominalInput').value = Number(item.nominal).toLocaleString('id-ID');
+            document.getElementById('editKeterangan').value = item.keterangan;
+
+            document.getElementById('modalEdit').classList.remove('hidden');
+        }
+
+        window.tutupModalEdit = function() {
+            document.getElementById('modalEdit').classList.add('hidden');
+        }
+
+        window.updateTransaksi = async function(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('editId').value;
+            const wilayah = document.getElementById('editWilayah').value;
+            const jenisTransaksi = document.getElementById('editJenis').value;
+            const tanggal = document.getElementById('editTanggal').value;
+            const kategori = document.getElementById('editKategori').value;
+            const pihakTerkait = document.getElementById('editPihak').value;
+            const nominal = parseFloat(document.getElementById('editNominalAsli').value) || 0;
+            const keterangan = document.getElementById('editKeterangan').value;
+
+            try {
+                const docRef = doc(db, "keuangan", id);
+                await updateDoc(docRef, {
+                    wilayah,
+                    jenisTransaksi,
+                    tanggal,
+                    kategori,
+                    pihakTerkait,
+                    nominal,
+                    keterangan
+                });
+
+                alert("Transaksi berhasil diperbarui!");
+                tutupModalEdit();
+                loadDataKas();
+            } catch (error) {
+                console.error("Gagal mengupdate transaksi:", error);
+                alert("Terjadi kesalahan saat memperbarui data.");
+            }
+        }
+
+        window.hapusTransaksi = async function(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus transaksi kas ini?")) {
+                try {
+                    await deleteDoc(doc(db, "keuangan", id));
+                    alert("Transaksi berhasil dihapus!");
+                    loadDataKas();
+                } catch (error) {
+                    console.error("Gagal menghapus transaksi:", error);
+                    alert("Terjadi kesalahan saat menghapus data.");
+                }
             }
         }
 

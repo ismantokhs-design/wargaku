@@ -16,98 +16,109 @@
             background-color: #f8fafc;
             overflow-x: hidden;
         }
+        /* Custom scrollbar halus */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased text-gray-800">
 
     <!-- ========================================================================= -->
     <!-- 1. TAMPILAN KHUSUS LAYAR MONITOR KOMPUTER / DESKTOP                        -->
     <!-- ========================================================================= -->
-    <div class="hidden md:flex h-screen overflow-hidden bg-gray-100">
+    <div class="hidden md:flex h-screen overflow-hidden bg-slate-50">
         
         <!-- Sidebar Samping Desktop -->
-        <aside class="w-64 bg-[#1e2229] text-gray-300 flex flex-col justify-between shadow-xl flex-shrink-0">
+        <aside class="w-72 bg-[#1a1f2c] text-slate-300 flex flex-col justify-between shadow-2xl flex-shrink-0 border-r border-slate-800/80">
             <div class="p-6">
                 <!-- Brand -->
-                <div class="flex items-center space-x-3 text-emerald-400 font-bold text-xl tracking-wide mb-4">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                <div class="flex items-center space-x-3 text-emerald-400 font-bold text-xl tracking-wide mb-6">
+                    <div class="w-10 h-10 rounded-2xl bg-emerald-500/15 flex items-center justify-center text-emerald-400 shadow-inner border border-emerald-500/20">
                         <i class="fa-solid fa-house-chimney text-lg"></i>
                     </div>
-                    <span>WargaKu</span>
+                    <span class="text-white font-extrabold tracking-tight">Warga<span class="text-emerald-400">Ku</span></span>
                 </div>
 
                 <!-- Info Wilayah -->
-                <div id="infoWilayahDesktop" class="text-xs text-gray-400 space-y-1 pb-4 border-b border-gray-700/60">
-                    <p class="font-semibold text-gray-200 text-sm" id="txtWilayahDukuh">Potrobayan</p>
-                    <p id="txtWilayahLengkap" class="text-[11px] text-gray-400 leading-relaxed">Srihardono, Pundong, Bantul</p>
+                <div id="infoWilayahDesktop" class="text-xs text-slate-400 space-y-1 pb-5 border-b border-slate-800">
+                    <p class="font-bold text-slate-200 text-sm tracking-wide" id="txtWilayahDukuh">Potrobayan</p>
+                    <p id="txtWilayahLengkap" class="text-[11px] text-slate-400 leading-relaxed">Srihardono, Pundong, Bantul</p>
                 </div>
 
                 <!-- Menu Navigasi Desktop -->
                 <nav class="mt-6 space-y-1.5">
-                    <a href="dashboard.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium shadow-md transition">
+                    <a href="dashboard.html" class="flex items-center px-4 py-3 bg-emerald-600 text-white rounded-2xl font-semibold shadow-lg shadow-emerald-900/30 transition-all">
                         <i class="fa-solid fa-gauge w-7 text-lg"></i><span>Dashboard Utama</span>
                     </a>
                     
                     <!-- Menu Warga dengan Sub-Menu Desktop -->
                     <div id="navDesktopWargaGroup">
-                        <button onclick="toggleDesktopSubWarga()" class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition cursor-pointer focus:outline-none">
+                        <button onclick="toggleDesktopSubWarga()" class="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-800/70 text-slate-400 hover:text-white rounded-2xl transition-all cursor-pointer focus:outline-none font-medium">
                             <div class="flex items-center space-x-3">
                                 <i class="fa-solid fa-users w-5 text-lg"></i><span>Data Warga</span>
                             </div>
-                            <i id="desktopWargaArrow" class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+                            <i id="desktopWargaArrow" class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
                         </button>
-                        <div id="desktopSubWargaMenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-gray-900/40 rounded-xl mt-1 text-xs">
-                            <a href="kepala-keluarga.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Kepala Keluarga</a>
-                            <a href="daftar-warga.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Daftar Warga</a>
-                            <a href="input-warga.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Input Data</a>
-                            <a href="input-pengumuman.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Info Wilayah</a>
+                        <div id="desktopSubWargaMenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-slate-900/50 rounded-2xl mt-1 text-xs border border-slate-800/50">
+                            <a href="kepala-keluarga.html" class="block py-2 px-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition">Kepala Keluarga</a>
+                            <a href="daftar-warga.html" class="block py-2 px-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition">Daftar Warga</a>
+                            <a href="input-warga.html" class="block py-2 px-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition">Input Data</a>
                         </div>
                     </div>
 
                     <!-- Menu Keuangan dengan Sub-Menu Desktop -->
                     <div id="navDesktopKeuanganGroup">
-                        <button onclick="toggleDesktopSubKeuangan()" class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition cursor-pointer focus:outline-none">
+                        <button onclick="toggleDesktopSubKeuangan()" class="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-800/70 text-slate-400 hover:text-white rounded-2xl transition-all cursor-pointer focus:outline-none font-medium">
                             <div class="flex items-center space-x-3">
                                 <i class="fa-solid fa-wallet w-5 text-lg"></i><span>Keuangan</span>
                             </div>
-                            <i id="desktopKeuanganArrow" class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+                            <i id="desktopKeuanganArrow" class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
                         </button>
-                        <div id="desktopSubKeuanganMenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-gray-900/40 rounded-xl mt-1 text-xs">
-                            <a href="kas-rt.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Kas RT</a>
-                            <a href="kas-ronda.html" class="block py-2 px-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition">Kas Ronda</a>
+                        <div id="desktopSubKeuanganMenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-slate-900/50 rounded-2xl mt-1 text-xs border border-slate-800/50">
+                            <a href="kas-rt.html" class="block py-2 px-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition">Kas RT</a>
+                            <a href="kas-ronda.html" class="block py-2 px-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition">Kas Ronda</a>
                         </div>
                     </div>
 
-                    <a href="laporan.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                    <a href="laporan.html" class="flex items-center px-4 py-3 hover:bg-slate-800/70 text-slate-400 hover:text-white rounded-2xl transition-all font-medium">
                         <i class="fa-solid fa-file-invoice-dollar w-7 text-lg"></i><span>Laporan & Layanan</span>
                     </a>
-                    <a href="input-pengumuman.html" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
+                    <a href="input-pengumuman.html" class="flex items-center px-4 py-3 hover:bg-slate-800/70 text-slate-400 hover:text-white rounded-2xl transition-all font-medium">
                         <i class="fa-solid fa-bullhorn w-7 text-lg"></i><span>Pengumuman</span>
-                    </a>
-                    <a href="#" onclick="alert('Menu Bantuan & Sosial'); return false;" class="flex items-center px-4 py-3 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition">
-                        <i class="fa-solid fa-hand-holding-heart w-7 text-lg"></i><span>Bantuan Sosial</span>
                     </a>
                 </nav>
             </div>
-            <div class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
-                <p>WargaKu Desktop v1.0</p>
-                <p class="mt-0.5" id="userRoleBadgeDesktop">Role: Administrator</p>
+            <div class="p-5 border-t border-slate-800 text-center text-xs text-slate-500 bg-slate-900/30">
+                <p class="font-medium">WargaKu Desktop v1.0</p>
+                <p class="mt-0.5 text-slate-400" id="userRoleBadgeDesktop">Role: Administrator</p>
             </div>
         </aside>
 
         <!-- Area Konten Utama Desktop -->
         <main class="flex-1 flex flex-col overflow-y-auto">
-            <header class="bg-white shadow-sm h-20 flex items-center justify-between px-10 border-b border-gray-200">
+            <header class="bg-white shadow-xs h-20 flex items-center justify-between px-10 border-b border-slate-100 sticky top-0 z-30 backdrop-blur-md bg-white/90">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800" id="headerTitleDesktop">Sistem Informasi Pengurus Wilayah</h1>
-                    <p class="text-xs text-gray-500 mt-0.5">Kelola seluruh administrasi warga dan laporan kependudukan dalam satu layar.</p>
+                    <h1 class="text-xl font-extrabold text-slate-800" id="headerTitleDesktop">Sistem Informasi Pengurus Wilayah</h1>
+                    <p class="text-xs text-slate-500 mt-0.5">Kelola seluruh administrasi warga dan laporan kependudukan secara real-time.</p>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="text-right">
-                        <p id="userNameDisplayDesktop" class="text-sm font-bold text-gray-800">Ismanto</p>
-                        <p id="userRoleDisplayDesktop" class="text-xs text-emerald-600 font-medium">Administrator</p>
+                        <p id="userNameDisplayDesktop" class="text-sm font-bold text-slate-800">Ismanto</p>
+                        <p id="userRoleDisplayDesktop" class="text-xs text-emerald-600 font-semibold">Administrator</p>
                     </div>
-                    <button id="logoutBtnDesktop" class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-xl text-sm font-semibold transition border border-red-200 cursor-pointer flex items-center space-x-2">
+                    <button id="logoutBtnDesktop" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-4 py-2.5 rounded-2xl text-xs font-bold transition border border-rose-100 cursor-pointer flex items-center space-x-2 shadow-xs">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span>Keluar</span>
                     </button>
@@ -116,14 +127,206 @@
 
             <div class="p-10 space-y-8 max-w-7xl mx-auto w-full">
 
+                <!-- 4 Statistik Kartu Atas -->
+                <div class="grid grid-cols-4 gap-6">
+                    <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-3xl p-6 shadow-lg shadow-emerald-600/20 flex justify-between items-center relative overflow-hidden">
+                        <div>
+                            <span class="bg-white/20 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">Database</span>
+                            <p class="text-xs uppercase tracking-wider font-semibold opacity-85 mt-3">Total Kepala Keluarga</p>
+                            <h3 id="statTotalKKDesktop" class="text-3xl font-extrabold mt-1 tracking-tight">0 KK</h3>
+                        </div>
+                        <div class="text-5xl opacity-15"><i class="fa-solid fa-user-tie"></i></div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-3xl p-6 shadow-lg shadow-blue-600/20 flex justify-between items-center relative overflow-hidden">
+                        <div>
+                            <span class="bg-white/20 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">Database</span>
+                            <p class="text-xs uppercase tracking-wider font-semibold opacity-85 mt-3">Total Warga</p>
+                            <h3 id="statTotalWargaDesktop" class="text-3xl font-extrabold mt-1 tracking-tight">0 Jiwa</h3>
+                        </div>
+                        <div class="text-5xl opacity-15"><i class="fa-solid fa-users"></i></div>
+                    </div>
+
+                    <!-- Kartu Laki-laki -->
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex items-center space-x-4 relative overflow-hidden border-l-[6px] border-l-blue-600">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center flex-shrink-0 border border-blue-100 shadow-inner">
+                            <i class="fa-solid fa-mars text-blue-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">Laki-Laki</p>
+                            <h3 id="statTotalLakiDesktop" class="text-2xl font-extrabold text-slate-800 mt-0.5">0 Jiwa</h3>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Perempuan -->
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex items-center space-x-4 relative overflow-hidden border-l-[6px] border-l-rose-500">
+                        <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center flex-shrink-0 border border-rose-100 shadow-inner">
+                            <i class="fa-solid fa-venus text-rose-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">Perempuan</p>
+                            <h3 id="statTotalPerempuanDesktop" class="text-2xl font-extrabold text-slate-800 mt-0.5">0 Jiwa</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= STATISTIK BERDASARKAN USIA ================= -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
+                    <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center">
+                        <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mr-2.5 shadow-xs">
+                            <i class="fa-solid fa-chart-column text-sm"></i>
+                        </span>
+                        Statistik Penduduk Berdasarkan Usia
+                    </h3>
+                    <div class="grid grid-cols-4 gap-5">
+                        <!-- Balita -->
+                        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-blue-500 hover:shadow-md transition-all">
+                            <div class="space-y-3">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-100/70 text-blue-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-face-smile"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">Balita (0-5 Thn)</p>
+                                    <h4 id="statBalita" class="text-2xl font-extrabold text-slate-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Balita')" class="mt-4 w-full py-2 bg-white border border-blue-200 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Anak -->
+                        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-emerald-500 hover:shadow-md transition-all">
+                            <div class="space-y-3">
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-child"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">Anak (6-17 Thn)</p>
+                                    <h4 id="statAnak" class="text-2xl font-extrabold text-slate-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Anak')" class="mt-4 w-full py-2 bg-white border border-emerald-200 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Dewasa -->
+                        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-amber-500 hover:shadow-md transition-all">
+                            <div class="space-y-3">
+                                <div class="w-12 h-12 rounded-2xl bg-amber-100/70 text-amber-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">Dewasa (18-59 Thn)</p>
+                                    <h4 id="statDewasa" class="text-2xl font-extrabold text-slate-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Dewasa')" class="mt-4 w-full py-2 bg-white border border-amber-200 text-amber-600 hover:bg-amber-600 hover:text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Lansia -->
+                        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-rose-500 hover:shadow-md transition-all">
+                            <div class="space-y-3">
+                                <div class="w-12 h-12 rounded-2xl bg-rose-100/70 text-rose-600 flex items-center justify-center mx-auto text-xl shadow-inner">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">Lansia (60+ Thn)</p>
+                                    <h4 id="statLansia" class="text-2xl font-extrabold text-slate-800 mt-1">0</h4>
+                                </div>
+                            </div>
+                            <button onclick="alert('Detail Lansia')" class="mt-4 w-full py-2 bg-white border border-rose-200 text-rose-600 hover:bg-rose-600 hover:text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= STATISTIK BERDASARKAN GOLONGAN DARAH ================= -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
+                    <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center">
+                        <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center mr-2.5 shadow-xs">
+                            <i class="fa-solid fa-droplet text-sm"></i>
+                        </span>
+                        Statistik Penduduk Berdasarkan Golongan Darah
+                    </h3>
+                    <div class="grid grid-cols-5 gap-4">
+                        <!-- Gol A -->
+                        <div class="bg-slate-50/60 rounded-2xl p-4 border border-slate-100 shadow-xs text-center flex flex-col justify-between border-t-4 border-t-rose-500 hover:shadow-md transition-all">
+                            <div>
+                                <span class="text-base font-extrabold text-rose-600">A</span>
+                                <p class="text-[9px] font-extrabold text-slate-400 uppercase mt-0.5">Gol. Darah A</p>
+                                <h4 id="statGolA" class="text-2xl font-extrabold text-slate-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah A')" class="mt-4 py-1.5 bg-white border border-rose-200 text-rose-600 hover:bg-rose-600 hover:text-white rounded-xl text-[11px] font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Gol B -->
+                        <div class="bg-slate-50/60 rounded-2xl p-4 border border-slate-100 shadow-xs text-center flex flex-col justify-between border-t-4 border-t-blue-500 hover:shadow-md transition-all">
+                            <div>
+                                <span class="text-base font-extrabold text-blue-600">B</span>
+                                <p class="text-[9px] font-extrabold text-slate-400 uppercase mt-0.5">Gol. Darah B</p>
+                                <h4 id="statGolB" class="text-2xl font-extrabold text-slate-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah B')" class="mt-4 py-1.5 bg-white border border-blue-200 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl text-[11px] font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Gol AB -->
+                        <div class="bg-slate-50/60 rounded-2xl p-4 border border-slate-100 shadow-xs text-center flex flex-col justify-between border-t-4 border-t-emerald-500 hover:shadow-md transition-all">
+                            <div>
+                                <span class="text-base font-extrabold text-emerald-600">AB</span>
+                                <p class="text-[9px] font-extrabold text-slate-400 uppercase mt-0.5">Gol. Darah AB</p>
+                                <h4 id="statGolAB" class="text-2xl font-extrabold text-slate-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah AB')" class="mt-4 py-1.5 bg-white border border-emerald-200 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-xl text-[11px] font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Gol O -->
+                        <div class="bg-slate-50/60 rounded-2xl p-4 border border-slate-100 shadow-xs text-center flex flex-col justify-between border-t-4 border-t-amber-500 hover:shadow-md transition-all">
+                            <div>
+                                <span class="text-base font-extrabold text-amber-600">O</span>
+                                <p class="text-[9px] font-extrabold text-slate-400 uppercase mt-0.5">Gol. Darah O</p>
+                                <h4 id="statGolO" class="text-2xl font-extrabold text-slate-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah O')" class="mt-4 py-1.5 bg-white border border-amber-200 text-amber-600 hover:bg-amber-600 hover:text-white rounded-xl text-[11px] font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+
+                        <!-- Tidak Tahu / - -->
+                        <div class="bg-slate-50/60 rounded-2xl p-4 border border-slate-100 shadow-xs text-center flex flex-col justify-between border-t-4 border-t-slate-400 hover:shadow-md transition-all">
+                            <div>
+                                <span class="text-base font-extrabold text-slate-500">-</span>
+                                <p class="text-[9px] font-extrabold text-slate-400 uppercase mt-0.5">Tidak Tahu</p>
+                                <h4 id="statGolLain" class="text-2xl font-extrabold text-slate-800 mt-2">0</h4>
+                            </div>
+                            <button onclick="alert('Detail Gol Darah Tidak Tahu')" class="mt-4 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-700 hover:text-white rounded-xl text-[11px] font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center space-x-1">
+                                <i class="fa-regular fa-eye"></i><span>Detail</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- REKAPITULASI KAS & FILTER WILAYAH DESKTOP -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-4">
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-base font-bold text-gray-800 flex items-center">
-                            <i class="fa-solid fa-chart-pie mr-2 text-emerald-600"></i> Rekapitulasi Kas
+                        <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center">
+                            <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mr-2.5 shadow-xs">
+                                <i class="fa-solid fa-chart-pie text-sm"></i>
+                            </span> 
+                            Rekapitulasi Kas
                         </h3>
                         <div class="w-72">
-                            <select id="filterWilayahDesktop" onchange="gantiWilayahDashboard(this.value)" class="w-full bg-gray-50 border border-gray-300 rounded-2xl px-4 py-2.5 text-xs font-bold text-emerald-800 focus:outline-none focus:border-emerald-500 transition cursor-pointer shadow-sm">
+                            <select id="filterWilayahDesktop" onchange="gantiWilayahDashboard(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs font-bold text-emerald-800 focus:outline-none focus:border-emerald-500 transition cursor-pointer shadow-xs disabled:bg-slate-100 disabled:text-slate-500 disabled:cursor-not-allowed">
                                 <option value="Semua">Semua Wilayah</option>
                                 <option value="RT 01">RT 01 - Potrobayan</option>
                                 <option value="RT 02">RT 02 - Potrobayan</option>
@@ -135,237 +338,76 @@
 
                     <div class="grid grid-cols-3 gap-6">
                         <!-- Total Masuk -->
-                        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
-                            <p class="text-[11px] font-semibold tracking-wider opacity-90 uppercase">Total Masuk</p>
-                            <h3 id="lblTotalMasukDesktop" class="text-2xl font-extrabold mt-2">Rp 0</h3>
+                        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-6 shadow-md shadow-emerald-500/20 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-7xl opacity-10"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                            <p class="text-[11px] font-bold tracking-wider opacity-90 uppercase">Total Masuk</p>
+                            <h3 id="lblTotalMasukDesktop" class="text-2xl font-extrabold mt-3 tracking-tight">Rp 0</h3>
                         </div>
                         <!-- Total Keluar -->
-                        <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
-                            <p class="text-[11px] font-semibold tracking-wider opacity-90 uppercase">Total Keluar</p>
-                            <h3 id="lblTotalKeluarDesktop" class="text-2xl font-extrabold mt-2">Rp 0</h3>
+                        <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-2xl p-6 shadow-md shadow-rose-500/20 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-7xl opacity-10"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                            <p class="text-[11px] font-bold tracking-wider opacity-90 uppercase">Total Keluar</p>
+                            <h3 id="lblTotalKeluarDesktop" class="text-2xl font-extrabold mt-3 tracking-tight">Rp 0</h3>
                         </div>
                         <!-- Saldo Akhir -->
-                        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
-                            <p class="text-[11px] font-semibold tracking-wider opacity-90 uppercase">Saldo Akhir</p>
-                            <h3 id="lblSaldoAkhirDesktop" class="text-2xl font-extrabold mt-2">Rp 0</h3>
+                        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-6 shadow-md shadow-blue-500/20 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 text-7xl opacity-10"><i class="fa-solid fa-wallet"></i></div>
+                            <p class="text-[11px] font-bold tracking-wider opacity-90 uppercase">Saldo Akhir</p>
+                            <h3 id="lblSaldoAkhirDesktop" class="text-2xl font-extrabold mt-3 tracking-tight">Rp 0</h3>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4 Statistik Kartu Atas -->
-                <div class="grid grid-cols-4 gap-6">
-                    <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Total Kepala Keluarga</p>
-                            <h3 id="statTotalKKDesktop" class="text-3xl font-extrabold mt-2">0 KK</h3>
-                            <p class="text-[11px] mt-2 bg-white/20 px-2 py-0.5 rounded-md inline-block font-medium">Database Real-time</p>
-                        </div>
-                        <div class="text-5xl opacity-20"><i class="fa-solid fa-user-tie"></i></div>
-                    </div>
-
-                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-6 shadow-lg flex justify-between items-center relative overflow-hidden">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider font-semibold opacity-80">Total Warga</p>
-                            <h3 id="statTotalWargaDesktop" class="text-3xl font-extrabold mt-2">0 Jiwa</h3>
-                            <p class="text-[11px] mt-2 bg-white/20 px-2 py-0.5 rounded-md inline-block font-medium">Database Real-time</p>
-                        </div>
-                        <div class="text-5xl opacity-20"><i class="fa-solid fa-users"></i></div>
-                    </div>
-
-                    <!-- Kartu Laki-laki -->
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 flex items-center space-x-4 relative overflow-hidden border-l-[6px] border-l-blue-600">
-                        <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-blue-50 shadow-inner">
-                            <i class="fa-solid fa-mars text-blue-600 text-2xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Penduduk Laki-Laki</p>
-                            <h3 id="statTotalLakiDesktop" class="text-2xl font-extrabold text-gray-800 mt-0.5">0 Jiwa</h3>
-                        </div>
-                    </div>
-
-                    <!-- Kartu Perempuan -->
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 flex items-center space-x-4 relative overflow-hidden border-l-[6px] border-l-rose-500">
-                        <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-rose-50 shadow-inner">
-                            <i class="fa-solid fa-venus text-rose-500 text-2xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Penduduk Perempuan</p>
-                            <h3 id="statTotalPerempuanDesktop" class="text-2xl font-extrabold text-gray-800 mt-0.5">0 Jiwa</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ================= STATISTIK BERDASARKAN USIA ================= -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
-                    <h3 class="text-base font-bold text-gray-800 flex items-center">
-                        <i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Statistik Penduduk Berdasarkan Usia
-                    </h3>
-                    <div class="grid grid-cols-4 gap-5">
-                        <!-- Balita -->
-                        <div class="bg-white rounded-2xl p-5 border border-blue-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-blue-500">
-                            <div class="space-y-2">
-                                <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto text-xl shadow-inner">
-                                    <i class="fa-solid fa-face-smile"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Balita (0-5 Thn)</p>
-                                    <h4 id="statBalita" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
-                                </div>
-                            </div>
-                            <button onclick="alert('Detail Balita')" class="mt-4 w-full py-1.5 border border-blue-300 text-blue-600 hover:bg-blue-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-
-                        <!-- Anak -->
-                        <div class="bg-white rounded-2xl p-5 border border-emerald-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-emerald-500">
-                            <div class="space-y-2">
-                                <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto text-xl shadow-inner">
-                                    <i class="fa-solid fa-child"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Anak (6-17 Thn)</p>
-                                    <h4 id="statAnak" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
-                                </div>
-                            </div>
-                            <button onclick="alert('Detail Anak')" class="mt-4 w-full py-1.5 border border-emerald-300 text-emerald-600 hover:bg-emerald-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-
-                        <!-- Dewasa -->
-                        <div class="bg-white rounded-2xl p-5 border border-amber-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-amber-500">
-                            <div class="space-y-2">
-                                <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-xl shadow-inner">
-                                    <i class="fa-solid fa-user-tie"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Dewasa (18-59 Thn)</p>
-                                    <h4 id="statDewasa" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
-                                </div>
-                            </div>
-                            <button onclick="alert('Detail Dewasa')" class="mt-4 w-full py-1.5 border border-amber-300 text-amber-600 hover:bg-amber-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-
-                        <!-- Lansia -->
-                        <div class="bg-white rounded-2xl p-5 border border-rose-200 shadow-sm flex flex-col justify-between text-center relative overflow-hidden border-t-4 border-t-rose-500">
-                            <div class="space-y-2">
-                                <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto text-xl shadow-inner">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Lansia (60+ Thn)</p>
-                                    <h4 id="statLansia" class="text-2xl font-extrabold text-gray-800 mt-1">0</h4>
-                                </div>
-                            </div>
-                            <button onclick="alert('Detail Lansia')" class="mt-4 w-full py-1.5 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ================= STATISTIK BERDASARKAN GOLONGAN DARAH ================= -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
-                    <h3 class="text-base font-bold text-gray-800 flex items-center">
-                        <i class="fa-solid fa-droplet text-rose-600 mr-2"></i> Statistik Penduduk Berdasarkan Golongan Darah
-                    </h3>
-                    <div class="grid grid-cols-5 gap-4">
-                        <!-- Gol A -->
-                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-rose-500">
-                            <div>
-                                <span class="text-sm font-extrabold text-rose-600">A</span>
-                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. A</p>
-                                <h4 id="statGolA" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
-                            </div>
-                            <button onclick="alert('Detail Gol Darah A')" class="mt-4 py-1.5 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-
-                        <!-- Gol B -->
-                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-blue-500">
-                            <div>
-                                <span class="text-sm font-extrabold text-blue-600">B</span>
-                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. B</p>
-                                <h4 id="statGolB" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
-                            </div>
-                            <button onclick="alert('Detail Gol Darah B')" class="mt-4 py-1.5 border border-blue-300 text-blue-600 hover:bg-blue-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-
-                        <!-- Gol AB -->
-                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-emerald-500">
-                            <div>
-                                <span class="text-sm font-extrabold text-emerald-600">AB</span>
-                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. AB</p>
-                                <h4 id="statGolAB" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
-                            </div>
-                            <button onclick="alert('Detail Gol Darah AB')" class="mt-4 py-1.5 border border-emerald-300 text-emerald-600 hover:bg-emerald-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-
-                        <!-- Gol O -->
-                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-amber-500">
-                            <div>
-                                <span class="text-sm font-extrabold text-amber-600">O</span>
-                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Gol. O</p>
-                                <h4 id="statGolO" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
-                            </div>
-                            <button onclick="alert('Detail Gol Darah O')" class="mt-4 py-1.5 border border-amber-300 text-amber-600 hover:bg-amber-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-
-                        <!-- Tidak Tahu / - -->
-                        <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between border-t-4 border-t-gray-400">
-                            <div>
-                                <span class="text-sm font-extrabold text-gray-500">-</span>
-                                <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Tidak Tahu</p>
-                                <h4 id="statGolLain" class="text-xl font-extrabold text-gray-800 mt-2">0</h4>
-                            </div>
-                            <button onclick="alert('Detail Gol Darah Tidak Tahu')" class="mt-4 py-1.5 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-xl text-[11px] font-semibold transition cursor-pointer flex items-center justify-center space-x-1">
-                                <i class="fa-regular fa-eye"></i><span>Detail</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-3 gap-6">
-                    <div id="desktopPintasanAdminContainer" class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                        <h3 class="text-base font-bold text-gray-800 mb-4"><i class="fa-solid fa-grid-2 mr-2 text-emerald-600"></i>Pintasan Menu Administrator</h3>
+                <div class="grid grid-cols-3 gap-6 pb-12">
+                    <div id="desktopPintasanAdminContainer" class="col-span-2 bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                        <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-5 flex items-center">
+                            <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mr-2.5 shadow-xs">
+                                <i class="fa-solid fa-grid-2 text-sm"></i>
+                            </span>
+                            Pintasan Menu Administrator
+                        </h3>
                         <div class="grid grid-cols-4 gap-4">
-                            <a href="database.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
-                                <i class="fa-solid fa-database text-2xl"></i>
-                                <span class="text-xs font-semibold">Database</span>
+                            <a href="database.html" class="p-5 rounded-2xl bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-700 transition-all flex flex-col items-center justify-center text-center space-y-2.5 group shadow-xs border border-slate-100">
+                                <div class="w-12 h-12 rounded-xl bg-white group-hover:bg-emerald-500 flex items-center justify-center text-emerald-600 group-hover:text-white shadow-xs transition-all">
+                                    <i class="fa-solid fa-database text-lg"></i>
+                                </div>
+                                <span class="text-xs font-bold">Database</span>
                             </a>
-                            <a href="daftar-warga.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
-                                <i class="fa-solid fa-address-book text-2xl"></i>
-                                <span class="text-xs font-semibold">Daftar Warga</span>
+                            <a href="daftar-warga.html" class="p-5 rounded-2xl bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-700 transition-all flex flex-col items-center justify-center text-center space-y-2.5 group shadow-xs border border-slate-100">
+                                <div class="w-12 h-12 rounded-xl bg-white group-hover:bg-emerald-500 flex items-center justify-center text-emerald-600 group-hover:text-white shadow-xs transition-all">
+                                    <i class="fa-solid fa-address-book text-lg"></i>
+                                </div>
+                                <span class="text-xs font-bold">Daftar Warga</span>
                             </a>
-                            <a href="input-warga.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
-                                <i class="fa-solid fa-user-plus text-2xl"></i>
-                                <span class="text-xs font-semibold">Input Warga</span>
+                            <a href="input-warga.html" class="p-5 rounded-2xl bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-700 transition-all flex flex-col items-center justify-center text-center space-y-2.5 group shadow-xs border border-slate-100">
+                                <div class="w-12 h-12 rounded-xl bg-white group-hover:bg-emerald-500 flex items-center justify-center text-emerald-600 group-hover:text-white shadow-xs transition-all">
+                                    <i class="fa-solid fa-user-plus text-lg"></i>
+                                </div>
+                                <span class="text-xs font-bold">Input Warga</span>
                             </a>
-                            <a href="laporan.html" class="p-4 rounded-xl bg-emerald-50 hover:bg-emerald-500 hover:text-white text-emerald-700 transition flex flex-col items-center justify-center text-center space-y-2 group shadow-sm">
-                                <i class="fa-solid fa-file-invoice-dollar text-2xl"></i>
-                                <span class="text-xs font-semibold">Laporan</span>
+                            <a href="laporan.html" class="p-5 rounded-2xl bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-700 transition-all flex flex-col items-center justify-center text-center space-y-2.5 group shadow-xs border border-slate-100">
+                                <div class="w-12 h-12 rounded-xl bg-white group-hover:bg-emerald-500 flex items-center justify-center text-emerald-600 group-hover:text-white shadow-xs transition-all">
+                                    <i class="fa-solid fa-file-invoice-dollar text-lg"></i>
+                                </div>
+                                <span class="text-xs font-bold">Laporan</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-base font-bold text-gray-800"><i class="fa-solid fa-bullhorn mr-2 text-emerald-600"></i>Informasi Wilayah Terbaru</h3>
-                            <!-- Tombol Lihat Semua Desktop (Hidden default, muncul jika data > 3) -->
-                            <a href="info-pengumuman.html" id="btnLihatSemuaDesktop" class="hidden text-xs font-semibold text-emerald-600 hover:underline">Lihat Semua</a>
-                        </div>
-                        <div id="desktopInfoWilayahContainer" class="space-y-3">
-                            <p class="text-xs text-gray-400 italic">Memuat informasi wilayah...</p>
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center">
+                                    <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mr-2 shadow-xs">
+                                        <i class="fa-solid fa-bullhorn text-xs"></i>
+                                    </span>
+                                    Informasi Wilayah
+                                </h3>
+                                <a href="info-pengumuman.html" id="btnLihatSemuaDesktop" class="hidden text-xs font-bold text-emerald-600 hover:underline">Lihat Semua</a>
+                            </div>
+                            <div id="desktopInfoWilayahContainer" class="space-y-3">
+                                <p class="text-xs text-slate-400 italic">Memuat informasi wilayah...</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -377,39 +419,39 @@
     <!-- ========================================================================= -->
     <!-- 2. TAMPILAN KHUSUS LAYAR HP / PONSEL                                     -->
     <!-- ========================================================================= -->
-    <div class="md:hidden max-w-md mx-auto h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-hidden" style="background-color: #f0fdf4;">
+    <div class="md:hidden max-w-md mx-auto h-screen bg-slate-50 shadow-2xl flex flex-col justify-between relative overflow-hidden">
         
-        <!-- HEADER & PROFIL MOBILE MODERN (Menempel di atas & tidak ikut ter-scroll) -->
-        <header class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 px-6 pt-6 pb-6 flex-shrink-0 z-40 shadow-lg rounded-b-3xl">
-            <div class="flex justify-between items-center mb-5">
+        <!-- HEADER & PROFIL MOBILE MODERN -->
+        <header class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 px-5 pt-5 pb-5 flex-shrink-0 z-40 shadow-lg rounded-b-[2.5rem]">
+            <div class="flex justify-between items-center mb-4">
                 <div class="flex items-center space-x-2.5">
-                    <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-inner border border-white/30 flex-shrink-0">
-                        <i class="fa-solid fa-house-chimney text-base"></i>
+                    <div class="w-9 h-9 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-inner border border-white/30 flex-shrink-0">
+                        <i class="fa-solid fa-house-chimney text-sm"></i>
                     </div>
                     <div>
-                        <h1 class="text-lg font-extrabold text-white tracking-wide leading-none">WargaKu</h1>
+                        <h1 class="text-base font-extrabold text-white tracking-wide leading-none">WargaKu</h1>
                         <p id="headerAlamatWilayah" class="text-[10px] text-emerald-100 font-medium mt-1 flex items-center">
                             <i class="fa-solid fa-location-dot text-amber-300 mr-1 text-[9px] flex-shrink-0"></i> 
-                            <span class="truncate max-w-[200px]">Memuat lokasi...</span>
+                            <span class="truncate max-w-[190px]">Memuat lokasi...</span>
                         </p>
                     </div>
                 </div>
                 
-                <div class="flex items-center space-x-2.5">
-                    <button class="w-10 h-10 rounded-full bg-white/15 backdrop-blur-md hover:bg-white/25 text-white flex items-center justify-center transition border border-white/20 shadow-sm cursor-pointer">
-                        <i class="fa-regular fa-bell text-sm"></i>
+                <div class="flex items-center space-x-2">
+                    <button class="w-9 h-9 rounded-full bg-white/15 backdrop-blur-md hover:bg-white/25 text-white flex items-center justify-center transition border border-white/20 shadow-xs cursor-pointer">
+                        <i class="fa-regular fa-bell text-xs"></i>
                     </button>
                     
                     <div class="relative">
-                        <button onclick="toggleUserDropdown()" class="w-10 h-10 rounded-full bg-amber-200 text-amber-900 font-bold border-2 border-white overflow-hidden shadow-md flex items-center justify-center focus:outline-none cursor-pointer">
+                        <button onclick="toggleUserDropdown()" class="w-9 h-9 rounded-full bg-amber-200 text-amber-900 font-bold border-2 border-white overflow-hidden shadow-md flex items-center justify-center focus:outline-none cursor-pointer">
                             <span id="userAvatarInitialTop" class="text-xs">IS</span>
                         </button>
-                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50">
-                            <div class="px-4 py-2 border-b border-gray-100">
-                                <p class="text-[10px] text-gray-400">Masuk sebagai</p>
-                                <p id="userNameDropdown" class="text-xs font-bold text-gray-800 truncate">Ismanto</p>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 z-50">
+                            <div class="px-4 py-2 border-b border-slate-100">
+                                <p class="text-[10px] text-slate-400">Masuk sebagai</p>
+                                <p id="userNameDropdown" class="text-xs font-bold text-slate-800 truncate">Ismanto</p>
                             </div>
-                            <button id="logoutBtnMobile" class="w-full text-left px-4 py-2.5 text-xs font-semibold text-red-600 hover:bg-red-50 flex items-center space-x-2 cursor-pointer">
+                            <button id="logoutBtnMobile" class="w-full text-left px-4 py-2.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 flex items-center space-x-2 cursor-pointer">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <span>Keluar (Logout)</span>
                             </button>
@@ -418,44 +460,135 @@
                 </div>
             </div>
 
-            <div class="bg-white/15 backdrop-blur-md border border-white/25 rounded-2xl p-4 flex items-center justify-between shadow-inner text-white">
-                <div class="flex items-center space-x-3.5">
-                    <div id="userAvatarInitial" class="w-12 h-12 rounded-full bg-white text-emerald-700 flex items-center justify-center font-extrabold text-base shadow-md border-2 border-white/50">
+            <div class="bg-white/15 backdrop-blur-md border border-white/25 rounded-2xl p-3.5 flex items-center justify-between shadow-inner text-white">
+                <div class="flex items-center space-x-3">
+                    <div id="userAvatarInitial" class="w-11 h-11 rounded-full bg-white text-emerald-700 flex items-center justify-center font-extrabold text-sm shadow-md border-2 border-white/50">
                         IS
                     </div>
                     <div>
-                        <p class="text-[11px] text-emerald-100 font-medium">Selamat datang kembali,</p>
-                        <h2 class="text-sm font-bold text-white tracking-wide" id="userNameMobile">Ismanto</h2>
-                        <!-- Badge Role & Informasi Wilayah Login User -->
+                        <p class="text-[10px] text-emerald-100 font-medium">Selamat datang kembali,</p>
+                        <h2 class="text-xs font-bold text-white tracking-wide" id="userNameMobile">Ismanto</h2>
                         <div class="flex items-center space-x-1.5 mt-1">
-                            <div class="inline-flex items-center bg-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-semibold text-emerald-50 border border-white/25">
-                                <i class="fa-solid fa-shield-halved text-amber-300 mr-1 text-[9px]"></i> 
+                            <div class="inline-flex items-center bg-white/20 px-2 py-0.2 rounded-full text-[9px] font-semibold text-emerald-50 border border-white/25">
+                                <i class="fa-solid fa-shield-halved text-amber-300 mr-1 text-[8px]"></i> 
                                 <span id="userRoleBadgeMobile">Administrator</span>
                             </div>
-                            <div class="inline-flex items-center bg-emerald-800/40 px-2 py-0.5 rounded-full text-[10px] font-bold text-amber-200 border border-amber-300/30">
-                                <i class="fa-solid fa-map-pin mr-1 text-[9px]"></i> 
+                            <div class="inline-flex items-center bg-emerald-800/40 px-2 py-0.2 rounded-full text-[9px] font-bold text-amber-200 border border-amber-300/30">
+                                <i class="fa-solid fa-map-pin mr-1 text-[8px]"></i> 
                                 <span id="userWilayahBadgeMobile">RT 01</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-right opacity-30 text-3xl pr-1">
-                    <i class="fa-solid fa-id-badge"></i>
-                </div>
             </div>
         </header>
 
-        <!-- KONTEN UTAMA HP (Bagian ini yang bisa digulir / di-scroll ke bawah secara mandiri) -->
-        <main class="px-6 pt-4 space-y-4 flex-1 overflow-y-auto pb-24">
+        <!-- KONTEN UTAMA HP -->
+        <main class="px-5 pt-4 space-y-3.5 flex-1 overflow-y-auto pb-24">
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <span class="bg-white/20 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Database</span>
+                        <h3 class="text-xs font-semibold opacity-90 mt-2">Total Kepala Keluarga</h3>
+                        <p id="statTotalKKMobile" class="text-base font-extrabold mt-0.5">0 KK</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <span class="bg-white/20 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Database</span>
+                        <h3 class="text-xs font-semibold opacity-90 mt-2">Total Warga</h3>
+                        <p id="statTotalWargaMobile" class="text-base font-extrabold mt-0.5">0 Jiwa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Laki-laki & Perempuan Mobile -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white rounded-2xl p-3.5 shadow-xs border border-slate-100 flex items-center space-x-3 relative overflow-hidden border-l-[5px] border-l-blue-600">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 border border-blue-100 shadow-inner">
+                        <i class="fa-solid fa-mars text-blue-600 text-base"></i>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-extrabold text-slate-400 tracking-wider uppercase">Laki-Laki</p>
+                        <p id="statTotalLakiMobile" class="text-xs font-extrabold text-slate-800 mt-0.5">0 Jiwa</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-3.5 shadow-xs border border-slate-100 flex items-center space-x-3 relative overflow-hidden border-l-[5px] border-l-rose-500">
+                    <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center flex-shrink-0 border border-rose-100 shadow-inner">
+                        <i class="fa-solid fa-venus text-rose-500 text-base"></i>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-extrabold text-slate-400 tracking-wider uppercase">Perempuan</p>
+                        <p id="statTotalPerempuanMobile" class="text-xs font-extrabold text-slate-800 mt-0.5">0 Jiwa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistik Usia Mobile -->
+            <div class="bg-white rounded-2xl p-4 shadow-xs border border-slate-100 space-y-3">
+                <h3 class="text-xs font-extrabold text-slate-800 flex items-center uppercase tracking-wider">
+                    <i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Berdasarkan Usia
+                </h3>
+                <div class="grid grid-cols-2 gap-2 text-center text-xs">
+                    <div class="p-2.5 bg-blue-50/40 border border-blue-100/70 rounded-xl">
+                        <p class="text-[9px] font-extrabold text-slate-400 uppercase">BALITA (0-5)</p>
+                        <p id="statBalitaMobile" class="text-base font-extrabold text-blue-600 mt-0.5">0</p>
+                    </div>
+                    <div class="p-2.5 bg-emerald-50/40 border border-emerald-100/70 rounded-xl">
+                        <p class="text-[9px] font-extrabold text-slate-400 uppercase">ANAK (6-17)</p>
+                        <p id="statAnakMobile" class="text-base font-extrabold text-emerald-600 mt-0.5">0</p>
+                    </div>
+                    <div class="p-2.5 bg-amber-50/40 border border-amber-100/70 rounded-xl">
+                        <p class="text-[9px] font-extrabold text-slate-400 uppercase">DEWASA (18-59)</p>
+                        <p id="statDewasaMobile" class="text-base font-extrabold text-amber-600 mt-0.5">0</p>
+                    </div>
+                    <div class="p-2.5 bg-rose-50/40 border border-rose-100/70 rounded-xl">
+                        <p class="text-[9px] font-extrabold text-slate-400 uppercase">LANSIA (60+)</p>
+                        <p id="statLansiaMobile" class="text-base font-extrabold text-rose-600 mt-0.5">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistik Golongan Darah Mobile -->
+            <div class="bg-white rounded-2xl p-4 shadow-xs border border-slate-100 space-y-3">
+                <h3 class="text-xs font-extrabold text-slate-800 flex items-center uppercase tracking-wider">
+                    <i class="fa-solid fa-droplet text-rose-600 mr-2"></i> Berdasarkan Gol. Darah
+                </h3>
+                <div class="grid grid-cols-5 gap-1 text-center text-xs">
+                    <div class="p-2 bg-slate-50 border border-slate-100 rounded-xl">
+                        <span class="font-extrabold text-rose-600 text-[11px]">A</span>
+                        <p id="statGolAMobile" class="text-xs font-extrabold text-slate-800 mt-0.5">0</p>
+                    </div>
+                    <div class="p-2 bg-slate-50 border border-slate-100 rounded-xl">
+                        <span class="font-extrabold text-blue-600 text-[11px]">B</span>
+                        <p id="statGolBMobile" class="text-xs font-extrabold text-slate-800 mt-0.5">0</p>
+                    </div>
+                    <div class="p-2 bg-slate-50 border border-slate-100 rounded-xl">
+                        <span class="font-extrabold text-emerald-600 text-[11px]">AB</span>
+                        <p id="statGolABMobile" class="text-xs font-extrabold text-slate-800 mt-0.5">0</p>
+                    </div>
+                    <div class="p-2 bg-slate-50 border border-slate-100 rounded-xl">
+                        <span class="font-extrabold text-amber-600 text-[11px]">O</span>
+                        <p id="statGolOMobile" class="text-xs font-extrabold text-slate-800 mt-0.5">0</p>
+                    </div>
+                    <div class="p-2 bg-slate-50 border border-slate-100 rounded-xl">
+                        <span class="font-extrabold text-slate-500 text-[11px]">-</span>
+                        <p id="statGolLainMobile" class="text-xs font-extrabold text-slate-800 mt-0.5">0</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- REKAPITULASI KAS & FILTER WILAYAH MOBILE -->
-            <div class="bg-white rounded-2xl p-4 shadow-sm border border-emerald-100 space-y-3">
+            <div class="bg-white rounded-2xl p-4 shadow-xs border border-slate-100 space-y-3">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center">
-                        <i class="fa-solid fa-chart-pie mr-1 text-emerald-600"></i> Rekapitulasi Kas
+                    <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-chart-pie mr-1.5 text-emerald-600"></i> Rekapitulasi Kas
                     </h3>
                     <div class="w-36">
-                        <select id="filterWilayahMobile" onchange="gantiWilayahDashboard(this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-2 py-1 text-[11px] font-bold text-emerald-800 focus:outline-none focus:border-emerald-500 transition cursor-pointer">
+                        <select id="filterWilayahMobile" onchange="gantiWilayahDashboard(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2 py-1 text-[11px] font-bold text-emerald-800 focus:outline-none focus:border-emerald-500 transition cursor-pointer shadow-xs disabled:bg-slate-100 disabled:text-slate-500 disabled:cursor-not-allowed">
                             <option value="Semua">Semua Wilayah</option>
                             <option value="RT 01">RT 01</option>
                             <option value="RT 02">RT 02</option>
@@ -467,183 +600,81 @@
 
                 <div class="grid grid-cols-3 gap-2">
                     <!-- Total Masuk -->
-                    <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-xl p-2.5 shadow-sm text-center">
-                        <p class="text-[8px] font-medium opacity-80 uppercase">Total Masuk</p>
+                    <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-xl p-2.5 shadow-xs text-center">
+                        <p class="text-[8px] font-bold opacity-85 uppercase tracking-wider">Total Masuk</p>
                         <h3 id="lblTotalMasukMobile" class="text-[11px] font-extrabold mt-1">Rp 0</h3>
                     </div>
                     <!-- Total Keluar -->
-                    <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-xl p-2.5 shadow-sm text-center">
-                        <p class="text-[8px] font-medium opacity-80 uppercase">Total Keluar</p>
+                    <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-xl p-2.5 shadow-xs text-center">
+                        <p class="text-[8px] font-bold opacity-85 uppercase tracking-wider">Total Keluar</p>
                         <h3 id="lblTotalKeluarMobile" class="text-[11px] font-extrabold mt-1">Rp 0</h3>
                     </div>
                     <!-- Saldo Akhir -->
-                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl p-2.5 shadow-sm text-center">
-                        <p class="text-[8px] font-medium opacity-80 uppercase">Saldo Akhir</p>
+                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl p-2.5 shadow-xs text-center">
+                        <p class="text-[8px] font-bold opacity-85 uppercase tracking-wider">Saldo Akhir</p>
                         <h3 id="lblSaldoAkhirMobile" class="text-[11px] font-extrabold mt-1">Rp 0</h3>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <span class="bg-white/20 text-[9px] px-2 py-0.5 rounded-full font-medium">Database</span>
-                        <h3 class="text-xs font-medium opacity-90 mt-2">Total Kepala Keluarga</h3>
-                        <p id="statTotalKKMobile" class="text-base font-bold mt-0.5">0 KK</p>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl p-4 shadow-md relative overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <span class="bg-white/20 text-[9px] px-2 py-0.5 rounded-full font-medium">Database</span>
-                        <h3 class="text-xs font-medium opacity-90 mt-2">Total Warga</h3>
-                        <p id="statTotalWargaMobile" class="text-base font-bold mt-0.5">0 Jiwa</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kartu Laki-laki & Perempuan Mobile -->
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-gray-200 flex items-center space-x-3 relative overflow-hidden border-l-[5px] border-l-blue-600">
-                    <div class="w-11 h-11 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-blue-50 shadow-inner">
-                        <i class="fa-solid fa-mars text-blue-600 text-lg"></i>
-                    </div>
-                    <div>
-                        <p class="text-[9px] font-bold text-gray-400 tracking-wider uppercase">Laki-Laki</p>
-                        <p id="statTotalLakiMobile" class="text-sm font-extrabold text-gray-800 mt-0.5">0 Jiwa</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-gray-200 flex items-center space-x-3 relative overflow-hidden border-l-[5px] border-l-rose-500">
-                    <div class="w-11 h-11 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 border border-rose-50 shadow-inner">
-                        <i class="fa-solid fa-venus text-rose-500 text-lg"></i>
-                    </div>
-                    <div>
-                        <p class="text-[9px] font-bold text-gray-400 tracking-wider uppercase">Perempuan</p>
-                        <p id="statTotalPerempuanMobile" class="text-sm font-extrabold text-gray-800 mt-0.5">0 Jiwa</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Statistik Usia Mobile -->
-            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200 space-y-3">
-                <h3 class="text-xs font-bold text-gray-800 flex items-center">
-                    <i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Berdasarkan Usia
-                </h3>
-                <div class="grid grid-cols-2 gap-2.5 text-center text-xs">
-                    <div class="p-3 bg-blue-50/50 border border-blue-100 rounded-xl">
-                        <p class="text-[10px] font-bold text-gray-500">BALITA (0-5)</p>
-                        <p id="statBalitaMobile" class="text-lg font-extrabold text-blue-600 mt-0.5">0</p>
-                    </div>
-                    <div class="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl">
-                        <p class="text-[10px] font-bold text-gray-500">ANAK (6-17)</p>
-                        <p id="statAnakMobile" class="text-lg font-extrabold text-emerald-600 mt-0.5">0</p>
-                    </div>
-                    <div class="p-3 bg-amber-50/50 border border-amber-100 rounded-xl">
-                        <p class="text-[10px] font-bold text-gray-500">DEWASA (18-59)</p>
-                        <p id="statDewasaMobile" class="text-lg font-extrabold text-amber-600 mt-0.5">0</p>
-                    </div>
-                    <div class="p-3 bg-rose-50/50 border border-rose-100 rounded-xl">
-                        <p class="text-[10px] font-bold text-gray-500">LANSIA (60+)</p>
-                        <p id="statLansiaMobile" class="text-lg font-extrabold text-rose-600 mt-0.5">0</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Statistik Golongan Darah Mobile -->
-            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200 space-y-3">
-                <h3 class="text-xs font-bold text-gray-800 flex items-center">
-                    <i class="fa-solid fa-droplet text-rose-600 mr-2"></i> Berdasarkan Gol. Darah
-                </h3>
-                <div class="grid grid-cols-5 gap-1.5 text-center text-xs">
-                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
-                        <span class="font-bold text-rose-600 text-xs">A</span>
-                        <p id="statGolAMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
-                    </div>
-                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
-                        <span class="font-bold text-blue-600 text-xs">B</span>
-                        <p id="statGolBMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
-                    </div>
-                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
-                        <span class="font-bold text-emerald-600 text-xs">AB</span>
-                        <p id="statGolABMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
-                    </div>
-                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
-                        <span class="font-bold text-amber-600 text-xs">O</span>
-                        <p id="statGolOMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
-                    </div>
-                    <div class="p-2.5 bg-slate-50 border border-gray-200 rounded-xl">
-                        <span class="font-bold text-gray-500 text-xs">-</span>
-                        <p id="statGolLainMobile" class="text-sm font-extrabold text-gray-800 mt-1">0</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Informasi Wilayah / Pengumuman dari Firebase -->
-            <div class="space-y-3 pt-1">
+            <div class="space-y-3 pt-1 pb-4">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-bold text-gray-800"><i class="fa-solid fa-bullhorn text-emerald-600 mr-1.5"></i> Informasi Wilayah Terbaru</h3>
-                    <!-- Tombol Lihat Semua Mobile (Hidden default, muncul jika data > 3) -->
-                    <a href="info-pengumuman.html" id="btnLihatSemuaMobile" class="hidden text-[11px] font-semibold text-emerald-600 hover:underline">Lihat Semua</a>
+                    <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider"><i class="fa-solid fa-bullhorn text-emerald-600 mr-1.5"></i> Informasi Wilayah Terbaru</h3>
+                    <a href="info-pengumuman.html" id="btnLihatSemuaMobile" class="hidden text-[11px] font-bold text-emerald-600 hover:underline">Lihat Semua</a>
                 </div>
                 <div id="mobileInfoWilayahContainer" class="space-y-2.5">
-                    <p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Memuat informasi wilayah...</p>
+                    <p class="text-xs text-slate-400 italic bg-white p-3 rounded-2xl border border-slate-100">Memuat informasi wilayah...</p>
                 </div>
             </div>
         </main>
 
-        <!-- ================= FIXED BOTTOM NAVIGATION (Menempel di bawah) ================= -->
+        <!-- ================= FIXED BOTTOM NAVIGATION ================= -->
         <div class="absolute bottom-0 left-0 right-0 max-w-md mx-auto z-50">
             
             <!-- SUB-MENU WARGA -->
-            <div id="subWargaMenu" class="hidden bg-emerald-900/95 text-white border-t border-emerald-700 px-6 py-3 shadow-2xl rounded-t-2xl transition-all duration-300 backdrop-blur-md">
-                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-700/60">
-                    <span class="text-[11px] font-bold text-emerald-200"><i class="fa-solid fa-users mr-1"></i> Sub-Menu Data Warga</span>
-                    <button onclick="toggleSubWargaMobile()" class="text-emerald-200 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-800 cursor-pointer">✕ Tutup</button>
+            <div id="subWargaMenu" class="hidden bg-emerald-950/95 text-white border-t border-emerald-800/80 px-5 py-3 shadow-2xl rounded-t-3xl transition-all duration-300 backdrop-blur-md">
+                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-900">
+                    <span class="text-[11px] font-bold text-emerald-300"><i class="fa-solid fa-users mr-1"></i> Sub-Menu Data Warga</span>
+                    <button onclick="toggleSubWargaMobile()" class="text-emerald-300 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-900 cursor-pointer">✕ Tutup</button>
                 </div>
-                <div class="grid grid-cols-4 gap-2 text-center">
-                    <a href="kepala-keluarga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <a href="kepala-keluarga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-user-tie"></i>
                         </div>
-                        <span class="text-[9px] font-bold text-emerald-100">Kepala Keluarga</span>
+                        <span class="text-[9px] font-bold text-emerald-100">KK</span>
                     </a>
-                    <a href="daftar-warga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                    <a href="daftar-warga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-address-book"></i>
                         </div>
-                        <span class="text-[9px] font-bold text-emerald-100">Daftar Warga</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Warga</span>
                     </a>
-                    <a href="input-warga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                    <a href="input-warga.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-user-plus"></i>
                         </div>
-                        <span class="text-[9px] font-bold text-emerald-100">Input Data</span>
-                    </a>
-                    <a href="input-pengumuman.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </div>
-                        <span class="text-[9px] font-bold text-emerald-100">Info Wilayah</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Input</span>
                     </a>
                 </div>
             </div>
 
             <!-- SUB-MENU KEUANGAN -->
-            <div id="subKeuanganMenu" class="hidden bg-emerald-900/95 text-white border-t border-emerald-700 px-6 py-3 shadow-2xl rounded-t-2xl transition-all duration-300 backdrop-blur-md">
-                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-700/60">
-                    <span class="text-[11px] font-bold text-emerald-200"><i class="fa-solid fa-wallet mr-1"></i> Sub-Menu Keuangan</span>
-                    <button onclick="toggleSubKeuangan()" class="text-emerald-200 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-800 cursor-pointer">✕ Tutup</button>
+            <div id="subKeuanganMenu" class="hidden bg-emerald-950/95 text-white border-t border-emerald-800/80 px-5 py-3 shadow-2xl rounded-t-3xl transition-all duration-300 backdrop-blur-md">
+                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-900">
+                    <span class="text-[11px] font-bold text-emerald-300"><i class="fa-solid fa-wallet mr-1"></i> Sub-Menu Keuangan</span>
+                    <button onclick="toggleSubKeuangan()" class="text-emerald-300 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-900 cursor-pointer">✕ Tutup</button>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-center">
-                    <a href="kas-rt.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                    <a href="kas-rt.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-wallet"></i>
                         </div>
                         <span class="text-[10px] font-bold text-emerald-100">Kas RT</span>
                     </a>
-                    <a href="kas-ronda.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                    <a href="kas-ronda.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-shield-halved"></i>
                         </div>
                         <span class="text-[10px] font-bold text-emerald-100">Kas Ronda</span>
@@ -652,38 +683,60 @@
             </div>
 
             <!-- SUB-MENU MANAJEMEN -->
-            <div id="subManajemenMenu" class="hidden bg-emerald-900/95 text-white border-t border-emerald-700 px-6 py-3 shadow-2xl rounded-t-2xl transition-all duration-300 backdrop-blur-md">
-                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-700/60">
-                    <span class="text-[11px] font-bold text-emerald-200"><i class="fa-solid fa-sitemap mr-1"></i> Sub-Menu Manajemen</span>
-                    <button onclick="toggleSubManajemen()" class="text-emerald-200 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-800 cursor-pointer">✕ Tutup</button>
+            <div id="subManajemenMenu" class="hidden bg-emerald-950/95 text-white border-t border-emerald-800/80 px-5 py-3 shadow-2xl rounded-t-3xl transition-all duration-300 backdrop-blur-md">
+                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-900">
+                    <span class="text-[11px] font-bold text-emerald-300"><i class="fa-solid fa-sitemap mr-1"></i> Sub-Menu Manajemen</span>
+                    <button onclick="toggleSubManajemen()" class="text-emerald-300 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-900 cursor-pointer">✕ Tutup</button>
                 </div>
-                <div class="grid grid-cols-5 gap-1.5 text-center">
-                    <a href="database.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                <div class="grid grid-cols-4 gap-1 text-center">
+                    <a href="database.html" class="flex flex-col items-center space-y-1 p-1.5 rounded-xl hover:bg-emerald-900/60 transition">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-[10px] shadow-xs">
                             <i class="fa-solid fa-database"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-100">Database</span>
+                        <span class="text-[9px] font-bold text-emerald-100">DB</span>
                     </a>
-                    <a href="setting-user.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                    <a href="setting-user.html" class="flex flex-col items-center space-y-1 p-1.5 rounded-xl hover:bg-emerald-900/60 transition">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-[10px] shadow-xs">
                             <i class="fa-solid fa-user-gear"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-100">Setting User</span>
+                        <span class="text-[9px] font-bold text-emerald-100">User</span>
                     </a>
-                    <a href="hak-akses.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                    <a href="hak-akses.html" class="flex flex-col items-center space-y-1 p-1.5 rounded-xl hover:bg-emerald-900/60 transition">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-[10px] shadow-xs">
                             <i class="fa-solid fa-shield-halved"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-100">Hak Akses</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Akses</span>
                     </a>
-                    <a href="profil-wilayah.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                    <a href="profil-wilayah.html" class="flex flex-col items-center space-y-1 p-1.5 rounded-xl hover:bg-emerald-900/60 transition">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-[10px] shadow-xs">
                             <i class="fa-solid fa-map-location-dot"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-100">Profil</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Profil</span>
                     </a>
-                    <a href="input-galeri.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-800/60 transition shadow-sm">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                </div>
+            </div>
+
+            <!-- SUB-MENU INFO / BERITA -->
+            <div id="subInfoMenu" class="hidden bg-emerald-950/95 text-white border-t border-emerald-800/80 px-5 py-3 shadow-2xl rounded-t-3xl transition-all duration-300 backdrop-blur-md">
+                <div class="flex items-center justify-between mb-2 pb-1 border-b border-emerald-900">
+                    <span class="text-[11px] font-bold text-emerald-300"><i class="fa-solid fa-newspaper mr-1"></i> Sub-Menu Info & Berita</span>
+                    <button onclick="toggleSubInfoMobile()" class="text-emerald-300 text-xs font-bold px-2 py-0.5 rounded hover:bg-emerald-900 cursor-pointer">✕ Tutup</button>
+                </div>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <a href="info-pengumuman.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-emerald-100">Info Wilayah</span>
+                    </a>
+                    <a href="input-pengumuman.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-emerald-100">Input Info</span>
+                    </a>
+                    <a href="input-galeri.html" class="flex flex-col items-center space-y-1 p-2 rounded-xl hover:bg-emerald-900/60 transition shadow-xs">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-images"></i>
                         </div>
                         <span class="text-[10px] font-bold text-emerald-100">Galeri</span>
@@ -692,7 +745,7 @@
             </div>
 
             <!-- LEVEL 1: MENU UTAMA "LAINNYA" -->
-            <div id="expandMenu" class="hidden bg-emerald-900/95 text-white border-t border-emerald-700 px-6 py-4 shadow-2xl rounded-t-3xl transition-all duration-300 backdrop-blur-md">
+            <div id="expandMenu" class="hidden bg-emerald-950/95 text-white border-t border-emerald-800/80 px-5 py-4 shadow-2xl rounded-t-3xl transition-all duration-300 backdrop-blur-md">
                 <div id="expandMenuGrid" class="grid grid-cols-5 gap-1.5 text-center">
                     <!-- Dinamis oleh JS -->
                 </div>
@@ -735,7 +788,6 @@
             window.location.href = 'index.html';
         }
 
-        // Minta izin notifikasi browser/HP saat membuka dashboard
         if ("Notification" in window) {
             if (Notification.permission !== "granted" && Notification.permission !== "denied") {
                 Notification.requestPermission();
@@ -755,9 +807,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        let activeWilayah = "Semua";
+        const currentRole = localStorage.getItem('userRole') || 'Administrator';
+        const userWilayahLogin = localStorage.getItem('userWilayah') || 'RT 01';
+        let activeWilayah = (currentRole.toLowerCase() === 'administrator') ? "Semua" : userWilayahLogin;
 
         window.gantiWilayahDashboard = function(wilayahBaru) {
+            if (currentRole.toLowerCase() !== 'administrator') return;
             activeWilayah = wilayahBaru;
             const selDesktop = document.getElementById('filterWilayahDesktop');
             const selMobile = document.getElementById('filterWilayahMobile');
@@ -781,8 +836,10 @@
 
                 querySnapshot.forEach(docSnap => {
                     const data = docSnap.data();
-                    const wilayahItem = data.wilayah || 'Semua';
-                    const matchWilayah = (activeWilayah === "Semua" || wilayahItem === activeWilayah);
+                    const wilayahItem = data.wilayah ? String(data.wilayah).trim() : 'Semua';
+                    
+                    const isSemua = (activeWilayah === "Semua" || activeWilayah.toLowerCase().includes('semua'));
+                    const matchWilayah = isSemua || (wilayahItem.toLowerCase() === activeWilayah.toLowerCase());
 
                     if (matchWilayah) {
                         const nominal = Number(data.nominal) || 0;
@@ -796,12 +853,10 @@
 
                 const saldoAkhir = totalMasuk - totalKeluar;
 
-                // Update Desktop
                 document.getElementById('lblTotalMasukDesktop').textContent = formatRupiah(totalMasuk);
                 document.getElementById('lblTotalKeluarDesktop').textContent = formatRupiah(totalKeluar);
                 document.getElementById('lblSaldoAkhirDesktop').textContent = formatRupiah(saldoAkhir);
 
-                // Update Mobile
                 document.getElementById('lblTotalMasukMobile').textContent = formatRupiah(totalMasuk);
                 document.getElementById('lblTotalKeluarMobile').textContent = formatRupiah(totalKeluar);
                 document.getElementById('lblSaldoAkhirMobile').textContent = formatRupiah(saldoAkhir);
@@ -811,7 +866,6 @@
             }
         }
 
-        // Fungsi memuat Informasi Wilayah / Pengumuman dari Firebase
         function loadInformasiWilayah() {
             const q = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"));
             
@@ -862,30 +916,30 @@
                         countTampil++;
                         if (countTampil <= 3) {
                             desktopHTML += `
-                                <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4 space-y-1.5">
+                                <div class="bg-slate-50/80 border border-slate-100 rounded-2xl p-4 space-y-1.5 hover:shadow-sm transition-all">
                                     <div class="flex justify-between items-center">
                                         <div class="flex space-x-1.5">
                                             <span class="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
-                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">${wilayahPengumuman}</span>
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full">${wilayahPengumuman}</span>
                                         </div>
-                                        <span class="text-[10px] text-gray-500"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
+                                        <span class="text-[10px] text-slate-400 font-medium"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
                                     </div>
-                                    <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
-                                    <p class="text-[11px] text-gray-600 line-clamp-2">${isi}</p>
+                                    <h4 class="text-xs font-bold text-slate-800">${judul}</h4>
+                                    <p class="text-[11px] text-slate-600 line-clamp-2">${isi}</p>
                                 </div>
                             `;
 
                             mobileHTML += `
-                                <div class="bg-white rounded-2xl p-3.5 border border-emerald-100 shadow-sm space-y-1.5">
+                                <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-xs space-y-1.5">
                                     <div class="flex justify-between items-center">
                                         <div class="flex space-x-1">
                                             <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${kategori}</span>
-                                            <span class="bg-blue-50 text-blue-700 text-[9px] font-semibold px-2 py-0.5 rounded-full">${wilayahPengumuman}</span>
+                                            <span class="bg-blue-50 text-blue-700 text-[9px] font-bold px-2 py-0.5 rounded-full">${wilayahPengumuman}</span>
                                         </div>
-                                        <span class="text-[9px] text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
+                                        <span class="text-[9px] text-slate-400"><i class="fa-regular fa-clock mr-1"></i>${waktu}</span>
                                     </div>
-                                    <h4 class="text-xs font-bold text-gray-800">${judul}</h4>
-                                    <p class="text-[10px] text-gray-500 line-clamp-2">${isi}</p>
+                                    <h4 class="text-xs font-bold text-slate-800">${judul}</h4>
+                                    <p class="text-[10px] text-slate-500 line-clamp-2">${isi}</p>
                                 </div>
                             `;
                         }
@@ -893,7 +947,7 @@
                 });
 
                 if (countTampil === 0) {
-                    const emptyMsg = '<p class="text-xs text-gray-400 italic bg-white p-3 rounded-2xl border border-gray-100">Belum ada informasi wilayah untuk RT Anda.</p>';
+                    const emptyMsg = '<p class="text-xs text-slate-400 italic bg-white p-3 rounded-2xl border border-slate-100">Belum ada informasi wilayah untuk RT Anda.</p>';
                     desktopContainer.innerHTML = emptyMsg;
                     mobileContainer.innerHTML = emptyMsg;
                     return;
@@ -905,37 +959,6 @@
                 console.error("Gagal memuat informasi wilayah:", error);
             });
         }
-
-        let isFirstLoad = true;
-        const qPengumuman = query(collection(db, "pengumuman"), orderBy("createdAt", "desc"), limit(1));
-        onSnapshot(qPengumuman, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                    if (isFirstLoad) {
-                        return;
-                    }
-                    const data = change.doc.data();
-                    if ("Notification" in window && Notification.permission === "granted") {
-                        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-                            navigator.serviceWorker.ready.then(registration => {
-                                registration.showNotification("📢 Pengumuman Baru WargaKu", {
-                                    body: `${data.judul}\nPelaksanaan: ${data.waktuPelaksanaan || '-'}`,
-                                    icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
-                                    vibrate: [200, 100, 200]
-                                });
-                            });
-                        } else {
-                            new Notification("📢 Pengumuman Baru WargaKu", {
-                                body: `${data.judul}\nPelaksanaan: ${data.waktuPelaksanaan || '-'}`,
-                                icon: "https://cdn-icons-png.flaticon.com/512/3233/3233483.png",
-                                vibrate: [200, 100, 200]
-                            });
-                        }
-                    }
-                }
-            });
-            isFirstLoad = false;
-        });
 
         const handleLogout = () => {
             localStorage.removeItem('isLoggedIn');
@@ -958,11 +981,13 @@
             const subMenu = document.getElementById('subManajemenMenu');
             const subWarga = document.getElementById('subWargaMenu');
             const subKeuangan = document.getElementById('subKeuanganMenu');
+            const subInfo = document.getElementById('subInfoMenu');
             menu.classList.toggle('hidden');
             if (menu.classList.contains('hidden')) {
                 subMenu.classList.add('hidden');
                 subWarga.classList.add('hidden');
                 subKeuangan.classList.add('hidden');
+                subInfo.classList.add('hidden');
             }
         }
 
@@ -970,20 +995,24 @@
             const subMenu = document.getElementById('subManajemenMenu');
             const subWarga = document.getElementById('subWargaMenu');
             const subKeuangan = document.getElementById('subKeuanganMenu');
+            const subInfo = document.getElementById('subInfoMenu');
             subMenu.classList.toggle('hidden');
             subWarga.classList.add('hidden');
             subKeuangan.classList.add('hidden');
+            subInfo.classList.add('hidden');
         }
 
         window.toggleSubWargaMobile = function() {
             const subWarga = document.getElementById('subWargaMenu');
             const subMenu = document.getElementById('subManajemenMenu');
             const subKeuangan = document.getElementById('subKeuanganMenu');
+            const subInfo = document.getElementById('subInfoMenu');
             const expandMenu = document.getElementById('expandMenu');
             
             subWarga.classList.toggle('hidden');
             subMenu.classList.add('hidden');
             subKeuangan.classList.add('hidden');
+            subInfo.classList.add('hidden');
             expandMenu.classList.add('hidden');
         }
 
@@ -991,11 +1020,27 @@
             const subKeuangan = document.getElementById('subKeuanganMenu');
             const subWarga = document.getElementById('subWargaMenu');
             const subMenu = document.getElementById('subManajemenMenu');
+            const subInfo = document.getElementById('subInfoMenu');
             const expandMenu = document.getElementById('expandMenu');
             
             subKeuangan.classList.toggle('hidden');
             subWarga.classList.add('hidden');
             subMenu.classList.add('hidden');
+            subInfo.classList.add('hidden');
+            expandMenu.classList.add('hidden');
+        }
+
+        window.toggleSubInfoMobile = function() {
+            const subInfo = document.getElementById('subInfoMenu');
+            const subWarga = document.getElementById('subWargaMenu');
+            const subMenu = document.getElementById('subManajemenMenu');
+            const subKeuangan = document.getElementById('subKeuanganMenu');
+            const expandMenu = document.getElementById('expandMenu');
+            
+            subInfo.classList.toggle('hidden');
+            subWarga.classList.add('hidden');
+            subMenu.classList.add('hidden');
+            subKeuangan.classList.add('hidden');
             expandMenu.classList.add('hidden');
         }
 
@@ -1037,7 +1082,7 @@
                     document.getElementById('txtWilayahLengkap').textContent = `${kal}, ${kec}, ${kab}`;
                     document.getElementById('headerAlamatWilayah').innerHTML = `
                         <i class="fa-solid fa-location-dot text-amber-300 mr-1 text-[9px] flex-shrink-0"></i> 
-                        <span class="text-[10px] truncate max-w-[200px]" title="${ringkasAlamat}">${ringkasAlamat}</span>
+                        <span class="text-[10px] truncate max-w-[190px]" title="${ringkasAlamat}">${ringkasAlamat}</span>
                     `;
                 }
             } catch (error) {
@@ -1046,16 +1091,30 @@
         }
 
         function terapkanHakAkses() {
-            const currentRole = localStorage.getItem('userRole') || 'Administrator';
             const currentName = localStorage.getItem('userName') || 'Ismanto';
-            const currentWilayah = localStorage.getItem('userWilayah') || 'RT 01';
 
             document.getElementById('userNameDisplayDesktop').textContent = currentName;
             document.getElementById('userRoleDisplayDesktop').textContent = currentRole;
             document.getElementById('userNameMobile').textContent = currentName;
             document.getElementById('userRoleBadgeMobile').textContent = currentRole;
-            document.getElementById('userWilayahBadgeMobile').textContent = currentWilayah;
-            document.getElementById('userRoleBadgeDesktop').textContent = `Role: ${currentRole} (${currentWilayah})`;
+            document.getElementById('userWilayahBadgeMobile').textContent = userWilayahLogin;
+            document.getElementById('userRoleBadgeDesktop').textContent = `Role: ${currentRole} (${userWilayahLogin})`;
+
+            const selDesktop = document.getElementById('filterWilayahDesktop');
+            const selMobile = document.getElementById('filterWilayahMobile');
+            
+            if (selDesktop) {
+                selDesktop.value = activeWilayah;
+                if (currentRole.toLowerCase() !== 'administrator') {
+                    selDesktop.disabled = true;
+                }
+            }
+            if (selMobile) {
+                selMobile.value = activeWilayah;
+                if (currentRole.toLowerCase() !== 'administrator') {
+                    selMobile.disabled = true;
+                }
+            }
 
             const initials = currentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
             document.getElementById('userAvatarInitial').textContent = initials;
@@ -1063,50 +1122,73 @@
             document.getElementById('userNameDropdown').textContent = currentName;
 
             const expandMenuGrid = document.getElementById('expandMenuGrid');
+            const roleLower = currentRole.toLowerCase();
 
-            if (currentRole === 'Anggota') {
+            if (roleLower === 'anggota') {
                 expandMenuGrid.className = "grid grid-cols-1 gap-2 text-center";
                 expandMenuGrid.innerHTML = `
-                    <a href="profil-read.html" class="flex flex-col items-center space-y-1.5 group p-2 rounded-xl hover:bg-emerald-800/50 transition">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-base shadow">
+                    <a href="profil-read.html" class="flex flex-col items-center space-y-1.5 group p-2 rounded-2xl hover:bg-emerald-900 transition">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-sm shadow-xs">
                             <i class="fa-solid fa-id-badge"></i>
                         </div>
-                        <span class="text-[11px] font-semibold text-emerald-100">Profil Wilayah</span>
+                        <span class="text-[10px] font-bold text-emerald-100">Profil Wilayah</span>
                     </a>
+                `;
+            } else if (roleLower === 'pengurus') {
+                expandMenuGrid.className = "grid grid-cols-3 gap-2 text-center";
+                expandMenuGrid.innerHTML = `
+                    <button onclick="toggleSubKeuangan(); toggleLainnya();" class="flex flex-col items-center space-y-1 group p-2 rounded-2xl hover:bg-emerald-900 transition focus:outline-none cursor-pointer">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <span class="text-[9px] font-bold text-emerald-100">Keuangan</span>
+                    </button>
+                    <a href="laporan.html" class="flex flex-col items-center space-y-1 group p-2 rounded-2xl hover:bg-emerald-900 transition">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <span class="text-[9px] font-bold text-emerald-100">Laporan</span>
+                    </a>
+                    <button onclick="toggleSubInfoMobile()" class="flex flex-col items-center space-y-1 group p-2 rounded-2xl hover:bg-emerald-900 transition focus:outline-none cursor-pointer">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </div>
+                        <span class="text-[9px] font-bold text-emerald-100">Info</span>
+                    </button>
                 `;
             } else {
                 expandMenuGrid.className = "grid grid-cols-5 gap-1.5 text-center";
                 expandMenuGrid.innerHTML = `
-                    <button onclick="toggleSubWargaMobile(); toggleLainnya();" class="flex flex-col items-center space-y-1 group p-1.5 rounded-xl hover:bg-emerald-800/50 transition focus:outline-none cursor-pointer">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-sm shadow">
+                    <button onclick="toggleSubWargaMobile(); toggleLainnya();" class="flex flex-col items-center space-y-1 group p-1.5 rounded-2xl hover:bg-emerald-900 transition focus:outline-none cursor-pointer">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-users"></i>
                         </div>
-                        <span class="text-[10px] font-semibold text-emerald-100">Warga</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Warga</span>
                     </button>
-                    <button onclick="toggleSubKeuangan(); toggleLainnya();" class="flex flex-col items-center space-y-1 group p-1.5 rounded-xl hover:bg-emerald-800/50 transition focus:outline-none cursor-pointer">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-sm shadow">
+                    <button onclick="toggleSubKeuangan(); toggleLainnya();" class="flex flex-col items-center space-y-1 group p-1.5 rounded-2xl hover:bg-emerald-900 transition focus:outline-none cursor-pointer">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-wallet"></i>
                         </div>
-                        <span class="text-[10px] font-semibold text-emerald-100">Keuangan</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Keuangan</span>
                     </button>
-                    <a href="laporan.html" class="flex flex-col items-center space-y-1 group p-1.5 rounded-xl hover:bg-emerald-800/50 transition">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-sm shadow">
+                    <a href="laporan.html" class="flex flex-col items-center space-y-1 group p-1.5 rounded-2xl hover:bg-emerald-900 transition">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-file-invoice-dollar"></i>
                         </div>
-                        <span class="text-[10px] font-semibold text-emerald-100">Laporan</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Laporan</span>
                     </a>
-                    <button onclick="toggleSubManajemen()" class="flex flex-col items-center space-y-1 group p-1.5 rounded-xl hover:bg-emerald-800/50 transition focus:outline-none cursor-pointer">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-sm shadow">
+                    <button onclick="toggleSubManajemen()" class="flex flex-col items-center space-y-1 group p-1.5 rounded-2xl hover:bg-emerald-900 transition focus:outline-none cursor-pointer">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
                             <i class="fa-solid fa-sitemap"></i>
                         </div>
-                        <span class="text-[10px] font-semibold text-emerald-100">Manajemen</span>
+                        <span class="text-[9px] font-bold text-emerald-100">Manajemen</span>
                     </button>
-                    <a href="setting-user.html" class="flex flex-col items-center space-y-1 group p-1.5 rounded-xl hover:bg-emerald-800/50 transition">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-sm shadow">
-                            <i class="fa-solid fa-gear"></i>
+                    <button onclick="toggleSubInfoMobile()" class="flex flex-col items-center space-y-1 group p-1.5 rounded-2xl hover:bg-emerald-900 transition focus:outline-none cursor-pointer">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xs shadow-xs">
+                            <i class="fa-solid fa-newspaper"></i>
                         </div>
-                        <span class="text-[10px] font-semibold text-emerald-100">Pengaturan</span>
-                    </a>
+                        <span class="text-[9px] font-bold text-emerald-100">Info</span>
+                    </button>
                 `;
             }
         }
@@ -1127,7 +1209,6 @@
         async function loadAllStats() {
             try {
                 const querySnapshot = await getDocs(collection(db, "warga"));
-                const currentWilayah = localStorage.getItem('userWilayah') || 'RT 01';
                 
                 let totalWarga = 0;
                 const setKK = new Set();
@@ -1149,10 +1230,10 @@
                     const data = docSnap.data();
                     const wargaRt = data.rt ? String(data.rt).trim() : '';
                     
-                    const isSemuaWilayah = currentWilayah.toLowerCase().includes('semua');
-                    const matchRt = wargaRt === currentWilayah.replace(/[^0-9]/g, '');
+                    const isSemuaWilayah = (activeWilayah === "Semua" || activeWilayah.toLowerCase().includes('semua'));
+                    const matchRt = wargaRt === activeWilayah.replace(/[^0-9]/g, '');
 
-                    if (isSemuaWilayah || currentWilayah.includes(wargaRt) || matchRt) {
+                    if (isSemuaWilayah || activeWilayah.includes(wargaRt) || matchRt) {
                         totalWarga++;
                         if (data.noKK) setKK.add(data.noKK.trim());
                         

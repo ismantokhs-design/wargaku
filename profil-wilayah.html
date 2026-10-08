@@ -72,7 +72,7 @@
                 <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-3xl p-6 shadow-lg relative overflow-hidden">
                     <span class="bg-white/20 text-[10px] px-3 py-1 rounded-full font-semibold uppercase tracking-wider inline-block mb-2">Form Pengaturan</span>
                     <h2 class="text-base font-bold">Update Data Wilayah RT</h2>
-                    <p class="text-xs text-emerald-100 mt-1">Data wilayah telah dimuat ke form di bawah. Silakan ubah sesuai kebutuhan dan simpan.</p>
+                    <p class="text-xs text-emerald-100 mt-1">Data wilayah serta susunan pengurus padukuhan dapat dikelola melalui form di bawah ini.</p>
                 </div>
 
                 <!-- Input Detail Informasi Wilayah -->
@@ -122,6 +122,36 @@
                         <div>
                             <label class="block font-bold text-gray-600 mb-1">Provinsi</label>
                             <input type="text" id="inputProvinsi" value="Yogyakarta" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Susunan Pengurus Padukuhan (Dinamis) -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-4">
+                    <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm pb-3 border-b border-gray-100">
+                        <i class="fa-solid fa-users-gear text-emerald-600"></i>
+                        <span>SUSUNAN PENGURUS PADUKUHAN</span>
+                    </div>
+
+                    <!-- 1. Dukuh (Tunggal) -->
+                    <div>
+                        <label class="block font-bold text-gray-600 mb-1">Nama Dukuh</label>
+                        <input type="text" id="inputNamaDukuh" placeholder="Contoh: Bpk. Sugiyanto" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-medium text-gray-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition">
+                    </div>
+
+                    <!-- Daftar RT, Nama Wilayah, Sekretaris, Bendahara (Dinamis) -->
+                    <div class="space-y-3 pt-2">
+                        <div class="flex justify-between items-center">
+                            <label class="font-bold text-gray-700">Daftar Pengurus RT & Wilayah</label>
+                            <button type="button" onclick="tambahBarisPengurus()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold px-3 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer text-[11px]">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Tambah Wilayah RT</span>
+                            </button>
+                        </div>
+
+                        <!-- Container Baris Pengurus Dinamis -->
+                        <div id="pengurusContainer" class="space-y-3">
+                            <!-- Diisi via JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -215,10 +245,47 @@
             }, 2500);
         }
 
+        // Fungsi untuk menambah baris pengurus RT secara dinamis (termasuk Kolom Nama Wilayah)
+        window.tambahBarisPengurus = function(data = {}) {
+            const container = document.getElementById('pengurusContainer');
+            const index = container.children.length + 1;
+
+            const div = document.createElement('div');
+            div.className = "bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-3 relative group";
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-emerald-700 text-[11px] uppercase tracking-wide">Wilayah RT / Pengurus #${index}</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-rose-500 hover:text-rose-700 text-xs font-bold px-2 py-0.5 rounded cursor-pointer">
+                        <i class="fa-solid fa-trash-can mr-1"></i>Hapus
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-gray-500 text-[10px] mb-1">Nama RT</label>
+                        <input type="text" name="rt_nama" value="${data.rt || ''}" placeholder="Cth: RT 01" class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-500 text-[10px] mb-1">Nama Wilayah</label>
+                        <input type="text" name="rt_nama_wilayah" value="${data.namaWilayah || ''}" placeholder="Cth: Somodaran" class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-gray-500 text-[10px] mb-1">Sekretaris</label>
+                        <input type="text" name="rt_sekretaris" value="${data.sekretaris || ''}" placeholder="Nama Sekretaris" class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-500 text-[10px] mb-1">Bendahara</label>
+                        <input type="text" name="rt_bendahara" value="${data.bendahara || ''}" placeholder="Nama Bendahara" class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 font-medium text-gray-800 focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
         // Fungsi ambil data dari database dengan pencarian koleksi menyeluruh
         async function loadProfilUntukEdit() {
             try {
-                // Daftar nama koleksi yang mungkin dipakai di database Anda
                 const collectionsToTry = ["profil-wilayah", "profil_wilayah", "profil", "wilayah"];
                 let foundData = false;
 
@@ -239,22 +306,54 @@
                         document.getElementById('inputProvinsi').value = data.provinsi || "Yogyakarta";
                         document.getElementById('inputTentang').value = data.tentang || data.keterangan || `Profil wilayah RT 02 Potrobayan merupakan lingkungan yang asri dan aktif. Tetap Semangat menjaga kerukunan warga!`;
                         
+                        // Load data pengurus
+                        document.getElementById('inputNamaDukuh').value = data.namaDukuhPadukuhan || data.dukuhNama || "";
+                        
+                        const container = document.getElementById('pengurusContainer');
+                        container.innerHTML = ''; // Reset container
+
+                        if (data.daftarPengurusRt && Array.isArray(data.daftarPengurusRt) && data.daftarPengurusRt.length > 0) {
+                            data.daftarPengurusRt.forEach(item => {
+                                window.tambahBarisPengurus(item);
+                            });
+                        } else {
+                            // Tambah satu baris kosong default jika belum ada data
+                            window.tambahBarisPengurus();
+                        }
+
                         foundData = true;
                         break;
                     }
                 }
 
                 if (!foundData) {
+                    window.tambahBarisPengurus(); // Baris kosong default
                     console.log("Data tidak ditemukan di database, menggunakan data default.");
                 }
             } catch (error) {
                 console.error("Gagal memuat data profil dari database:", error);
+                window.tambahBarisPengurus();
             }
         }
 
         window.saveProfilWilayah = async function(e) {
             e.preventDefault();
             const docId = document.getElementById('docId').value;
+
+            // Kumpulkan data pengurus RT dinamis dari form
+            const daftarPengurusRt = [];
+            const container = document.getElementById('pengurusContainer');
+            const rows = container.children;
+
+            for (let row of rows) {
+                const rt = row.querySelector('input[name="rt_nama"]').value;
+                const namaWilayah = row.querySelector('input[name="rt_nama_wilayah"]').value;
+                const sekretaris = row.querySelector('input[name="rt_sekretaris"]').value;
+                const bendahara = row.querySelector('input[name="rt_bendahara"]').value;
+                if (rt || namaWilayah || sekretaris || bendahara) {
+                    daftarPengurusRt.push({ rt, namaWilayah, sekretaris, bendahara });
+                }
+            }
 
             const profilData = {
                 dukuh: document.getElementById('inputDukuh').value,
@@ -266,6 +365,8 @@
                 kabupaten: document.getElementById('inputKabupaten').value,
                 provinsi: document.getElementById('inputProvinsi').value,
                 tentang: document.getElementById('inputTentang').value,
+                namaDukuhPadukuhan: document.getElementById('inputNamaDukuh').value,
+                daftarPengurusRt: daftarPengurusRt,
                 updatedAt: new Date().toISOString()
             };
 
@@ -275,7 +376,6 @@
             submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Menyimpan...`;
 
             try {
-                // Simpan konsisten ke koleksi "profil-wilayah" (atau "profil_wilayah")
                 if (!docId || docId === "") {
                     await addDoc(collection(db, "profil-wilayah"), profilData);
                     showToast('Profil wilayah berhasil ditambahkan!');
@@ -292,7 +392,7 @@
             } catch (error) {
                 console.error("Gagal menyimpan profil:", error);
                 alert("Terjadi kesalahan saat menyimpan ke database.");
-                submitBtn.disabled, submitBtn.disabled = false;
+                submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnText;
             }
         }

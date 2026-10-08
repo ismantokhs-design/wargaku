@@ -53,16 +53,6 @@
         <!-- Konten Utama (Form Pengisian Surat) -->
         <main class="px-6 space-y-4 flex-1 py-6 overflow-y-auto print-area">
 
-            <!-- Pilih Warga untuk Otomatis Mengisi Form -->
-            <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm space-y-3 no-print">
-                <label class="block text-xs font-bold text-gray-700">
-                    <i class="fa-solid fa-user-check text-emerald-600 mr-1"></i> Pilih Warga Pemohon (Otomatis Isi)
-                </label>
-                <select id="selectWarga" onchange="isiDataWarga()" class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 text-xs font-semibold text-gray-700 focus:outline-none focus:border-emerald-500 transition cursor-pointer">
-                    <option value="">-- Pilih Warga dari Database --</option>
-                </select>
-            </div>
-
             <!-- Preview Surat Pengantar RT -->
             <div id="previewSurat" class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm text-gray-800 text-xs space-y-4 font-serif leading-relaxed">
                 
@@ -76,8 +66,8 @@
                 <div class="space-y-1.5 text-justify">
                     <p>Yang bertanda tangan di bawah ini:</p>
                     <table class="w-full space-y-1">
-                        <tr><td class="w-28 font-semibold">Nama</td><td>: <span id="lblNamaRt">Ismanto</span></td></tr>
-                        <tr><td class="font-semibold">Jabatan</td><td>: Ketua RT <span id="lblRtPengurus">01</span> / RW <span id="lblRwPengurus">...</span></td></tr>
+                        <tr><td class="w-28 font-semibold">Nama</td><td>: <span id="lblNamaRt">Memuat...</span></td></tr>
+                        <tr><td class="font-semibold">Jabatan</td><td>: Ketua RT <span id="lblRtPengurus">...</span> / RW <span id="lblRwPengurus">01</span></td></tr>
                         <tr><td class="font-semibold">Padukuhan</td><td>: <span id="lblDukuh">Potrobayan</span></td></tr>
                         <tr><td class="font-semibold">Kalurahan</td><td>: <span id="lblKalurahan">Srihardono</span></td></tr>
                         <tr><td class="font-semibold">Kapanewon</td><td>: <span id="lblKapanewon">Pundong</span></td></tr>
@@ -85,26 +75,26 @@
                     </table>
                 </div>
 
-                <!-- Paragraf Warga -->
+                <!-- Paragraf Warga (Terisi Otomatis dari Akun Login) -->
                 <div class="space-y-1.5 text-justify pt-1">
                     <p>Dengan ini menerangkan bahwa:</p>
                     <table class="w-full space-y-1">
-                        <tr><td class="w-28 font-semibold">Nama</td><td>: <span id="lblNamaWarga" class="text-gray-400">........................................................</span></td></tr>
-                        <tr><td class="font-semibold">NIK</td><td>: <span id="lblNikWarga" class="text-gray-400">........................................................</span></td></tr>
-                        <tr><td class="font-semibold">No. KK</td><td>: <span id="lblKkWarga" class="text-gray-400">........................................................</span></td></tr>
-                        <tr><td class="font-semibold">Tempat/Tgl. Lahir</td><td>: <span id="lblTtlWarga" class="text-gray-400">........................................................</span></td></tr>
-                        <tr><td class="font-semibold">Jenis Kelamin</td><td>: <span id="lblGenderWarga" class="text-gray-400">........................................................</span></td></tr>
-                        <tr><td class="font-semibold">Agama</td><td>: <span id="lblAgamaWarga" class="text-gray-400">........................................................</span></td></tr>
-                        <tr><td class="font-semibold">Pekerjaan</td><td>: <span id="lblPekerjaanWarga" class="text-gray-400">........................................................</span></td></tr>
-                        <tr><td class="font-semibold">Alamat</td><td>: <span id="lblAlamatWarga" class="text-gray-400">........................................................</span></td></tr>
+                        <tr><td class="w-28 font-semibold">Nama</td><td>: <span id="lblNamaWarga" class="font-bold text-gray-900">Memuat data...</span></td></tr>
+                        <tr><td class="font-semibold">NIK</td><td>: <span id="lblNikWarga" class="font-bold text-gray-900">-</span></td></tr>
+                        <tr><td class="font-semibold">No. KK</td><td>: <span id="lblKkWarga" class="font-bold text-gray-900">-</span></td></tr>
+                        <tr><td class="font-semibold">Tempat/Tgl. Lahir</td><td>: <span id="lblTtlWarga" class="font-bold text-gray-900">-</span></td></tr>
+                        <tr><td class="font-semibold">Jenis Kelamin</td><td>: <span id="lblGenderWarga" class="font-bold text-gray-900">-</span></td></tr>
+                        <tr><td class="font-semibold">Agama</td><td>: <span id="lblAgamaWarga" class="font-bold text-gray-900">-</span></td></tr>
+                        <tr><td class="font-semibold">Pekerjaan</td><td>: <span id="lblPekerjaanWarga" class="font-bold text-gray-900">-</span></td></tr>
+                        <tr><td class="font-semibold">Alamat</td><td>: <span id="lblAlamatWarga" class="font-bold text-gray-900">-</span></td></tr>
                         <tr><td class="font-semibold">RT/RW</td><td>: RT <span id="lblRtWarga">...</span> / RW <span id="lblRwWarga">...</span></td></tr>
-                        <tr><td class="font-semibold">Padukuhan</td><td>: <span id="lblPadukuhanWarga" class="text-gray-400">Potrobayan</span></td></tr>
+                        <tr><td class="font-semibold">Padukuhan</td><td>: <span id="lblPadukuhanWarga">Potrobayan</span></td></tr>
                     </table>
                 </div>
 
                 <!-- Keterangan Domisili -->
                 <p class="text-justify pt-1">
-                    Adalah benar warga yang berdomisili di wilayah RT <span id="lblRtDomisili">...</span> / RW <span id="lblRwDomisili">...</span>, Padukuhan Potrobayan.
+                    Adalah benar warga yang berdomisili di wilayah RT <span id="lblRtDomisili">...</span> / RW <span id="lblRwDomisili">...</span>, Padukuhan <span id="lblDukuhDomisili">Potrobayan</span>.
                 </p>
 
                 <!-- Keperluan Surat (Bisa diketik) -->
@@ -115,15 +105,15 @@
 
                 <!-- Penutup -->
                 <p class="text-justify pt-1">
-                    Selanjutnya surat ini dipergunakan sebagai pengantar untuk mengajukan pelayanan administrasi pada Kalurahan Srihardono. Demikian surat pengantar ini dibuat dengan sebenar-benarnya untuk dapat dipergunakan sebagaimana mestinya.
+                    Selanjutnya surat ini dipergunakan sebagai pengantar untuk mengajukan pelayanan administrasi pada Kalurahan <span id="lblKalurahanTeks">Srihardono</span>. Demikian surat pengantar ini dibuat dengan sebenar-benarnya untuk dapat dipergunakan sebagaimana mestinya.
                 </p>
 
                 <!-- Tanda Tangan -->
                 <div class="pt-4 flex justify-end text-center font-sans">
                     <div class="space-y-12">
-                        <p>Potrobayan, <span id="lblTanggalSurat">8 Oktober 2026</span></p>
+                        <p><span id="lblDukuhTtd">Potrobayan</span>, <span id="lblTanggalSurat">8 Oktober 2026</span></p>
                         <p class="font-bold">Ketua RT <span id="lblRtTtd">...</span><br><span class="text-[10px] text-gray-500 font-normal">(tanda tangan dan stempel)</span></p>
-                        <p class="font-bold uppercase tracking-widest pt-2 text-emerald-700" id="lblNamaRtTtd">ISMANTO</p>
+                        <p class="font-bold uppercase tracking-widest pt-2 text-emerald-700" id="lblNamaRtTtd">MEMUAT...</p>
                     </div>
                 </div>
 
@@ -167,10 +157,14 @@
 
     </div>
 
-    <!-- Script Ambil Data Warga dari Firestore -->
+    <!-- Script Ambil Data Profil Wilayah & Data Warga Login dari Firestore -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
 
         const firebaseConfig = {
             apiKey: "AIzaSyABhd15u0ThpRxw8hGGJJ1qvi2lvNDTLug",
@@ -185,85 +179,143 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        let listWargaCache = [];
+        async function initSurat() {
+            const namaLogin = localStorage.getItem('userName') || 'Ismanto';
+            const wilayahLogin = localStorage.getItem('userWilayah') || 'RT 01';
+            const rtNum = wilayahLogin.replace(/[^0-9]/g, '') || '01';
 
-        async function initForm() {
-            // Set data pengurus RT dari localStorage
-            const namaAdmin = localStorage.getItem('userName') || 'Ismanto';
-            const wilayahAdmin = localStorage.getItem('userWilayah') || 'RT 01';
-            const rtNum = wilayahAdmin.replace(/[^0-9]/g, '') || '01';
+            // 1. Ambil data profil wilayah dari Firestore & cari nama Ketua RT berdasarkan wilayah login
+            let wilayahInfo = {
+                dukuh: "Potrobayan",
+                rw: "01",
+                kelurahan: "Srihardono",
+                kecamatan: "Pundong",
+                kabupaten: "Bantul",
+                namaKetuaRt: namaLogin // fallback ke nama login jika tidak ditemukan di list profil
+            };
 
-            document.getElementById('lblNamaRt').textContent = namaAdmin;
-            document.getElementById('lblNamaRtTtd').textContent = namaAdmin;
+            try {
+                const querySnapshotProfil = await getDocs(collection(db, "profil-wilayah"));
+                if (!querySnapshotProfil.empty) {
+                    const dataProfil = querySnapshotProfil.docs[0].data();
+                    wilayahInfo.dukuh = dataProfil.dukuh || dataProfil.namaDukuh || "Potrobayan";
+                    wilayahInfo.rw = dataProfil.rw || "01";
+                    wilayahInfo.kelurahan = dataProfil.kelurahan || dataProfil.kalurahan || "Srihardono";
+                    wilayahInfo.kecamatan = dataProfil.kecamatan || "Pundong";
+                    wilayahInfo.kabupaten = dataProfil.kabupaten || "Bantul";
+
+                    // Cari nama Ketua RT dari tabel profil (daftarPengurusRt) yang sesuai dengan RT login
+                    if (dataProfil.daftarPengurusRt && Array.isArray(dataProfil.daftarPengurusRt)) {
+                        const pengurusRtMatch = dataProfil.daftarPengurusRt.find(item => {
+                            const itemRtNum = String(item.rt || '').replace(/[^0-9]/g, '');
+                            return itemRtNum === rtNum;
+                        });
+
+                        if (pengurusRtMatch && pengurusRtMatch.rt) {
+                            // Catatan: Jika di form profil RT Anda menggunakan input nama RT sebagai nama Ketua, atau jika Anda menyimpannya, 
+                            // Kita cocokan. Jika di struktur form sebelumnya isian "rt_nama" berisi "RT 01" (atau nama Ketua RT), 
+                            // mari kita pastikan jika ada properti nama ketua, atau kita ambil dari nama pengurus RT tersebut.
+                            // Sesuai struktur sebelumnya: { rt: "RT 01", sekretaris: "...", bendahara: "..." }
+                            // Jika nama Ketua RT disimpan di field rt atau Anda ingin mengambilnya dari koleksi warga/user:
+                            // Mari kita sesuaikan jika data Ketua RT disimpan.
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Gagal memuat profil wilayah:", err);
+            }
+
+            // Sebagai alternatif yang paling akurat untuk Nama Ketua RT sesuai wilayah login:
+            // Kita cari dari koleksi "warga" atau "user" yang memiliki wilayah tersebut dan jabatan Ketua RT,
+            // atau jika nama Ketua RT disimpan di profil wilayah. 
+            // Mari kita ambil langsung dari koleksi "warga" (atau "users") yang RT-nya sama dengan `rtNum` dan berperan sebagai pengurus/ketua RT, 
+            // atau fallback ke `namaLogin`.
+            try {
+                const querySnapshotWarga = await getDocs(collection(db, "warga"));
+                querySnapshotWarga.forEach(docSnap => {
+                    const dWarga = docSnap.data();
+                    const dWargaRt = String(dWarga.rt || '').replace(/[^0-9]/g, '');
+                    const roleWarga = (dWarga.role || dWarga.jabatan || '').toLowerCase();
+                    if (dWargaRt === rtNum && (roleWarga.includes('ketua') || roleWarga.includes('rt'))) {
+                        wilayahInfo.namaKetuaRt = dWarga.nama;
+                    }
+                });
+            } catch (e) {
+                console.error("Gagal ambil ketua RT dari warga:", e);
+            }
+
+            // Set data wilayah & penandatangan ke surat
+            document.getElementById('lblDukuh').textContent = wilayahInfo.dukuh;
+            document.getElementById('lblDukuhDomisili').textContent = wilayahInfo.dukuh;
+            document.getElementById('lblDukuhTtd').textContent = wilayahInfo.dukuh;
+            document.getElementById('lblKalurahan').textContent = wilayahInfo.kelurahan;
+            document.getElementById('lblKalurahanTeks').textContent = wilayahInfo.kelurahan;
+            document.getElementById('lblKapanewon').textContent = wilayahInfo.kecamatan;
+            document.getElementById('lblKabupaten').textContent = wilayahInfo.kabupaten;
+            document.getElementById('lblRwPengurus').textContent = wilayahInfo.rw;
+            document.getElementById('lblRwWarga').textContent = wilayahInfo.rw;
+            document.getElementById('lblRwDomisili').textContent = wilayahInfo.rw;
+            document.getElementById('lblPadukuhanWarga').textContent = wilayahInfo.dukuh;
+
+            document.getElementById('lblNamaRt').textContent = wilayahInfo.namaKetuaRt;
+            document.getElementById('lblNamaRtTtd').textContent = wilayahInfo.namaKetuaRt;
             document.getElementById('lblRtPengurus').textContent = rtNum;
             document.getElementById('lblRtWarga').textContent = rtNum;
             document.getElementById('lblRtDomisili').textContent = rtNum;
             document.getElementById('lblRtTtd').textContent = rtNum;
 
-            // Tanggal hari ini
+            // Tanggal hari ini & nomor surat
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('lblTanggalSurat').textContent = new Date().toLocaleDateString('id-ID', options);
             document.getElementById('lblNomor').textContent = `400.12.1 / RT-${rtNum} / X / 2026`;
 
+            // 2. Cari data warga pemohon yang cocok dengan akun yang sedang login di database "warga"
             try {
-                const querySnapshot = await getDocs(collection(db, "warga"));
-                const selectWarga = document.getElementById('selectWarga');
-                listWargaCache = [];
+                const querySnapshotWarga = await getDocs(collection(db, "warga"));
+                let foundWarga = null;
 
-                querySnapshot.forEach(docSnap => {
-                    const data = docSnap.data();
-                    listWargaCache.push(data);
-                    
-                    const option = document.createElement('option');
-                    option.value = data.nik || data.nama;
-                    option.textContent = `${data.nama} (NIK: ${data.nik || '-'})`;
-                    selectWarga.appendChild(option);
+                querySnapshotWarga.forEach(docSnap => {
+                    const dataWarga = docSnap.data();
+                    const namaWargaDb = (dataWarga.nama || '').trim().toLowerCase();
+                    if (namaWargaDb === namaLogin.trim().toLowerCase()) {
+                        foundWarga = dataWarga;
+                    }
                 });
-            } catch (error) {
-                console.error("Gagal memuat data warga:", error);
-            }
-        }
 
-        window.isiDataWarga = function() {
-            const nikSelected = document.getElementById('selectWarga').value;
-            const warga = listWargaCache.find(w => (w.nik || w.nama) === nikSelected);
+                if (foundWarga) {
+                    document.getElementById('lblNamaWarga').textContent = foundWarga.nama || '-';
+                    document.getElementById('lblNikWarga').textContent = foundWarga.nik || '-';
+                    document.getElementById('lblKkWarga').textContent = foundWarga.noKK || '-';
 
-            if (warga) {
-                document.getElementById('lblNamaWarga').textContent = warga.nama || '-';
-                document.getElementById('lblNamaWarga').className = "font-bold text-gray-900";
+                    let ttl = foundWarga.tempatLahir ? `${foundWarga.tempatLahir}, ${foundWarga.tanggalLahir || ''}` : (foundWarga.tanggalLahir || '-');
+                    document.getElementById('lblTtlWarga').textContent = ttl;
+                    document.getElementById('lblGenderWarga').textContent = foundWarga.gender || '-';
+                    document.getElementById('lblAgamaWarga').textContent = foundWarga.agama || '-';
+                    document.getElementById('lblPekerjaanWarga').textContent = foundWarga.pekerjaan || '-';
+                    document.getElementById('lblAlamatWarga').textContent = foundWarga.alamat || '-';
 
-                document.getElementById('lblNikWarga').textContent = warga.nik || '-';
-                document.getElementById('lblNikWarga').className = "font-bold text-gray-900";
-
-                document.getElementById('lblKkWarga').textContent = warga.noKK || '-';
-                document.getElementById('lblKkWarga').className = "font-bold text-gray-900";
-
-                let ttl = warga.tempatLahir ? `${warga.tempatLahir}, ${warga.tanggalLahir || ''}` : (warga.tanggalLahir || '-');
-                document.getElementById('lblTtlWarga').textContent = ttl;
-                document.getElementById('lblTtlWarga').className = "font-bold text-gray-900";
-
-                document.getElementById('lblGenderWarga').textContent = warga.gender || '-';
-                document.getElementById('lblGenderWarga').className = "font-bold text-gray-900";
-
-                document.getElementById('lblAgamaWarga').textContent = warga.agama || '-';
-                document.getElementById('lblAgamaWarga').className = "font-bold text-gray-900";
-
-                document.getElementById('lblPekerjaanWarga').textContent = warga.pekerjaan || '-';
-                document.getElementById('lblPekerjaanWarga').className = "font-bold text-gray-900";
-
-                document.getElementById('lblAlamatWarga').textContent = warga.alamat || '-';
-                document.getElementById('lblAlamatWarga').className = "font-bold text-gray-900";
-
-                if (warga.rt) {
-                    const rtVal = String(warga.rt).replace(/[^0-9]/g, '');
-                    document.getElementById('lblRtWarga').textContent = rtVal;
-                    document.getElementById('lblRtDomisili').textContent = rtVal;
+                    if (foundWarga.rt) {
+                        const rtWargaVal = String(foundWarga.rt).replace(/[^0-9]/g, '');
+                        document.getElementById('lblRtWarga').textContent = rtWargaVal;
+                        document.getElementById('lblRtDomisili').textContent = rtWargaVal;
+                    }
+                } else {
+                    document.getElementById('lblNamaWarga').textContent = namaLogin;
+                    document.getElementById('lblNikWarga').textContent = '-';
+                    document.getElementById('lblKkWarga').textContent = '-';
+                    document.getElementById('lblTtlWarga').textContent = '-';
+                    document.getElementById('lblGenderWarga').textContent = '-';
+                    document.getElementById('lblAgamaWarga').textContent = '-';
+                    document.getElementById('lblPekerjaanWarga').textContent = '-';
+                    document.getElementById('lblAlamatWarga').textContent = '-';
                 }
+            } catch (error) {
+                console.error("Gagal mencocokkan data warga:", error);
             }
         }
 
         window.onload = () => {
-            initForm();
+            initSurat();
         };
     </script>
 </body>

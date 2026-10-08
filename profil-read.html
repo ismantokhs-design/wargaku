@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Wilayah RT - WargaKu PWA</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#10b981">
     <style>
@@ -19,10 +16,8 @@
 </head>
 <body class="font-sans antialiased">
 
-    <!-- Kontainer Utama Tampilan Mobile / PWA -->
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-24" style="background-color: #f0fdf4;">
-        
-        <!-- Header Halaman Profil -->
+
         <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
             <div class="flex items-center space-x-3">
                 <a href="dashboard.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
@@ -30,18 +25,15 @@
                 </a>
                 <h1 class="text-lg font-bold text-white tracking-wide">Profil Wilayah</h1>
             </div>
-            
-            <!-- Label Status Read-Only -->
+
             <div class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/30 flex items-center space-x-1 shadow-inner">
                 <i class="fa-solid fa-eye text-amber-300 text-xs"></i>
                 <span>Read-Only</span>
             </div>
         </header>
 
-        <!-- Konten Detail Profil Wilayah -->
         <main class="px-6 space-y-6 flex-1 py-6 overflow-y-auto">
 
-            <!-- Detail Informasi Wilayah -->
             <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-4">
                 <div class="flex items-center justify-between pb-3 border-b border-gray-100">
                     <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm">
@@ -87,7 +79,31 @@
                 </div>
             </div>
 
-            <!-- Tentang Wilayah -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-4">
+                <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm pb-3 border-b border-gray-100">
+                    <i class="fa-solid fa-users-gear text-emerald-600"></i>
+                    <span>SUSUNAN PENGURUS PADUKUHAN</span>
+                </div>
+
+                <div class="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-3.5 flex items-center justify-between text-xs">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-xs">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Kepala Dukuh</p>
+                            <p id="valNamaDukuh" class="font-extrabold text-gray-800 text-sm mt-0.5">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-1">
+                    <p class="text-[11px] font-bold text-gray-700 uppercase tracking-wide">Daftar Pengurus RT & Perangkat</p>
+                    <div id="viewPengurusContainer" class="space-y-2.5">
+                        </div>
+                </div>
+            </div>
+
             <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 space-y-3">
                 <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm pb-2 border-b border-gray-100">
                     <i class="fa-solid fa-circle-info text-emerald-600"></i>
@@ -100,14 +116,13 @@
 
         </main>
 
-        <!-- Navigasi Bawah (Diperbarui: Menu Pesan terhubung ke pesan.html) -->
         <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50">
             <nav class="bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-900 border-t border-emerald-700/60 flex justify-around items-center h-16 px-2 shadow-2xl text-emerald-100">
                 <a href="dashboard.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-solid fa-house text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Beranda</span>
                 </a>
-                
+
                 <a href="profil-read.html" class="flex flex-col items-center text-emerald-300 font-bold">
                     <i class="fa-solid fa-id-badge text-lg drop-shadow"></i>
                     <span class="text-[10px] mt-1">Profil</span>
@@ -117,8 +132,7 @@
                     <i class="fa-solid fa-images text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Galeri</span>
                 </a>
-                
-                <!-- Menu Pesan yang Diperbarui -->
+
                 <a href="pesan.html" class="flex flex-col items-center text-emerald-200/70 hover:text-white transition">
                     <i class="fa-regular fa-comment-dots text-lg"></i>
                     <span class="text-[10px] font-medium mt-1">Pesan</span>
@@ -133,7 +147,6 @@
 
     </div>
 
-    <!-- Script Ambil Data dari Firestore tabel "profil-wilayah" -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -160,7 +173,7 @@
                 const querySnapshot = await getDocs(collection(db, "profil-wilayah"));
                 if (!querySnapshot.empty) {
                     const data = querySnapshot.docs[0].data();
-                    
+
                     const dukuh = data.dukuh || data.namaDukuh || "Potrobayan";
                     const rt = data.rt || "02";
                     const rw = data.rw || "01";
@@ -180,6 +193,41 @@
                     document.getElementById('valKabupaten').textContent = kabupaten;
                     document.getElementById('valProvinsi').textContent = provinsi;
                     document.getElementById('valTentang').textContent = tentang;
+
+                    // Load Data Pengurus Padukuhan
+                    document.getElementById('valNamaDukuh').textContent = data.namaDukuhPadukuhan || '-';
+
+                    const container = document.getElementById('viewPengurusContainer');
+                    container.innerHTML = '';
+
+                    if (data.daftarPengurusRt && Array.isArray(data.daftarPengurusRt) && data.daftarPengurusRt.length > 0) {
+                        data.daftarPengurusRt.forEach((item, index) => {
+                            const div = document.createElement('div');
+                            div.className = "bg-gray-50 border border-gray-100 rounded-2xl p-3.5 space-y-2 text-xs";
+                            
+                            // Format tampilan Nama Wilayah jika ada
+                            const infoWilayah = item.namaWilayah ? ` (${item.namaWilayah})` : '';
+
+                            div.innerHTML = `
+                                <div class="flex justify-between items-center font-bold text-emerald-700 border-b border-gray-200/60 pb-1.5">
+                                    <span>${item.rt || 'RT -'}${infoWilayah}</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 pt-1 text-[11px]">
+                                    <div>
+                                        <p class="text-gray-400 font-medium">Sekretaris:</p>
+                                        <p class="font-bold text-gray-800">${item.sekretaris || '-'}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-400 font-medium">Bendahara:</p>
+                                        <p class="font-bold text-gray-800">${item.bendahara || '-'}</p>
+                                    </div>
+                                </div>
+                            `;
+                            container.appendChild(div);
+                        });
+                    } else {
+                        container.innerHTML = `<p class="text-xs text-gray-400 italic bg-gray-50 p-3 rounded-xl border border-gray-100">Belum ada data susunan pengurus RT.</p>`;
+                    }
                 }
             } catch (error) {
                 console.error("Gagal mengambil data profil wilayah:", error);

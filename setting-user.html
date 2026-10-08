@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WargaKu - Setting User</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#10b981">
     <style>
@@ -33,7 +30,6 @@
 </head>
 <body class="font-sans antialiased">
 
-    <!-- ELEMEN CUSTOM TOAST NOTIFICATION -->
     <div id="toastNotification" class="hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-[90%] bg-gray-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md flex items-center space-x-3 border border-gray-700/50">
         <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0 shadow-md">
             <i class="fa-solid fa-check text-sm"></i>
@@ -44,10 +40,8 @@
         </div>
     </div>
 
-    <!-- TAMPILAN UTAMA MOBILE CONTAINER -->
     <div class="max-w-md mx-auto min-h-screen bg-[#f0fdf4] shadow-2xl flex flex-col justify-between relative overflow-x-hidden pb-12">
-        
-        <!-- HEADER HALAMAN -->
+
         <header class="px-6 pt-6 pb-5 flex justify-between items-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 sticky top-0 z-40 shadow-lg rounded-b-3xl">
             <div class="flex items-center space-x-3">
                 <a href="dashboard.html" class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/30 transition shadow-inner border border-white/30">
@@ -61,10 +55,8 @@
             </button>
         </header>
 
-        <!-- KONTEN UTAMA -->
         <main class="px-6 space-y-4 flex-1 pt-4">
 
-            <!-- Banner Info -->
             <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
                 <div class="flex items-center justify-between">
                     <div>
@@ -78,14 +70,12 @@
                 </div>
             </div>
 
-            <!-- KARTU DAFTAR USER -->
             <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="px-5 py-4 bg-gray-50/80 border-b border-gray-100 flex items-center justify-between">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500"><i class="fa-solid fa-users mr-1.5 text-emerald-600"></i>Daftar Pengguna Cloud</h3>
                     <span id="userCount" class="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-md">Memuat...</span>
                 </div>
 
-                <!-- List Container -->
                 <div id="userListContainer" class="divide-y divide-gray-100 text-xs">
                     <div class="p-6 text-center text-gray-400 italic">Mengambil data dari database...</div>
                 </div>
@@ -93,15 +83,13 @@
 
         </main>
 
-        <!-- FOOTER INFO -->
         <footer class="text-center py-6 text-[11px] text-gray-400">
             <p>WargaKu Sistem Informasi RT v1.0</p>
         </footer>
 
-        <!-- ================= MODAL TAMBAH / EDIT USER ================= -->
         <div id="userModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
             <div class="bg-white w-full max-w-md rounded-t-[2.55rem] sm:rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-                
+
                 <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-100">
                     <div class="flex items-center space-x-2.5">
                         <div id="modalIconContainer" class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
@@ -117,7 +105,6 @@
                     </button>
                 </div>
 
-                <!-- Form User -->
                 <form id="userForm" onsubmit="saveUserToDatabase(event)" class="space-y-3.5 text-xs">
                     <input type="hidden" id="editDocId" value="">
 
@@ -137,15 +124,10 @@
                         <span id="passwordHint" class="text-[10px] text-gray-400 mt-0.5 block hidden">Kosongkan jika tidak ingin mengubah password.</span>
                     </div>
 
-                    <!-- Pilihan Wilayah -->
                     <div>
                         <label class="block font-bold text-gray-600 mb-1">Wilayah Akses</label>
                         <select id="inputWilayah" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 font-bold text-emerald-800 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition" required>
-                            <option value="" disabled selected>Pilih Wilayah</option>
-                            <option value="RT 01">RT 01</option>
-                            <option value="RT 02">RT 02</option>
-                            <option value="RT 03">RT 03</option>
-                            <option value="Semua Wilayah">Semua Wilayah (Pak Dukuh / Pusat)</option>
+                            <option value="" disabled selected>Memuat wilayah...</option>
                         </select>
                     </div>
 
@@ -189,7 +171,6 @@
 
     </div>
 
-    <!-- Firebase & Logika Interaksi Database -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -211,12 +192,14 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        let wilayahListCache = [];
+
         // Fungsi Toast Notification
         function showToast(message) {
             const toast = document.getElementById('toastNotification');
             const toastMsg = document.getElementById('toastMessage');
             toastMsg.textContent = message;
-            
+
             toast.classList.remove('hidden', 'toast-hide');
             toast.classList.add('toast-show');
 
@@ -227,6 +210,52 @@
                     toast.classList.add('hidden');
                 }, 300);
             }, 2500);
+        }
+
+        // Ambil Daftar Wilayah dari tabel "profil-wilayah"
+        async function loadWilayahOptions(selectedWilayah = '') {
+            const selectWilayah = document.getElementById('inputWilayah');
+            selectWilayah.innerHTML = `<option value="" disabled selected>Pilih Wilayah</option>`;
+            wilayahListCache = [];
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "profil-wilayah"));
+                if (!querySnapshot.empty) {
+                    const data = querySnapshot.docs[0].data();
+                    if (data.daftarPengurusRt && Array.isArray(data.daftarPengurusRt)) {
+                        data.daftarPengurusRt.forEach(item => {
+                            if (item.rt) {
+                                // Format nama RT (misal: "RT 01")
+                                const rtName = item.rt.toUpperCase().includes('RT') ? item.rt : `RT ${item.rt}`;
+                                wilayahListCache.push(rtName);
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("Gagal memuat wilayah dari profil:", error);
+            }
+
+            // Fallback jika belum ada data RT di profil wilayah
+            if (wilayahListCache.length === 0) {
+                wilayahListCache = ["RT 01", "RT 02", "RT 03"];
+            }
+
+            // Tambahkan opsi RT ke dropdown
+            wilayahListCache.forEach(rt => {
+                const option = document.createElement('option');
+                option.value = rt;
+                option.textContent = rt;
+                if (selectedWilayah === rt) option.selected = true;
+                selectWilayah.appendChild(option);
+            });
+
+            // Tambahkan opsi "Semua Wilayah"
+            const optionSemua = document.createElement('option');
+            optionSemua.value = "Semua Wilayah";
+            optionSemua.textContent = "Semua Wilayah (Pak Dukuh / Pusat)";
+            if (selectedWilayah === "Semua Wilayah") optionSemua.selected = true;
+            selectWilayah.appendChild(optionSemua);
         }
 
         // Ambil Data User dari Firestore
@@ -248,7 +277,7 @@
                     const docId = documentSnapshot.id;
                     const initials = user.nama ? user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'US';
                     const wilayahUser = user.wilayah || 'RT 01';
-                    
+
                     let badgeClass = "px-2 py-0.5 rounded-lg text-[9px] font-bold border ";
                     if(user.role === 'Admin') badgeClass += "bg-purple-100 text-purple-700 border-purple-200";
                     else if(user.role === 'Pengurus') badgeClass += "bg-blue-100 text-blue-700 border-blue-200";
@@ -287,24 +316,27 @@
             }
         }
 
-        window.openAddModal = function() {
+        window.openAddModal = async function() {
             document.getElementById('editDocId').value = '';
             document.getElementById('modalTitle').textContent = 'Tambah User Baru';
             document.getElementById('userForm').reset();
             document.getElementById('passwordHint').classList.add('hidden');
             document.getElementById('inputPassword').setAttribute('required', 'true');
+            
+            await loadWilayahOptions('');
             document.getElementById('userModal').classList.remove('hidden');
         }
 
-        window.openEditModal = function(docId, nama, email, role, wilayah) {
+        window.openEditModal = async function(docId, nama, email, role, wilayah) {
             document.getElementById('editDocId').value = docId;
             document.getElementById('modalTitle').textContent = 'Edit User';
             document.getElementById('inputNama').value = nama;
             document.getElementById('inputEmail').value = email;
-            document.getElementById('inputWilayah').value = wilayah || 'RT 01';
             document.getElementById('inputPassword').value = '';
             document.getElementById('passwordHint').classList.remove('hidden');
             document.getElementById('inputPassword').removeAttribute('required');
+
+            await loadWilayahOptions(wilayah);
 
             const radios = document.querySelectorAll('input[name="inputRole"]');
             radios.forEach(radio => {

@@ -1,67 +1,72 @@
-const CACHE_NAME = 'wargaku-pwa-v3';
-const urlsToCache = [
-    './',
-    './index.html',
-    './dashboard.html',
-    './info-pengumuman.html',
-    './input-pengumuman.html',
-    './daftar-warga.html',
-    './galeri.html',
-    './pesan.html',
-    './manifest.json',
-    './icon.png',
-    'https://cdn.tailwindcss.com',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+const CACHE_NAME = 'kantin-ku-v1';
+const ASSETS_TO_CACHE = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/pages/promo.html',
+  '/pages/manajemen.html',
+  '/pages/banner.html',
+  '/pages/profil.html'
 ];
 
-// 1. Install Service Worker & Cache File Penting
+// 1. Install Service Worker & Cache Aset Dasar Secara Aman
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(urlsToCache);
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('Membuka cache dan menyimpan aset utama');
+      // Menggunakan Promise.allSettled atau loop agar jika ada 1 file gagal, tidak merusak instalasi keseluruhan
+      return Promise.all(
+        ASSETS_TO_CACHE.map(path => {
+          return cache.add(path).catch(err => {
+            console.warn('Gagal mencache aset:', path, err);
+          });
         })
-    );
-    self.skipWaiting();
+      );
+    })
+  );
+  self.skipWaiting();
 });
 
-// 2. Aktifkan Service Worker & Bersihkan Cache Lama yang Tidak Terpakai
+// 2. Activate Service Worker & Bersihkan Cache Lama
 self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
-                        console.log('Menghapus cache lama:', cacheName);
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log('Menghapus cache lama:', cache);
+            return caches.delete(cache);
+          }
         })
-    );
-    event.waitUntil(self.clients.claim());
+      );
+    })
+  );
+  self.clients.claim();
 });
 
-// 3. Tangani Permintaan Fetch (Offline Support)
+// 3. Fetch Strategy: Cache First, fallback to Network
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
-        })
-    );
-});
+  if (event.request.url.includes('firestore.googleapis.com') || event.request.method !== 'GET') {
+    return;
+  }
 
-// 4. Tangani Notifikasi Push agar Muncul di Topbar / Layar Depan HP
-self.addEventListener('push', (event) => {
-    const data = event.data ? event.data.json() : { title: 'WargaKu', body: 'Ada informasi baru untuk warga.' };
-    
-    const options = {
-        body: data.body,
-        icon: 'https://cdn-icons-png.flaticon.com/512/3233/3233483.png',
-        badge: 'https://cdn-icons-png.flaticon.com/512/3233/3233483.png',
-        vibrate: [200, 100, 200]
-    };
-
-    event.waitUntil(
-        self.registration.showNotification(data.title, options)
-    );
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        return caches.open(CACHE_NAME).then((cache) => {
+          if (event.request.url.startsWith(self.location.origin)) {
+            cache.put(event.request, networkResponse.clone());
+          }
+          return networkResponse;
+        });
+      }).catch(() => {
+        if (event.request.mode === 'navigate') {
+          return caches.match('/index.html');
+        }
+      });
+    })
+  );
 });

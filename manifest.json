@@ -1,7 +1,7 @@
 {
   "name": "Kantin Ku PWA",
   "short_name": "Kantin Ku",
-  "start_url": "./index.html",
+  "start_url": "./login.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#dc2626",
